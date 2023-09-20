@@ -1,4 +1,4 @@
-This library aims to provide code generation for immutable models with value comparison `==` and `copyWith` methods.
+This library provides code generation for immutable models with value comparison `==` and `copyWith` methods.
 
 Project targets:
 - Standard syntax.
@@ -75,7 +75,7 @@ You must prefix all your mutable collections to their immutable counterpart.
 
 The code generator will provide error messages if it detects mutable collections.
 
-After this, __with your linter__ fix deprecated mutable operations (add, remove, ...) in your code base if any.
+If you're migrating from another tool: __with your linter__ fix deprecated mutable operations (add, remove, ...) in your code base if any.
 
 ⚠️ __Warning__ ⚠️
 
@@ -87,7 +87,7 @@ To facilitate mutation on collections there are two getters:
 - mut => to get the mutable version of the collection.
 - immut => to get the immutable version of the collection.
 
-Look at the example below for the demonstration.
+Look at the example below for demonstration.
 
 ## Equality & performance
 Since this package aims to minimize output size, equality is not generated.
@@ -149,3 +149,7 @@ This project diverges by targeting output size of your app and doesn't use "spec
 Freezed does not guarantee in any way that your collections are immutable when coding.
 
 I consider this package not too intrusive to allow you to get away easily if you(we) find a more suitable or definitive solution.
+
+## Final word
+
+Made with two fingers an a keyboard late at night.
