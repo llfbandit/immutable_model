@@ -3,10 +3,10 @@ This library provides code generation for immutable models with value comparison
 Project targets:
 - Standard syntax.
 - Improved output binary size.
-- Low source code generation code, your IDE will be happy.
+- errors/warnings before runtime (__do use a linter!__).
+- Low source code generation, your IDE will be happy.
 - Inheritance unlocked (while encouraging composition every day, "is-a" pattern is not bad).
 - to be not too intrusive.
-- errors/warnings before runtime (__do use a linter!__).
 
 ## Requirements
 Requirement dart SDK >= 3.0.0

@@ -1,3 +1,6 @@
+## 1.0.2
+- fix: abstract class copy generation.
+
 ## 1.0.1
 - fix: getters detection.
 - fix: static const collections detection.

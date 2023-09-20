@@ -162,8 +162,10 @@ class CopyWithGenerator {
     final parameters = _getConstructorPrams(classInfo);
 
     // Copy is fully ignored
-    if (classInfo.annotation.ignoreCopy &&
-        classInfo.fields.every((f) => (f.annotation?.ignoreCopy ?? true))) {
+    if (classInfo.isAbstract ||
+        (classInfo.annotation.ignoreCopy &&
+            classInfo.fields
+                .every((f) => (f.annotation?.ignoreCopy ?? true)))) {
       return const GenResult(generatedCode: '', extensionCode: '');
     }
 
@@ -184,8 +186,7 @@ class CopyWithGenerator {
       parameters,
     );
 
-    final extensionCode =
-        '''
+    final extensionCode = '''
       // ignore: library_private_types_in_public_api
       ${"_\$I${classInfo.element.name}Copy$typeParametersNames get copyWith => _\$${classInfo.element.name}Copy$typeParametersNames(this);"}
     ''';

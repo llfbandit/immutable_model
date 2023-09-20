@@ -14,6 +14,7 @@ class ClassInfo {
     required this.element,
     required this.annotation,
     required this.fields,
+    required this.isAbstract,
   });
 
   /// Super class info hierarchy
@@ -27,6 +28,9 @@ class ClassInfo {
 
   /// The fields of the class.
   final List<FieldInfo> fields;
+
+  /// [true] if class is abstract
+  final bool isAbstract;
 }
 
 class FieldInfo {
@@ -57,13 +61,13 @@ class ClassHierarchyInfo {
   final List<ClassInfo> classesInfo = [];
 
   ClassInfo getClassInfo(
-    InterfaceElement element,
+    ClassElement element,
     ConstantReader reader,
   ) {
     final existingClassInfo = _lookup(element);
     if (existingClassInfo != null) return existingClassInfo;
 
-    final classInfo = _createClassInfo(element, reader);
+    final classInfo = _createClassInfo(element, reader, element.isAbstract);
     classesInfo.add(classInfo);
     _addSuperClasses(classInfo);
 
@@ -91,6 +95,7 @@ class ClassHierarchyInfo {
   ClassInfo _createClassInfo(
     InterfaceElement element,
     ConstantReader reader,
+    bool isAbstract,
   ) {
     final annotation = _readClassAnnotation(reader);
 
@@ -110,6 +115,7 @@ class ClassHierarchyInfo {
       element: element,
       annotation: annotation,
       fields: fields,
+      isAbstract: isAbstract,
     );
   }
 
@@ -117,10 +123,13 @@ class ClassHierarchyInfo {
     final superClass = _getSuperClass(classInfo.element);
     if (superClass == null) return;
 
-    final superClassInfo = _lookup(superClass.superClass) ??
+    final ssClass = superClass.superClass;
+
+    final superClassInfo = _lookup(ssClass) ??
         _createClassInfo(
-          superClass.superClass,
+          ssClass,
           ConstantReader(superClass.annotation),
+          ssClass is ClassElement ? ssClass.isAbstract : true,
         );
 
     classInfo.superClass = superClassInfo;
