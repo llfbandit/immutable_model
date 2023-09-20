@@ -215,14 +215,14 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "1.0.0"
+    version: "1.0.1"
   im_model_gen:
     dependency: "direct dev"
     description:
       path: "../../im_model_gen"
       relative: true
     source: path
-    version: "1.0.0"
+    version: "1.0.1"
   io:
     dependency: transitive
     description:

@@ -1,15 +1,21 @@
 part of 'index.dart';
 
 @ShouldThrow(
-  'Only classes can be annotated with "ImmutableModel". "Object wrongAnnotation" is not a class.',
+  'Only classes can be annotated with "ImModel". "Object wrongAnnotation" is not a class.',
 )
 // ignore: invalid_annotation_target
 @ImModel()
 Object wrongAnnotation = Object();
 
+@ShouldThrow('Constructor "Empty" has no parameters.')
+@ImModel()
+class Empty {
+  const Empty();
+}
+
 @ShouldThrow('"int? test" is not final or const to ensure immutability.')
 @ImModel()
-class NoConstructor {
+class NotFinal {
   int? test;
 }
 
@@ -34,7 +40,7 @@ class TestNullabilityMismatch {
 }
 
 @ShouldThrow(
-  '"List<int> coll" is a mutable list, so you must use "ImList" instead to ensure immutability.',
+  '"List<int> coll" is a mutable list, you must use "ImList" instead to ensure immutability.',
 )
 @ImModel()
 class TestList {
@@ -44,7 +50,7 @@ class TestList {
 }
 
 @ShouldThrow(
-  '"Map<int, int> coll" is a mutable map, so you must use "ImMap" instead to ensure immutability.',
+  '"Map<int, int> coll" is a mutable map, you must use "ImMap" instead to ensure immutability.',
 )
 @ImModel()
 class TestMap {
@@ -54,7 +60,7 @@ class TestMap {
 }
 
 @ShouldThrow(
-  '"Set<int> coll" is a mutable set, so you must use "ImSet" instead to ensure immutability.',
+  '"Set<int> coll" is a mutable set, you must use "ImSet" instead to ensure immutability.',
 )
 @ImModel()
 class TestSet {

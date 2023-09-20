@@ -71,6 +71,7 @@ class EqualGenerator {
     FieldInfo field,
   ) {
     if (field.element.isStatic) return false;
+    if (field.element.isSynthetic) return false; // Getters
     if (field.element.getter == null) return false;
     if (field.element.name == 'props') return false;
 

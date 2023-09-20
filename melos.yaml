@@ -34,7 +34,7 @@ scripts:
     exec:
       concurrency: 1
       # orderDependents: true
-      depends-on: build_runner
+      depends-on: "build_runner"
 
   test:
     run: melos run test:package --no-select
