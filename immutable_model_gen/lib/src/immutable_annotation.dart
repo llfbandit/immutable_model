@@ -1,8 +1,8 @@
 import 'package:immutable_model/immutable_model.dart';
 
-/// The internal representation of `ImmutableModel` annotation.
-class ImmutableModelAnnotation implements ImModel {
-  const ImmutableModelAnnotation({
+/// The internal representation of `ImModel` annotation.
+class ImModelAnnotation implements ImModel {
+  const ImModelAnnotation({
     this.copyConstructor,
     this.ignoreCopy = false,
     this.ignoreEqual = false,
@@ -18,9 +18,9 @@ class ImmutableModelAnnotation implements ImModel {
   final bool ignoreEqual;
 }
 
-/// The internal representation of `ImmutableModelField` annotation.
-class ImmutableModelFieldAnnotation implements ImField {
-  const ImmutableModelFieldAnnotation({
+/// The internal representation of `ImField` annotation.
+class ImFieldAnnotation implements ImField {
+  const ImFieldAnnotation({
     this.ignoreCopy,
     this.ignoreEqual,
   });

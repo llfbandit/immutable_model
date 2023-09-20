@@ -67,7 +67,7 @@ class EqualGenerator {
   }
 
   bool _includeField(
-    ImmutableModelAnnotation classAnnotation,
+    ImModelAnnotation classAnnotation,
     FieldInfo field,
   ) {
     if (field.element.isStatic) return false;

@@ -23,7 +23,7 @@ class ClassInfo {
   final InterfaceElement element;
 
   /// The annotation attached to the class.
-  final ImmutableModelAnnotation annotation;
+  final ImModelAnnotation annotation;
 
   /// The fields of the class.
   final List<FieldInfo> fields;
@@ -47,7 +47,7 @@ class FieldInfo {
   final String type;
 
   /// The annotation attached to the field.
-  final ImmutableModelFieldAnnotation? annotation;
+  final ImFieldAnnotation? annotation;
 
   /// True if the type is `dynamic`.
   bool get isDynamic => type == 'dynamic';
@@ -141,19 +141,19 @@ class ClassHierarchyInfo {
         : null;
   }
 
-  ImmutableModelAnnotation _readClassAnnotation(ConstantReader reader) {
+  ImModelAnnotation _readClassAnnotation(ConstantReader reader) {
     final copyConstructor = reader.peek('copyConstructor')?.stringValue;
     final ignoreCopy = reader.peek('ignoreCopy')?.boolValue;
     final ignoreEqual = reader.peek('ignoreEqual')?.boolValue;
 
-    return ImmutableModelAnnotation(
+    return ImModelAnnotation(
       ignoreCopy: ignoreCopy ?? false,
       ignoreEqual: ignoreEqual ?? false,
       copyConstructor: copyConstructor,
     );
   }
 
-  ImmutableModelFieldAnnotation? _readFieldAnnotation(FieldElement element) {
+  ImFieldAnnotation? _readFieldAnnotation(FieldElement element) {
     const checker = TypeChecker.fromRuntime(ImField);
     final annotation = checker.firstAnnotationOf(element);
     if (annotation is! DartObject) {
@@ -161,14 +161,14 @@ class ClassHierarchyInfo {
     }
 
     final reader = ConstantReader(annotation);
-    return ImmutableModelFieldAnnotation(
+    return ImFieldAnnotation(
       ignoreCopy: reader.peek('ignoreCopy')?.boolValue,
       ignoreEqual: reader.peek('ignoreEqual')?.boolValue,
     );
   }
 
   bool _includeField(
-    ImmutableModelAnnotation classAnnotation,
+    ImModelAnnotation classAnnotation,
     FieldElement fieldElement,
   ) {
     if (fieldElement.isStatic) return false;
