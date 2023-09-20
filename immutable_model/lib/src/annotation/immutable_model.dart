@@ -1,6 +1,3 @@
-/// Provides `Immutable` annotation classes.
-library immutable;
-
 import 'package:meta/meta_meta.dart';
 
 /// Annotation used to indicate that the model will be immutable.
@@ -21,17 +18,14 @@ class ImModel {
   final bool ignoreCopy;
 
   /// Prevent the generation of == (equal) operator but fields annotated with
-  /// `ImField(ignoreEqual: ignoreCopy)`.
+  /// `ImField(ignoreEqual: false)`.
   final bool ignoreEqual;
 }
 
 /// Field related options for the class's `ImModel` annotation.
 @Target({TargetKind.field})
 class ImField {
-  const ImField({
-    this.ignoreCopy,
-    this.ignoreEqual,
-  });
+  const ImField({this.ignoreCopy, this.ignoreEqual});
 
   /// Prevent the field to be generated for `copyWith` method.
   ///

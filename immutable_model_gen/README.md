@@ -81,7 +81,7 @@ After this, __with your linter__ fix deprecated mutable operations (add, remove,
 
 At this time, if you use a custom collection implementation, the package won't be able to detect it.
 
-So things like `ImList<MyFooList<int>>` will be allowed, but `ImList<Set<int>>` or other variants won't.
+So things like `MyFooList<int>` or `ImList<MyFooList<int>>` will be allowed, but `ImList<Set<int>>` or other variants won't.
 
 To facilitate mutation on collections there are two getters:
 - mut => to get the mutable version of the collection.
