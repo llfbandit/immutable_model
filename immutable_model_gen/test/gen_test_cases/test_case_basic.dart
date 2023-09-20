@@ -2,7 +2,7 @@ part of 'index.dart';
 
 @ShouldGenerate(r'''
 extension $BasicClassImExt<T extends Iterable<int>> on BasicClass<T> {
-  List<Object?> get _$props => [id, optional, immutable, nullableImmutable];
+  List<Object?> get _$props => [optional, immutable, nullableImmutable];
 
   // ignore: library_private_types_in_public_api
   _$IBasicClassCopy<T> get copyWith => _$BasicClassCopy<T>(this);
@@ -55,6 +55,7 @@ class BasicClass<T extends Iterable<int>> {
     required this.nullableImmutable,
   });
 
+  @ImField(ignoreEqual: true)
   final String id;
   final T? optional;
   @ImField(ignoreCopy: true)
