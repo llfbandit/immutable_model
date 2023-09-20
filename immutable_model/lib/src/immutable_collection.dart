@@ -12,6 +12,7 @@ class ImList<E> extends ListBase<E> {
 
   final List<E> _inner;
 
+  /// Gets a mutable copy of the collection
   List<E> get mut => List.of(_inner);
 
   // Forward methods
@@ -24,11 +25,11 @@ class ImList<E> extends ListBase<E> {
   // Deprecated methods
   @Deprecated(errMessage)
   @override
-  void clear();
+  void clear() => throw UnsupportedError(errMessage);
 
   @Deprecated(errMessage)
   @override
-  void add(E element);
+  void add(E element) => throw UnsupportedError(errMessage);
 
   @Deprecated(errMessage)
   @override
@@ -100,7 +101,9 @@ class ImList<E> extends ListBase<E> {
 
   @Deprecated(errMessage)
   @override
-  void fillRange(int start, int end, [E? fill]);
+  void fillRange(int start, int end, [E? fill]) {
+    throw UnsupportedError(errMessage);
+  }
 
   @Deprecated(errMessage)
   @override
@@ -121,6 +124,7 @@ class ImMap<K, V> extends MapBase<K, V> {
 
   final Map<K, V> _inner;
 
+  /// Gets a mutable copy of the collection
   Map<K, V> get mut => Map.of(_inner);
 
   // Forward methods
@@ -137,11 +141,13 @@ class ImMap<K, V> extends MapBase<K, V> {
 
   @Deprecated(errMessage)
   @override
-  void addAll(Map<K, V> other);
+  void addAll(Map<K, V> other) => throw UnsupportedError(errMessage);
 
   @Deprecated(errMessage)
   @override
-  void addEntries(Iterable<MapEntry<K, V>> newEntries);
+  void addEntries(Iterable<MapEntry<K, V>> newEntries) {
+    throw UnsupportedError(errMessage);
+  }
 
   @Deprecated(errMessage)
   @override
@@ -184,6 +190,7 @@ class ImSet<E> extends SetBase<E> {
 
   final Set<E> _inner;
 
+  /// Gets a mutable copy of the collection
   Set<E> get mut => Set.of(_inner);
 
   // Forward methods
@@ -245,13 +252,16 @@ class ImSet<E> extends SetBase<E> {
 }
 
 extension IterableExtensions<T> on Iterable<T> {
+  /// Gets an immutable copy of the collection
   ImList<T> get immut => ImList<T>(this);
 }
 
 extension SetExtensions<T> on Set<T> {
+  /// Gets an immutable copy of the collection
   ImSet<T> get immut => ImSet<T>(this);
 }
 
 extension MapExtensions<K, V> on Map<K, V> {
+  /// Gets an immutable copy of the collection
   ImMap<K, V> get immut => ImMap<K, V>(this);
 }
