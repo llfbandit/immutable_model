@@ -152,4 +152,4 @@ I consider this package not too intrusive to allow you to get away easily if you
 
 ## Final word
 
-Made with two fingers an a keyboard late at night.
+Made with two fingers and a keyboard late at night.
