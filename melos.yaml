@@ -39,7 +39,22 @@ scripts:
   test:
     run: melos run test:package --no-select
     description: Run all Flutter tests in this project.
-  
+
   test:coverage:
-    run: melos run test:package_coverage --no-select
-    description: Run all Flutter tests in this project with coverage.
+    run: melos exec --dir-exists="test" -c 1 --fail-fast -- "dart test --coverage="coverage""
+
+  test:coverage:report:
+    run: melos test:coverage && melos test:coverage:convert && melos coverage:merge && melos coverage:report
+
+  test:coverage:convert:
+    run: melos exec --dir-exists="test" -c 1 --fail-fast -- "format_coverage --lcov --in=coverage --out=coverage/coverage.lcov --report-on=lib"
+
+  coverage:merge:
+    description: Merge all packages coverage trace files ignoring data related to generated files.
+    run: >
+      coverde rm MELOS_ROOT_PATH/coverage/coverage.lcov &&
+      melos exec --file-exists=coverage/coverage.lcov -- "coverde filter --input ./coverage/coverage.lcov --output MELOS_ROOT_PATH/coverage/coverage.lcov --filters '\.g\.dart'"
+
+  coverage:report:
+    description: Generate HTML report
+    run: coverde report -i coverage/coverage.lcov

@@ -9,6 +9,8 @@
 .history
 .svn/
 migrate_working_dir/
+coverage/
+**/coverage.lcov
 
 # Melos local packages links
 **/pubspec_overrides.yaml
