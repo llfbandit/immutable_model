@@ -1,0 +1,18 @@
+targets:
+  $default:
+    builders:
+      im_model_gen:
+        enabled: true
+        generate_for:
+          exclude:
+            - test/gen_test_cases/*
+
+builders:
+  im_model_gen:
+    target: ":im_model_gen"
+    import: "package:im_model_gen/im_model_gen.dart"
+    builder_factories: ["immutableModelGen"]
+    build_extensions: {".dart": [".im_model_gen.g.part"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]

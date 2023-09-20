@@ -1,9 +1,9 @@
 name: immutable_model_workspace
 
 packages:
-  - immutable_models
-  - immutable_models/example
-  - immutable_models_gen
+  - im_model
+  - im_model/example
+  - im_model_gen
 
 # Don't generate intellij files
 ide:

@@ -1,1 +1,1 @@
-immutable_model_gen/README.md
+im_model_gen/README.md
