@@ -1,3 +1,6 @@
+## 1.0.4
+- fix: unecessary cast in copy on Object or Object?
+
 ## 1.0.3
 - feat: Allow mutable collections in factory constructor parameters for convenience.
 

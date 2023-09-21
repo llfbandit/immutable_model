@@ -138,7 +138,11 @@ class _CopyImplTemplate {
       }
     }
 
-    return '${param.element.name} as ${param.type}';
+    if (param.type == 'Object' || param.type == 'Object?') {
+      return param.element.name;
+    } else {
+      return '${param.element.name} as ${param.type}';
+    }
   }
 
   bool _ignoreCopy(ClassInfo classInfo, ConstructorParameterInfo field) {
