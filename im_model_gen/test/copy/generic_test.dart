@@ -82,7 +82,7 @@ void main() {
 
     expect(
       generic
-          .copyWith(deepNestedGeneric: const ImList.empty())
+          .copyWith(deepNestedGeneric: const [])
           .deepNestedGeneric
           .runtimeType,
       ImList<ImList<ImList<int?>?>>,

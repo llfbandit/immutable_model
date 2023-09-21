@@ -35,21 +35,21 @@ void main() {
   test('CopyList', () {
     expect(
       const CopyList(coll: ImList.empty()).copyWith(coll: ['test']).coll,
-      ['test'],
+      ['test'].immut,
     );
   });
 
   test('CopyMap', () {
     expect(
       const CopyMap(coll: ImMap.empty()).copyWith(coll: {'test': 'test'}).coll,
-      {'test': 'test'},
+      {'test': 'test'}.immut,
     );
   });
 
   test('CopySet', () {
     expect(
       const CopySet(coll: ImSet.empty()).copyWith(coll: {'test'}).coll,
-      {'test'},
+      {'test'}.immut,
     );
   });
 
