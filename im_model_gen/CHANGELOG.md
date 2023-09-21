@@ -1,3 +1,6 @@
+## 1.0.3
+- feat: Allow mutable collections in factory constructor parameters for convenience.
+
 ## 1.0.2
 - fix: abstract class copy generation.
 

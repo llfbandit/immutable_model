@@ -47,6 +47,9 @@ class CheckImmutability {
     }
 
     for (var constructor in element.constructors) {
+      // Don't check for immutable collections in factory contructors.
+      if (constructor.isFactory) continue;
+
       for (var parameter in constructor.parameters) {
         final type = parameter.type.toString();
 

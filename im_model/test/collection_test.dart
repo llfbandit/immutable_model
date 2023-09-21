@@ -6,8 +6,10 @@ import 'package:test/test.dart';
 void main() {
   group('ImList', () {
     test('mut getter', () {
-      final coll = ImList(['foo', 'bar']);
+      final initial = ['foo', 'bar'];
+      final coll = ImList(initial);
       final mutColl = coll.mut..add('baz');
+      initial.add('baz');
 
       expect(coll.length, 2);
       expect(mutColl.length, 3);
