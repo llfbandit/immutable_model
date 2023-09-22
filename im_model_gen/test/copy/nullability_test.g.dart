@@ -23,6 +23,11 @@ mixin _$TestNullabilityMixin implements IEquatable {
 
   @override
   bool operator ==(Object other) => eq(this, other);
+
+  @override
+  String toString() {
+    return 'TestNullability(dynField: ${props[0]}, coll: ${props[1]})';
+  }
 }
 
 abstract interface class _$ITestNullabilityCopy {

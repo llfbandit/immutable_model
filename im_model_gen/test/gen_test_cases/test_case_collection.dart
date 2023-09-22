@@ -1,6 +1,7 @@
 part of 'index.dart';
 
-@ShouldGenerate(r'''
+@ShouldGenerate(
+    r'''
 extension $CollectionClassImExt<T extends Iterable<int>> on CollectionClass<T> {
   List<Object?> get _$props => [
         mandatoryList,
@@ -25,6 +26,11 @@ mixin _$CollectionClassMixin implements IEquatable {
 
   @override
   bool operator ==(Object other) => eq(this, other);
+
+  @override
+  String toString() {
+    return 'CollectionClass(mandatoryList: ${props[0]}, optionalList: ${props[1]}, mandatoryMap: ${props[2]}, optionalMap: ${props[3]}, mandatorySet: ${props[4]}, optionalSet: ${props[5]})';
+  }
 }
 
 abstract interface class _$ICollectionClassCopy<T extends Iterable<int>> {

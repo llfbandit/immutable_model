@@ -14,6 +14,11 @@ mixin _$AbtractMixin implements IEquatable {
 
   @override
   bool operator ==(Object other) => eq(this, other);
+
+  @override
+  String toString() {
+    return 'Abtract(id: ${props[0]}, aValue: ${props[1]})';
+  }
 }
 ''')
 @ImModel()
@@ -43,6 +48,11 @@ mixin _$AbtractChildMixin on IEquatable {
 
   @override
   bool operator ==(Object other) => eq(this, other);
+
+  @override
+  String toString() {
+    return 'AbtractChild(integer: ${props[0]})';
+  }
 }
 
 abstract interface class _$IAbtractChildCopy<T> {

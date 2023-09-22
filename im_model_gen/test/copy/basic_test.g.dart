@@ -23,6 +23,11 @@ mixin _$CopyNonOptionalMixin implements IEquatable {
 
   @override
   bool operator ==(Object other) => eq(this, other);
+
+  @override
+  String toString() {
+    return 'CopyNonOptional(id: ${props[0]})';
+  }
 }
 
 abstract interface class _$ICopyNonOptionalCopy {
@@ -62,6 +67,11 @@ mixin _$CopyOptionalMixin implements IEquatable {
 
   @override
   bool operator ==(Object other) => eq(this, other);
+
+  @override
+  String toString() {
+    return 'CopyOptional(id: ${props[0]})';
+  }
 }
 
 abstract interface class _$ICopyOptionalCopy {

@@ -28,6 +28,11 @@ mixin _$ChildMixin on IEquatable {
 
   @override
   bool operator ==(Object other) => eq(this, other);
+
+  @override
+  String toString() {
+    return 'Child(collection: ${props[0]})';
+  }
 }
 
 abstract interface class _$IChildCopy<T> {

@@ -17,6 +17,11 @@ mixin _$GetterMixin implements IEquatable {
 
   @override
   bool operator ==(Object other) => eq(this, other);
+
+  @override
+  String toString() {
+    return 'Getter(id: ${props[0]})';
+  }
 }
 
 abstract interface class _$IGetterCopy {

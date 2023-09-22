@@ -17,6 +17,11 @@ mixin _$InvertedMixin implements IEquatable {
 
   @override
   bool operator ==(Object other) => eq(this, other);
+
+  @override
+  String toString() {
+    return 'Inverted(id: ${props[0]})';
+  }
 }
 
 abstract interface class _$IInvertedCopy<T> {

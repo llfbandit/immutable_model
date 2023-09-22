@@ -23,6 +23,11 @@ mixin _$GenericsMixin implements IEquatable {
 
   @override
   bool operator ==(Object other) => eq(this, other);
+
+  @override
+  String toString() {
+    return 'Generics(basicGeneric: ${props[0]}, genericTemplate: ${props[1]}, nullableGeneric: ${props[2]}, deepNestedGeneric: ${props[3]})';
+  }
 }
 
 abstract interface class _$IGenericsCopy<G, T extends Iterable<G>> {

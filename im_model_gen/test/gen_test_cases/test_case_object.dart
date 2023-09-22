@@ -17,6 +17,11 @@ mixin _$CastObjectMixin implements IEquatable {
 
   @override
   bool operator ==(Object other) => eq(this, other);
+
+  @override
+  String toString() {
+    return 'CastObject(dyn: ${props[0]}, obj: ${props[1]}, objOptional: ${props[2]})';
+  }
 }
 
 abstract interface class _$ICastObjectCopy {

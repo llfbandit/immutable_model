@@ -255,7 +255,7 @@ packages:
       path: "../im_model"
       relative: true
     source: path
-    version: "1.0.1"
+    version: "1.0.3"
   io:
     dependency: transitive
     description:

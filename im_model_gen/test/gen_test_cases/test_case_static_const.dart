@@ -17,6 +17,11 @@ mixin _$StaticMixin implements IEquatable {
 
   @override
   bool operator ==(Object other) => eq(this, other);
+
+  @override
+  String toString() {
+    return 'Static(id: ${props[0]}, integer: ${props[1]})';
+  }
 }
 
 abstract interface class _$IStaticCopy {

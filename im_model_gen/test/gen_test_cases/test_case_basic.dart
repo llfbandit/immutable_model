@@ -1,6 +1,7 @@
 part of 'index.dart';
 
-@ShouldGenerate(r'''
+@ShouldGenerate(
+    r'''
 extension $BasicClassImExt<T extends Iterable<int>> on BasicClass<T> {
   List<Object?> get _$props => [optional, immutable, nullableImmutable];
 
@@ -17,6 +18,11 @@ mixin _$BasicClassMixin implements IEquatable {
 
   @override
   bool operator ==(Object other) => eq(this, other);
+
+  @override
+  String toString() {
+    return 'BasicClass(optional: ${props[0]}, immutable: ${props[1]}, nullableImmutable: ${props[2]})';
+  }
 }
 
 abstract interface class _$IBasicClassCopy<T extends Iterable<int>> {

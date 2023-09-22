@@ -23,6 +23,11 @@ mixin _$CopyNamedConstructorMixin implements IEquatable {
 
   @override
   bool operator ==(Object other) => eq(this, other);
+
+  @override
+  String toString() {
+    return 'CopyNamedConstructor(id: ${props[0]})';
+  }
 }
 
 abstract interface class _$ICopyNamedConstructorCopy {
@@ -64,6 +69,11 @@ mixin _$CopyMultiConstructorsMixin implements IEquatable {
 
   @override
   bool operator ==(Object other) => eq(this, other);
+
+  @override
+  String toString() {
+    return 'CopyMultiConstructors(id: ${props[0]}, field: ${props[1]})';
+  }
 }
 
 abstract interface class _$ICopyMultiConstructorsCopy {
@@ -110,6 +120,11 @@ mixin _$DefaultValuesConstructorMixin implements IEquatable {
 
   @override
   bool operator ==(Object other) => eq(this, other);
+
+  @override
+  String toString() {
+    return 'DefaultValuesConstructor(id: ${props[0]}, field: ${props[1]}, anotherField: ${props[2]})';
+  }
 }
 
 abstract interface class _$IDefaultValuesConstructorCopy {
@@ -153,6 +168,11 @@ mixin _$PositionedFieldsMixin implements IEquatable {
 
   @override
   bool operator ==(Object other) => eq(this, other);
+
+  @override
+  String toString() {
+    return 'PositionedFields(pOne: ${props[0]}, pTwo: ${props[1]}, namedOne: ${props[2]})';
+  }
 }
 
 abstract interface class _$IPositionedFieldsCopy {

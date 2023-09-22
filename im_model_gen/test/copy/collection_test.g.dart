@@ -22,6 +22,11 @@ mixin _$CopyListMixin implements IEquatable {
 
   @override
   bool operator ==(Object other) => eq(this, other);
+
+  @override
+  String toString() {
+    return 'CopyList(coll: ${props[0]})';
+  }
 }
 
 abstract interface class _$ICopyListCopy {
@@ -63,6 +68,11 @@ mixin _$CopyMapMixin implements IEquatable {
 
   @override
   bool operator ==(Object other) => eq(this, other);
+
+  @override
+  String toString() {
+    return 'CopyMap(coll: ${props[0]})';
+  }
 }
 
 abstract interface class _$ICopyMapCopy {
@@ -104,6 +114,11 @@ mixin _$CopySetMixin implements IEquatable {
 
   @override
   bool operator ==(Object other) => eq(this, other);
+
+  @override
+  String toString() {
+    return 'CopySet(coll: ${props[0]})';
+  }
 }
 
 abstract interface class _$ICopySetCopy {
@@ -146,6 +161,11 @@ mixin _$CopyNestedListMixin implements IEquatable {
 
   @override
   bool operator ==(Object other) => eq(this, other);
+
+  @override
+  String toString() {
+    return 'CopyNestedList(coll: ${props[0]})';
+  }
 }
 
 abstract interface class _$ICopyNestedListCopy {

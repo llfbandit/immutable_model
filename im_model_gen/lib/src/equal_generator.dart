@@ -10,7 +10,7 @@ class _EqualMixinTemplate {
     InterfaceElement classElement, {
     required String extensionName,
     required bool genSuperProps,
-    required String props,
+    required List<String> props,
   }) {
     final className = classElement.name;
     final mixinName = '_\$${className}Mixin';
@@ -22,6 +22,11 @@ class _EqualMixinTemplate {
     final close = genSuperProps ? ']' : '';
     final spreadOp = genSuperProps ? '...' : '';
 
+    var propIndex = 0;
+    final toString = props.map((prop) {
+      return '$prop: \${props[${propIndex++}]}';
+    }).join(', ');
+
     final generatedCode = '''
       mixin $mixinName $on IEquatable {
         @override
@@ -32,10 +37,16 @@ class _EqualMixinTemplate {
 
         @override
         bool operator ==(Object other) => eq(this, other);
+
+        @override
+        String toString() {
+          return '$className($toString)';
+        }
       }
       ''';
 
-    final extensionCode = 'List<Object?> get _\$props => [$props];';
+    final extensionCode =
+        'List<Object?> get _\$props => [${props.join(', ')}];';
 
     return GenResult(
       generatedCode: generatedCode,
@@ -59,11 +70,11 @@ class EqualGenerator {
     );
   }
 
-  String _generateEquality(ClassInfo classInfo) {
+  List<String> _generateEquality(ClassInfo classInfo) {
     return classInfo.fields
         .where((field) => _includeField(classInfo.annotation, field))
         .map((field) => field.element.name)
-        .join(',');
+        .toList(growable: false);
   }
 
   bool _includeField(

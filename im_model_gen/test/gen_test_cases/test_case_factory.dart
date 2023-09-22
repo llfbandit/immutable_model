@@ -18,6 +18,11 @@ mixin _$FactoryMixin implements IEquatable {
 
   @override
   bool operator ==(Object other) => eq(this, other);
+
+  @override
+  String toString() {
+    return 'Factory(coll: ${props[0]})';
+  }
 }
 
 abstract interface class _$IFactoryCopy {

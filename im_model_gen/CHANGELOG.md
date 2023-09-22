@@ -1,3 +1,6 @@
+## 1.1.1
+- feat: Add toString generation for equality members.
+
 ## 1.0.4
 - fix: unecessary cast in copy on Object or Object?
 
