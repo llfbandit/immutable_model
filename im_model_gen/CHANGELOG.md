@@ -1,4 +1,4 @@
-## 1.1.1
+## 1.1.0
 - feat: Add toString generation for equality members.
 
 ## 1.0.4

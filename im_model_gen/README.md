@@ -2,9 +2,9 @@ This library provides code generation for immutable models with value comparison
 
 Project targets:
 - Standard syntax.
-- Improved output binary size.
-- errors/warnings before runtime (__do use a linter!__).
+- errors before runtime.
 - Low source code generation, your IDE will be happy.
+- Improved output binary size (a bit).
 - Inheritance unlocked (while encouraging composition every day, "is-a" pattern is not bad).
 - to be not too intrusive.
 
@@ -43,7 +43,7 @@ example == exampleTwo; // true
 example == exampleTwo.copyWith(values: [1]); // false
 
 // Immutability
-example.values.add(1); // 'add' is deprecated and shouldn't be used. This collection is immutable and will throw exception at runtime.
+// example.values.add(1); // 'add' is undefined.
 ```
 
 #### Code generation command
@@ -75,7 +75,7 @@ You must prefix all your mutable collections to their immutable counterpart.
 
 The code generator will provide error messages if it detects mutable collections.
 
-If you're migrating from another tool: __with your linter__ fix deprecated mutable operations (add, remove, ...) in your code base if any.
+Fix existing mutable operations (add, remove, ...) in your code base if any.
 
 ⚠️ __Warning__ ⚠️
 
@@ -84,7 +84,7 @@ At this time, if you use a custom collection implementation, the package won't b
 So things like `MyFooList<int>` or `ImList<MyFooList<int>>` will be allowed, but `ImList<Set<int>>` or other variants won't.
 
 To facilitate mutation on collections there are two getters:
-- mut => to get the mutable version of the collection.
+- mut => to get a mutable version of the collection. You can use it at no cost, the collection is copied __only__ if you modify it.
 - immut => to get the immutable version of the collection.
 
 Look at the example below for demonstration.
@@ -128,13 +128,13 @@ class Child<T> extends Parent<T> with _$ChildMixin {
 void main() {
   var obj1 = Child('a', 0, collection: [1].immut);
   var obj2 = Child('a', 0, collection: ImList([1]));
-  print(obj1 == obj2 ? '\u2705 Equal' : '\u274C Not equal');
+  // obj1 == obj2 => true
 
   obj1 = obj1.copyWith(collection: obj1.collection.mut..add(2));
-  print(obj1 == obj2 ? '\u274C Equal' : '\u2705 Not equal');
+  // obj1 == obj2 => false
 
   // Two things to notice here:
-  // - we used `mut` getter to mutate the initial collection for shorter syntax. This is a shortcut (forward method) for `List.of`.
+  // - we used `mut` getter to mutate the initial collection for shorter syntax.
   // - we didn't had to wrap again the collection to be immutable, this is done in generated code.
 
   // obj1.copyWith(id: 'b');
