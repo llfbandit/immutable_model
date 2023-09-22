@@ -1,8 +1,6 @@
 import 'package:im_model/im_model.dart';
 import 'package:test/test.dart';
 
-import 'list.dart';
-
 part 'eq_test.g.dart';
 
 class NonImmutable {}
@@ -129,29 +127,29 @@ void main() {
     });
 
     test('should have same hashCode when values are equal', () {
-      final instanceA = Generic({'a': 1, 'b': 2, 'c': 3});
-      final instanceB = Generic({'b': 2, 'a': 1, 'c': 3});
+      final instanceA = Generic(ImMap({'a': 1, 'b': 2, 'c': 3}));
+      final instanceB = Generic(ImMap({'b': 2, 'a': 1, 'c': 3}));
       expect(instanceA == instanceB, true);
       expect(instanceA.hashCode, instanceB.hashCode);
     });
 
     test('should return true when instances are different', () {
-      final instanceA = Generic({'a': 1, 'b': 2, 'c': 3});
-      final instanceB = Generic({'a': 1, 'b': 2, 'c': 3});
+      final instanceA = Generic(ImMap({'a': 1, 'b': 2, 'c': 3}));
+      final instanceB = Generic(ImMap({'a': 1, 'b': 2, 'c': 3}));
       expect(instanceA == instanceB, true);
       expect(instanceA.hashCode == instanceB.hashCode, true);
     });
 
     test('should return false when compared to non-immutable', () {
-      final instanceA = Generic({'a': 1, 'b': 2, 'c': 3});
+      final instanceA = Generic(ImMap({'a': 1, 'b': 2, 'c': 3}));
       final instanceB = NonImmutable();
       // ignore: unrelated_type_equality_checks
       expect(instanceA == instanceB, false);
     });
 
     test('should return false when values are different', () {
-      final instanceA = Generic({'a': 1, 'b': 2, 'c': 3});
-      final instanceB = Generic({'a': 1, 'b': 2, 'c': 4});
+      final instanceA = Generic(ImMap({'a': 1, 'b': 2, 'c': 3}));
+      final instanceB = Generic(ImMap({'a': 1, 'b': 2, 'c': 4}));
       expect(instanceA == instanceB, false);
     });
   });
@@ -170,18 +168,18 @@ void main() {
 
     test('should have same hashCode when values are equal', () {
       final instanceA = Generic(
-        {
+        ImMap({
           Generic<String>('a'): 1,
           Generic<String>('b'): 2,
           Generic<String>('c'): 3
-        },
+        }),
       );
       final instanceB = Generic(
-        {
+        ImMap({
           Generic<String>('b'): 2,
           Generic<String>('a'): 1,
           Generic<String>('c'): 3
-        },
+        }),
       );
       expect(instanceA == instanceB, true);
       expect(instanceA.hashCode, instanceB.hashCode);
@@ -189,18 +187,18 @@ void main() {
 
     test('should return true when instances are different', () {
       final instanceA = Generic(
-        {
+        ImMap({
           Generic<String>('a'): 1,
           Generic<String>('b'): 2,
           Generic<String>('c'): 3
-        },
+        }),
       );
       final instanceB = Generic(
-        {
+        ImMap({
           Generic<String>('a'): 1,
           Generic<String>('b'): 2,
           Generic<String>('c'): 3
-        },
+        }),
       );
       expect(instanceA == instanceB, true);
       expect(instanceA.hashCode == instanceB.hashCode, true);
@@ -208,11 +206,11 @@ void main() {
 
     test('should return false when compared to non-immutable', () {
       final instanceA = Generic(
-        {
+        ImMap({
           Generic<String>('a'): 1,
           Generic<String>('b'): 2,
           Generic<String>('c'): 3
-        },
+        }),
       );
       final instanceB = NonImmutable();
       // ignore: unrelated_type_equality_checks
@@ -221,18 +219,18 @@ void main() {
 
     test('should return false when values are different', () {
       final instanceA = Generic(
-        {
+        ImMap({
           Generic<String>('a'): 1,
           Generic<String>('b'): 2,
           Generic<String>('c'): 3
-        },
+        }),
       );
       final instanceB = Generic(
-        {
+        ImMap({
           Generic<String>('a'): 1,
           Generic<String>('b'): 2,
           Generic<String>('c'): 2
-        },
+        }),
       );
       expect(instanceA == instanceB, false);
     });
@@ -357,28 +355,28 @@ void main() {
   group('Collection', () {
     group('Iterable', () {
       test('list of zeros same hashcode check', () {
-        final s0 = Generic([0, 0]);
-        final s1 = Generic([0, 0, 0]);
+        final s0 = Generic(ImList([0, 0]));
+        final s1 = Generic(ImList([0, 0, 0]));
         expect(s0.hashCode != s1.hashCode, true);
       });
 
       test('should return when values are same', () {
-        final instanceA = Generic(<String>['A', 'B']);
-        final instanceB = Generic(<String>['A', 'B']);
+        final instanceA = Generic(ImList(['A', 'B']));
+        final instanceB = Generic(ImList(['A', 'B']));
         expect(instanceA == instanceB, true);
         expect(instanceA.hashCode == instanceB.hashCode, true);
       });
 
       test('should return when values are different', () {
-        final instanceA = Generic(<String>['A', 'B']);
-        final instanceB = Generic(<String>['a', 'b']);
+        final instanceA = Generic(ImList(['A', 'B']));
+        final instanceB = Generic(ImList(['a', 'b']));
         expect(instanceA != instanceB, true);
         expect(instanceA.hashCode != instanceB.hashCode, true);
       });
 
       test('should return when values are different', () {
-        final instanceA = Generic(<String>['A', 'B']);
-        final instanceB = Generic(<String>['C', 'D']);
+        final instanceA = Generic(ImList(['A', 'B']));
+        final instanceB = Generic(ImList(['C', 'D']));
         expect(instanceA != instanceB, true);
         expect(instanceA.hashCode != instanceB.hashCode, true);
       });
@@ -386,27 +384,27 @@ void main() {
 
     group('Nested Iterable', () {
       test('should return when values are same', () {
-        final instanceA = Generic<Iterable<Iterable<String>>>([
-          ['A', 'B', 'C'],
-          ['D', 'E', 'F']
-        ]);
-        final instanceB = Generic<Iterable<Iterable<String>>>([
-          ['A', 'B', 'C'],
-          ['D', 'E', 'F']
-        ]);
+        final instanceA = Generic(ImList([
+          ImList(['A', 'B', 'C']),
+          ImList(['D', 'E', 'F'])
+        ]));
+        final instanceB = Generic(ImList([
+          ImList(['A', 'B', 'C']),
+          ImList(['D', 'E', 'F'])
+        ]));
         expect(instanceA == instanceB, true);
         expect(instanceA.hashCode == instanceB.hashCode, true);
       });
 
       test('should return when values are different', () {
-        final instanceA = Generic<Iterable<Iterable<String>>>([
-          ['A', 'B', 'C'],
-          ['D', 'E', 'F']
-        ]);
-        final instanceB = Generic<Iterable<Iterable<String>>>([
-          ['a', 'b', 'c'],
-          ['d', 'e', 'f']
-        ]);
+        final instanceA = Generic(ImList([
+          ImList(['A', 'B', 'C']),
+          ImList(['D', 'E', 'F'])
+        ]));
+        final instanceB = Generic(ImList([
+          ImList(['a', 'b', 'c']),
+          ImList(['d', 'e', 'f'])
+        ]));
         expect(instanceA != instanceB, true);
         expect(instanceA.hashCode != instanceB.hashCode, true);
       });
@@ -414,74 +412,55 @@ void main() {
 
     group('List', () {
       test('should return when values are same', () {
-        final instanceA = Generic(<String>['A', 'B']);
-        final instanceB = Generic(<String>['A', 'B']);
+        final instanceA = Generic(ImList(['A', 'B']));
+        final instanceB = Generic(ImList(['A', 'B']));
         expect(instanceA == instanceB, true);
         expect(instanceA.hashCode == instanceB.hashCode, true);
       });
 
       test('should return when values are different', () {
-        final instanceA = Generic(<String>['A', 'B']);
-        final instanceB = Generic(<String>['a', 'b']);
+        final instanceA = Generic(ImList(['A', 'B']));
+        final instanceB = Generic(ImList(['a', 'b']));
         expect(instanceA != instanceB, true);
         expect(instanceA.hashCode != instanceB.hashCode, true);
       });
 
       test('should return when values are different', () {
-        final instanceA = Generic(<String>['A', 'B']);
-        final instanceB = Generic(<String>['C', 'D']);
+        final instanceA = Generic(ImList(['A', 'B']));
+        final instanceB = Generic(ImList(['C', 'D']));
         expect(instanceA != instanceB, true);
         expect(instanceA.hashCode != instanceB.hashCode, true);
-      });
-
-      test('should return false on different kind of List', () {
-        final instanceA = Generic(
-          FooList<String>(['A', 'B'], growable: true),
-        );
-        final instanceB = Generic(<String>['A', 'B']);
-        expect(instanceA == instanceB, false);
       });
 
       test(
           'should return different hashCode '
           'when instance properties are different', () {
-        final instanceA = Generic(<String>['A', 'B']);
-        final instanceB = Generic(<String>['B']);
+        final instanceA = Generic(ImList(['A', 'B']));
+        final instanceB = Generic(ImList(['B']));
 
         expect(instanceA != instanceB, true);
         expect(instanceA.hashCode != instanceB.hashCode, true);
-      });
-
-      test(
-          'should return different hashCode '
-          'when instance properties are modified', () {
-        final list = ['A', 'B'];
-        final instanceA = Generic(list);
-        final hashCodeA = instanceA.hashCode;
-        list.removeLast();
-        final hashCodeB = instanceA.hashCode;
-        expect(hashCodeA != hashCodeB, true);
       });
     });
 
     group('Map', () {
       test('should return true when values are same', () {
-        final instanceA = Generic<Map<int, String>>({1: 'A', 2: 'B'});
-        final instanceB = Generic<Map<int, String>>({1: 'A', 2: 'B'});
+        final instanceA = Generic(ImMap({1: 'A', 2: 'B'}));
+        final instanceB = Generic(ImMap({1: 'A', 2: 'B'}));
         expect(instanceA == instanceB, true);
         expect(instanceA.hashCode == instanceB.hashCode, true);
       });
 
       test('should return false when values are different', () {
-        final instanceA = Generic<Map<int, String>>({1: 'A', 2: 'B'});
-        final instanceB = Generic<Map<int, String>>({1: 'a', 2: 'b'});
+        final instanceA = Generic(ImMap({1: 'A', 2: 'B'}));
+        final instanceB = Generic(ImMap({1: 'a', 2: 'b'}));
         expect(instanceA != instanceB, true);
         expect(instanceA.hashCode != instanceB.hashCode, true);
       });
 
       test('should return false when values are different', () {
-        final instanceA = Generic<Map<int, String>>({1: 'A', 2: 'B'});
-        final instanceB = Generic<Map<int, String>>({1: 'C', 2: 'D'});
+        final instanceA = Generic(ImMap({1: 'A', 2: 'B'}));
+        final instanceB = Generic(ImMap({1: 'C', 2: 'D'}));
         expect(instanceA != instanceB, true);
         expect(instanceA.hashCode != instanceB.hashCode, true);
       });
@@ -489,77 +468,46 @@ void main() {
       test(
           'should return different hashCode '
           'when instance properties are different', () {
-        final instanceA = Generic<Map<int, String>>({1: 'A', 2: 'B'});
-        final instanceB = Generic<Map<int, String>>({2: 'B'});
+        final instanceA = Generic(ImMap({1: 'A', 2: 'B'}));
+        final instanceB = Generic(ImMap({2: 'B'}));
 
         expect(instanceA != instanceB, true);
         expect(instanceA.hashCode != instanceB.hashCode, true);
-      });
-
-      test(
-          'should return different hashCode '
-          'when instance properties are modified', () {
-        final map = {1: 'A', 2: 'B'};
-        final instanceA = Generic(map);
-        final hashCodeA = instanceA.hashCode;
-        map.remove(1);
-        final hashCodeB = instanceA.hashCode;
-        expect(hashCodeA != hashCodeB, true);
       });
     });
 
     group('Set', () {
       test('should return when values are same', () {
-        final instanceA = Generic<Set<String>>(
-          <String>{'A', 'B'},
-        );
-        final instanceB = Generic<Set<String>>(
-          <String>{'A', 'B'},
-        );
+        final instanceA = Generic(ImSet({'A', 'B'}));
+        final instanceB = Generic(ImSet({'A', 'B'}));
         expect(instanceA == instanceB, true);
         expect(instanceA.hashCode == instanceB.hashCode, true);
       });
 
       test('should return when Set values are same but in different order', () {
-        final instanceA = Generic<Set<String>>(
-          <String>{'A', 'B'},
-        );
-        final instanceB = Generic<Set<String>>(
-          <String>{'B', 'A'},
-        );
+        final instanceA = Generic(ImSet({'A', 'B'}));
+        final instanceB = Generic(ImSet({'B', 'A'}));
         expect(instanceA == instanceB, true);
         expect(instanceA.hashCode == instanceB.hashCode, true);
       });
 
       test('should return when values are different', () {
-        final instanceA = Generic<Set<String>>(
-          <String>{'A', 'B'},
-        );
-        final instanceB = Generic<Set<String>>(
-          <String>{'a', 'b'},
-        );
+        final instanceA = Generic(ImSet({'A', 'B'}));
+        final instanceB = Generic(ImSet({'a', 'b'}));
         expect(instanceA != instanceB, true);
         expect(instanceA.hashCode != instanceB.hashCode, true);
       });
 
       test('should return when values are different', () {
-        final instanceA = Generic<Set<String>>(
-          <String>{'A', 'B'},
-        );
-        final instanceB = Generic<Set<String>>(
-          <String>{'C', 'D'},
-        );
+        final instanceA = Generic(ImSet({'A', 'B'}));
+        final instanceB = Generic(ImSet({'C', 'D'}));
         expect(instanceA != instanceB, true);
         expect(instanceA.hashCode != instanceB.hashCode, true);
       });
 
       test('should support non-comparable types', () {
-        final instanceA = Generic<Set<Object>>(
-          <Object>{Object()},
-        );
-        final instanceB = Generic<Set<Object>>(
-          <Object>{Object()},
-        );
+        final instanceA = Generic(ImSet({Object()}));
+        final instanceB = Generic(ImSet({Object()}));
         expect(instanceA == instanceB, false);
         expect(instanceA.hashCode == instanceB.hashCode, false);
       });

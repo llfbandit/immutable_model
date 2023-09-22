@@ -3,7 +3,17 @@ import 'package:im_model/src/collection/internal/copy_on_write_map.dart';
 
 /// A [Map] that is immutable.
 class ImMap<K, V> {
-  ImMap([Map<K, V>? other]) : _inner = Map<K, V>.from(other ?? <K, V>{});
+  ImMap._(Map<K, V> other) : _inner = Map<K, V>.from(other);
+
+  factory ImMap([Map<K, V>? other]) {
+    if (other == null) {
+      return ImMap._(<K, V>{});
+    } else if (other is ImMap<K, V>) {
+      return other as ImMap<K, V>;
+    }
+
+    return ImMap._(other);
+  }
 
   const ImMap.empty() : _inner = const {};
 
@@ -28,19 +38,16 @@ class ImMap<K, V> {
   /// differs from [toMap] where mutations are explicitly disallowed.
   Map<K, V> asMap() => Map<K, V>.unmodifiable(_inner);
 
-  /// hashCode.
+  /// Deep hashCode.
+  ///
+  /// A `ImMap` is only equal to another with equal key/value
+  /// pairs in any order. Then, the `hashCode` is guaranteed to be the same.
   @override
   int get hashCode {
-    return const Hash().hash(
-      _inner,
-      _inner.keys.map(
-        (key) {
-          return const Hash().hash(
-            _inner,
-            [key.hashCode, _inner[key].hashCode],
-          );
-        },
-      ).toList(growable: false)
+    return const Hash().hashIterable(
+      _inner.keys
+          .map((key) => const Hash().hash2(key.hashCode, _inner[key].hashCode))
+          .toList(growable: false)
         ..sort(),
     );
   }

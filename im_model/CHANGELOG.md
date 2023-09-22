@@ -1,3 +1,7 @@
+## 1.0.3
+- fix: Equality on collections ImList/ImSet/ImMap.
+- chore: remove collection package.
+
 ## 1.0.2
 - fix: Reworked collections to not extend List/Set/Map bases and internally use copy on write Google implementations.
 

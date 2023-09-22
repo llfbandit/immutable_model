@@ -1,7 +1,4 @@
-import 'package:collection/collection.dart';
 import 'package:im_model/src/equality/equality_interface.dart';
-
-const _dce = DeepCollectionEquality();
 
 bool eq(IEquatable main, Object other) {
   return identical(main, other) ||
@@ -22,11 +19,9 @@ bool _equals(IEquatable main, IEquatable other) {
     final otherProp = otherProps[i];
 
     if (prop is IEquatable && otherProp is IEquatable) {
-      return eq(prop, otherProp);
+      if (prop != otherProp) return false;
     } else if (prop?.runtimeType != otherProp?.runtimeType) {
       return false;
-    } else if (_dce.isValidKey(prop)) {
-      if (!_dce.equals(prop, otherProp)) return false;
     } else if (prop != otherProp) {
       return false;
     }

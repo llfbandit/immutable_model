@@ -5,7 +5,17 @@ import 'package:im_model/src/collection/internal/copy_on_write_set.dart';
 
 /// A [Set] that is immutable.
 class ImSet<E> implements Iterable<E> {
-  ImSet([Iterable<E>? items]) : _inner = Set<E>.from(items ?? <E>{});
+  ImSet._(Iterable<E> items) : _inner = Set<E>.from(items);
+
+  factory ImSet([Iterable<E>? items]) {
+    if (items == null) {
+      return ImSet._(<E>[]);
+    } else if (items is ImSet<E>) {
+      return items;
+    }
+
+    return ImSet._(items);
+  }
 
   const ImSet.empty() : _inner = const {};
 
@@ -20,8 +30,7 @@ class ImSet<E> implements Iterable<E> {
   /// any order. Then, the `hashCode` is guaranteed to be the same.
   @override
   int get hashCode {
-    return const Hash().hash(
-      _inner,
+    return const Hash().hashIterable(
       _inner.map((e) => e.hashCode).toList(growable: false)..sort(),
     );
   }

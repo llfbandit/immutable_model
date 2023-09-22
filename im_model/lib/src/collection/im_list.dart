@@ -1,8 +1,19 @@
+import 'package:im_model/im_model.dart';
 import 'package:im_model/src/collection/internal/copy_on_write_list.dart';
 
 /// A [List] that is immutable.
 class ImList<E> implements Iterable<E> {
-  ImList([Iterable<E>? items]) : _inner = List<E>.from(items ?? <E>[]);
+  ImList._(Iterable<E> items) : _inner = List<E>.from(items);
+
+  factory ImList([Iterable<E>? items]) {
+    if (items == null) {
+      return ImList._(<E>[]);
+    } else if (items is ImList<E>) {
+      return items;
+    }
+
+    return ImList._(items);
+  }
 
   const ImList.empty() : _inner = const [];
 
@@ -158,6 +169,32 @@ class ImList<E> implements Iterable<E> {
 
   @override
   Iterable<T> whereType<T>() => _inner.whereType<T>();
+
+  /// Deep hashCode.
+  ///
+  /// A `ImList` is only equal to another with equal elements in
+  /// the same order. Then, the `hashCode` is guaranteed to be the same.
+  @override
+  int get hashCode => _inner.length ^ const Hash().hashIterable(_inner);
+
+  /// Deep equality.
+  ///
+  /// A `ImList` is only equal to another with equal elements in
+  /// the same order.
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    if (other is! ImList) return false;
+    if (other.length != length) return false;
+    if (other.hashCode != hashCode) return false;
+    for (var i = 0; i != length; ++i) {
+      if (other[i] != this[i]) return false;
+    }
+    return true;
+  }
+
+  @override
+  String toString() => _inner.toString();
 }
 
 extension ListExtensions<T> on List<T> {
