@@ -7,21 +7,24 @@ part of 'example.dart';
 // **************************************************************************
 
 extension $ParentImExt<T> on Parent<T> {
-  List<Object?> get _$props => [id];
+  dynamic _eq() => (id);
 
   // ignore: library_private_types_in_public_api
   _$IParentCopy<T> get copyWith => _$ParentCopy<T>(this);
 }
 
-mixin _$ParentMixin implements IEquatable {
+mixin _$ParentMixin<T> {
   @override
-  List<Object?> get props => $ParentImExt(this as Parent)._$props;
+  int get hashCode => (this as Parent)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
+  bool operator ==(covariant Parent<T> other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as Parent)._eq();
+  }
 
   @override
-  bool operator ==(Object other) => eq(this, other);
+  String toString() => (this as Parent)._eq().toString();
 }
 
 abstract interface class _$IParentCopy<T> {
@@ -47,22 +50,24 @@ class _$ParentCopy<T> implements _$IParentCopy<T> {
 }
 
 extension $ChildImExt<T> on Child<T> {
-  List<Object?> get _$props => [collection];
+  dynamic _eq() => (id, collection);
 
   // ignore: library_private_types_in_public_api
   _$IChildCopy<T> get copyWith => _$ChildCopy<T>(this);
 }
 
-mixin _$ChildMixin on IEquatable {
+mixin _$ChildMixin<T> {
   @override
-  List<Object?> get props =>
-      [...super.props, ...$ChildImExt(this as Child)._$props];
+  int get hashCode => (this as Child)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
+  bool operator ==(covariant Child<T> other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as Child)._eq();
+  }
 
   @override
-  bool operator ==(Object other) => eq(this, other);
+  String toString() => (this as Child)._eq().toString();
 }
 
 abstract interface class _$IChildCopy<T> {
@@ -93,17 +98,19 @@ class _$ChildCopy<T> implements _$IChildCopy<T> {
 }
 
 extension $Child2ImExt<T> on Child2<T> {
-  List<Object?> get _$props => [foo];
+  dynamic _eq() => (id, collection, foo);
 }
 
-mixin _$Child2Mixin on IEquatable {
+mixin _$Child2Mixin<T> {
   @override
-  List<Object?> get props =>
-      [...super.props, ...$Child2ImExt(this as Child2)._$props];
+  int get hashCode => (this as Child2)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
+  bool operator ==(covariant Child2<T> other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as Child2)._eq();
+  }
 
   @override
-  bool operator ==(Object other) => eq(this, other);
+  String toString() => (this as Child2)._eq().toString();
 }

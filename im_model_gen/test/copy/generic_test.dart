@@ -4,7 +4,7 @@ import 'package:test/test.dart' hide equals;
 part 'generic_test.g.dart';
 
 @ImModel()
-class Generics<G, T extends Iterable<G>> with _$GenericsMixin {
+class Generics<G, T extends Iterable<G>> with _$GenericsMixin<G, T> {
   const Generics({
     required this.basicGeneric,
     required this.genericTemplate,

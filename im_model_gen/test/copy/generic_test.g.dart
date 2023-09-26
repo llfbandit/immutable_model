@@ -7,27 +7,25 @@ part of 'generic_test.dart';
 // **************************************************************************
 
 extension $GenericsImExt<G, T extends Iterable<G>> on Generics<G, T> {
-  List<Object?> get _$props =>
-      [basicGeneric, genericTemplate, nullableGeneric, deepNestedGeneric];
+  dynamic _eq() =>
+      (basicGeneric, genericTemplate, nullableGeneric, deepNestedGeneric);
 
   // ignore: library_private_types_in_public_api
   _$IGenericsCopy<G, T> get copyWith => _$GenericsCopy<G, T>(this);
 }
 
-mixin _$GenericsMixin implements IEquatable {
+mixin _$GenericsMixin<G, T extends Iterable<G>> {
   @override
-  List<Object?> get props => $GenericsImExt(this as Generics)._$props;
+  int get hashCode => (this as Generics)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
-
-  @override
-  bool operator ==(Object other) => eq(this, other);
-
-  @override
-  String toString() {
-    return 'Generics(basicGeneric: ${props[0]}, genericTemplate: ${props[1]}, nullableGeneric: ${props[2]}, deepNestedGeneric: ${props[3]})';
+  bool operator ==(covariant Generics<G, T> other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as Generics)._eq();
   }
+
+  @override
+  String toString() => (this as Generics)._eq().toString();
 }
 
 abstract interface class _$IGenericsCopy<G, T extends Iterable<G>> {

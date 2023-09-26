@@ -2,26 +2,24 @@ part of 'index.dart';
 
 @ShouldGenerate(r'''
 extension $StaticImExt on Static {
-  List<Object?> get _$props => [id, integer];
+  dynamic _eq() => (id, integer);
 
   // ignore: library_private_types_in_public_api
   _$IStaticCopy get copyWith => _$StaticCopy(this);
 }
 
-mixin _$StaticMixin implements IEquatable {
+mixin _$StaticMixin {
   @override
-  List<Object?> get props => $StaticImExt(this as Static)._$props;
+  int get hashCode => (this as Static)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
-
-  @override
-  bool operator ==(Object other) => eq(this, other);
-
-  @override
-  String toString() {
-    return 'Static(id: ${props[0]}, integer: ${props[1]})';
+  bool operator ==(covariant Static other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as Static)._eq();
   }
+
+  @override
+  String toString() => (this as Static)._eq().toString();
 }
 
 abstract interface class _$IStaticCopy {

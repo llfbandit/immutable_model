@@ -1,28 +1,25 @@
 part of 'index.dart';
 
-@ShouldGenerate(
-    r'''
+@ShouldGenerate(r'''
 extension $BasicClassImExt<T extends Iterable<int>> on BasicClass<T> {
-  List<Object?> get _$props => [optional, immutable, nullableImmutable];
+  dynamic _eq() => (optional, immutable, nullableImmutable);
 
   // ignore: library_private_types_in_public_api
   _$IBasicClassCopy<T> get copyWith => _$BasicClassCopy<T>(this);
 }
 
-mixin _$BasicClassMixin implements IEquatable {
+mixin _$BasicClassMixin<T extends Iterable<int>> {
   @override
-  List<Object?> get props => $BasicClassImExt(this as BasicClass)._$props;
+  int get hashCode => (this as BasicClass)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
-
-  @override
-  bool operator ==(Object other) => eq(this, other);
-
-  @override
-  String toString() {
-    return 'BasicClass(optional: ${props[0]}, immutable: ${props[1]}, nullableImmutable: ${props[2]})';
+  bool operator ==(covariant BasicClass<T> other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as BasicClass)._eq();
   }
+
+  @override
+  String toString() => (this as BasicClass)._eq().toString();
 }
 
 abstract interface class _$IBasicClassCopy<T extends Iterable<int>> {

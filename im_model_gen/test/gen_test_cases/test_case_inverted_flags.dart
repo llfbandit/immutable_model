@@ -2,26 +2,24 @@ part of 'index.dart';
 
 @ShouldGenerate(r'''
 extension $InvertedImExt<T> on Inverted<T> {
-  List<Object?> get _$props => [id];
+  dynamic _eq() => (id);
 
   // ignore: library_private_types_in_public_api
   _$IInvertedCopy<T> get copyWith => _$InvertedCopy<T>(this);
 }
 
-mixin _$InvertedMixin implements IEquatable {
+mixin _$InvertedMixin<T> {
   @override
-  List<Object?> get props => $InvertedImExt(this as Inverted)._$props;
+  int get hashCode => (this as Inverted)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
-
-  @override
-  bool operator ==(Object other) => eq(this, other);
-
-  @override
-  String toString() {
-    return 'Inverted(id: ${props[0]})';
+  bool operator ==(covariant Inverted<T> other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as Inverted)._eq();
   }
+
+  @override
+  String toString() => (this as Inverted)._eq().toString();
 }
 
 abstract interface class _$IInvertedCopy<T> {

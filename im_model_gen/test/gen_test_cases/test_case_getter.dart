@@ -2,26 +2,24 @@ part of 'index.dart';
 
 @ShouldGenerate(r'''
 extension $GetterImExt on Getter {
-  List<Object?> get _$props => [id];
+  dynamic _eq() => (id);
 
   // ignore: library_private_types_in_public_api
   _$IGetterCopy get copyWith => _$GetterCopy(this);
 }
 
-mixin _$GetterMixin implements IEquatable {
+mixin _$GetterMixin {
   @override
-  List<Object?> get props => $GetterImExt(this as Getter)._$props;
+  int get hashCode => (this as Getter)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
-
-  @override
-  bool operator ==(Object other) => eq(this, other);
-
-  @override
-  String toString() {
-    return 'Getter(id: ${props[0]})';
+  bool operator ==(covariant Getter other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as Getter)._eq();
   }
+
+  @override
+  String toString() => (this as Getter)._eq().toString();
 }
 
 abstract interface class _$IGetterCopy {

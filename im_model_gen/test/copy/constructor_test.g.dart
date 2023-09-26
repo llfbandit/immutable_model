@@ -7,27 +7,24 @@ part of 'constructor_test.dart';
 // **************************************************************************
 
 extension $CopyNamedConstructorImExt on CopyNamedConstructor {
-  List<Object?> get _$props => [id];
+  dynamic _eq() => (id);
 
   // ignore: library_private_types_in_public_api
   _$ICopyNamedConstructorCopy get copyWith => _$CopyNamedConstructorCopy(this);
 }
 
-mixin _$CopyNamedConstructorMixin implements IEquatable {
+mixin _$CopyNamedConstructorMixin {
   @override
-  List<Object?> get props =>
-      $CopyNamedConstructorImExt(this as CopyNamedConstructor)._$props;
+  int get hashCode => (this as CopyNamedConstructor)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
-
-  @override
-  bool operator ==(Object other) => eq(this, other);
-
-  @override
-  String toString() {
-    return 'CopyNamedConstructor(id: ${props[0]})';
+  bool operator ==(covariant CopyNamedConstructor other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as CopyNamedConstructor)._eq();
   }
+
+  @override
+  String toString() => (this as CopyNamedConstructor)._eq().toString();
 }
 
 abstract interface class _$ICopyNamedConstructorCopy {
@@ -52,28 +49,25 @@ class _$CopyNamedConstructorCopy implements _$ICopyNamedConstructorCopy {
 }
 
 extension $CopyMultiConstructorsImExt on CopyMultiConstructors {
-  List<Object?> get _$props => [id, field];
+  dynamic _eq() => (id, field);
 
   // ignore: library_private_types_in_public_api
   _$ICopyMultiConstructorsCopy get copyWith =>
       _$CopyMultiConstructorsCopy(this);
 }
 
-mixin _$CopyMultiConstructorsMixin implements IEquatable {
+mixin _$CopyMultiConstructorsMixin {
   @override
-  List<Object?> get props =>
-      $CopyMultiConstructorsImExt(this as CopyMultiConstructors)._$props;
+  int get hashCode => (this as CopyMultiConstructors)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
-
-  @override
-  bool operator ==(Object other) => eq(this, other);
-
-  @override
-  String toString() {
-    return 'CopyMultiConstructors(id: ${props[0]}, field: ${props[1]})';
+  bool operator ==(covariant CopyMultiConstructors other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as CopyMultiConstructors)._eq();
   }
+
+  @override
+  String toString() => (this as CopyMultiConstructors)._eq().toString();
 }
 
 abstract interface class _$ICopyMultiConstructorsCopy {
@@ -103,28 +97,25 @@ class _$CopyMultiConstructorsCopy implements _$ICopyMultiConstructorsCopy {
 }
 
 extension $DefaultValuesConstructorImExt on DefaultValuesConstructor {
-  List<Object?> get _$props => [id, field, anotherField];
+  dynamic _eq() => (id, field, anotherField);
 
   // ignore: library_private_types_in_public_api
   _$IDefaultValuesConstructorCopy get copyWith =>
       _$DefaultValuesConstructorCopy(this);
 }
 
-mixin _$DefaultValuesConstructorMixin implements IEquatable {
+mixin _$DefaultValuesConstructorMixin {
   @override
-  List<Object?> get props =>
-      $DefaultValuesConstructorImExt(this as DefaultValuesConstructor)._$props;
+  int get hashCode => (this as DefaultValuesConstructor)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
-
-  @override
-  bool operator ==(Object other) => eq(this, other);
-
-  @override
-  String toString() {
-    return 'DefaultValuesConstructor(id: ${props[0]}, field: ${props[1]}, anotherField: ${props[2]})';
+  bool operator ==(covariant DefaultValuesConstructor other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as DefaultValuesConstructor)._eq();
   }
+
+  @override
+  String toString() => (this as DefaultValuesConstructor)._eq().toString();
 }
 
 abstract interface class _$IDefaultValuesConstructorCopy {
@@ -152,27 +143,24 @@ class _$DefaultValuesConstructorCopy
 }
 
 extension $PositionedFieldsImExt on PositionedFields {
-  List<Object?> get _$props => [pOne, pTwo, namedOne];
+  dynamic _eq() => (pOne, pTwo, namedOne);
 
   // ignore: library_private_types_in_public_api
   _$IPositionedFieldsCopy get copyWith => _$PositionedFieldsCopy(this);
 }
 
-mixin _$PositionedFieldsMixin implements IEquatable {
+mixin _$PositionedFieldsMixin {
   @override
-  List<Object?> get props =>
-      $PositionedFieldsImExt(this as PositionedFields)._$props;
+  int get hashCode => (this as PositionedFields)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
-
-  @override
-  bool operator ==(Object other) => eq(this, other);
-
-  @override
-  String toString() {
-    return 'PositionedFields(pOne: ${props[0]}, pTwo: ${props[1]}, namedOne: ${props[2]})';
+  bool operator ==(covariant PositionedFields other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as PositionedFields)._eq();
   }
+
+  @override
+  String toString() => (this as PositionedFields)._eq().toString();
 }
 
 abstract interface class _$IPositionedFieldsCopy {

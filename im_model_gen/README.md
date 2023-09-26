@@ -4,7 +4,7 @@ Project targets:
 - Standard syntax.
 - errors before runtime.
 - Low source code generation, your IDE will be happy.
-- Improved output binary size (a bit).
+- Improved output binary size.
 - Inheritance unlocked (while encouraging composition every day, "is-a" pattern is not bad).
 - to be not too intrusive.
 
@@ -34,8 +34,8 @@ class Example with _$ExampleMixin { // Associate your class with the generated m
 const example = Example(id: 'id');
 
 // Copy
-example.copyWith(text: 'test'); // Example(id: "id", text: test, values = [])
-example.copyWith(text: null); // Example(id: "id", text: null, values = [])
+example.copyWith(text: 'test'); // Example(id: "id", text: test, values; [])
+example.copyWith(text: null); // Example(id: "id", text: null, values: [])
 
 // Equality
 const exampleTwo = Example(id: 'id');
@@ -65,7 +65,7 @@ There are two annotations available.
   - ignoreCopy: allows to ignore the copy generation. Defaults to `null`.
   - ignoreEqual: allows to ignore the equality generation. Defaults to `null`.
 
-## Collections:
+## Collections
 This package provides immutable collections by simply wrapping the core ones.
 
 You must prefix all your mutable collections to their immutable counterpart.
@@ -75,36 +75,37 @@ You must prefix all your mutable collections to their immutable counterpart.
 
 The code generator will provide error messages if it detects mutable collections.
 
-Fix existing mutable operations (add, remove, ...) in your code base if any.
-
-⚠️ __Warning__ ⚠️
-
-At this time, if you use a custom collection implementation, the package won't be able to detect it.
-
-So things like `MyFooList<int>` or `ImList<MyFooList<int>>` will be allowed, but `ImList<Set<int>>` or other variants won't.
-
 To facilitate mutation on collections there are two getters:
 - mut => to get a mutable version of the collection. You can use it at no cost, the collection is copied __only__ if you modify it.
 - immut => to get the immutable version of the collection.
 
 Look at the example below for demonstration.
 
-## Equality & performance
-Since this package aims to minimize output size, equality is not generated.
+⚠️ 
 
-Instead, equality mecanism is very similar to Equatable package. So you can expect similar performance.
+- Obviously, like anywhere else, the collections are immutable only if the elements are immutable.
+
+- At this time, if you use a custom collection implementation, the package won't be able to detect it. So things like `MyFooList<int>` or `ImList<MyFooList<int>>` will be allowed, but `ImList<Set<int>>` or other variants won't.
+
+## Equality
+This package uses Dart 3 records to make `ImModel`s comparable.
+
+Also, an `ImModel` enforces equality on models of the same type.
+
+Now, things like `MyImModel() == Object()` will trigger an error at compile time.
+
+Finally, the performance is completely determined by Dart internal libraries, partially on Im* collections.
 
 ## (More) advanced usage
 
 Now that we have all discovered, here's a full (fancy) example:
 
 ```dart
-/// Generic type => No need to forward it to the mixin.
 /// Inverted ignore flags on class => superseeded by fields
 /// [id] is not part of `copyWith`.
 /// Only [id] is part of equality.
 @ImModel(ignoreEqual: true, ignoreCopy: true)
-class Parent<T> with _$ParentMixin {
+class Parent<T> with _$ParentMixin<T> {
   @ImField(ignoreEqual: false)
   final String id;
   @ImField(ignoreCopy: false)
@@ -117,7 +118,7 @@ class Parent<T> with _$ParentMixin {
 /// [id] is not part of `copyWith`.
 /// Only [id] and [collection] are part of equality.
 @ImModel()
-class Child<T> extends Parent<T> with _$ChildMixin {
+class Child<T> extends Parent<T> with _$ChildMixin<T> {
   final ImList<int> collection;
 
   const Child(super.id, super.aValue, {required this.collection});
@@ -141,6 +142,14 @@ void main() {
   // The named parameter 'id' isn't defined.
 }
 ```
+
+## Improved output size
+
+Todo.
+
+For now, I'll give you my personal experience.
+
+I developed this package for professional needs and the resulting output size from a 8.2MB web app has decreased by 650KB => 8% (main.dart.js considered only).
 
 ## What if I do love `Freezed`?
 

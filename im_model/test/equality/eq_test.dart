@@ -3,8 +3,6 @@ import 'package:test/test.dart';
 
 part 'eq_test.g.dart';
 
-class NonImmutable {}
-
 @ImModel()
 class Generic<T extends Object> with _$GenericMixin {
   Generic(this.value);
@@ -45,20 +43,6 @@ void main() {
       expect(instanceA.hashCode == instanceB.hashCode, true);
     });
 
-    test('should return false when compared to non-immutable', () {
-      final instanceA = Generic('foo');
-      final instanceB = NonImmutable();
-      // ignore: unrelated_type_equality_checks
-      expect(instanceA == instanceB, false);
-    });
-
-    test('should return false when compared to different immutable', () {
-      final instanceA = Generic('foo');
-      final instanceB = Other('foo');
-      // ignore: unrelated_type_equality_checks
-      expect(instanceA == instanceB, false);
-    });
-
     test('should return false when values are different', () {
       final instanceA = Generic('foo');
       final instanceB = Generic('simpl');
@@ -79,13 +63,6 @@ void main() {
       expect(instanceA.hashCode == instanceB.hashCode, true);
     });
 
-    test('should return false when compared to non-immutable', () {
-      final instanceA = Generic(0);
-      final instanceB = NonImmutable();
-      // ignore: unrelated_type_equality_checks
-      expect(instanceA == instanceB, false);
-    });
-
     test('should return false when values are different', () {
       final instanceA = Generic(0);
       final instanceB = Generic(1);
@@ -104,13 +81,6 @@ void main() {
       final instanceB = Generic(true);
       expect(instanceA == instanceB, true);
       expect(instanceA.hashCode == instanceB.hashCode, true);
-    });
-
-    test('should return false when compared to non-immutable', () {
-      final instanceA = Generic(true);
-      final instanceB = NonImmutable();
-      // ignore: unrelated_type_equality_checks
-      expect(instanceA == instanceB, false);
     });
 
     test('should return false when values are different', () {
@@ -138,13 +108,6 @@ void main() {
       final instanceB = Generic(ImMap({'a': 1, 'b': 2, 'c': 3}));
       expect(instanceA == instanceB, true);
       expect(instanceA.hashCode == instanceB.hashCode, true);
-    });
-
-    test('should return false when compared to non-immutable', () {
-      final instanceA = Generic(ImMap({'a': 1, 'b': 2, 'c': 3}));
-      final instanceB = NonImmutable();
-      // ignore: unrelated_type_equality_checks
-      expect(instanceA == instanceB, false);
     });
 
     test('should return false when values are different', () {
@@ -204,19 +167,6 @@ void main() {
       expect(instanceA.hashCode == instanceB.hashCode, true);
     });
 
-    test('should return false when compared to non-immutable', () {
-      final instanceA = Generic(
-        ImMap({
-          Generic<String>('a'): 1,
-          Generic<String>('b'): 2,
-          Generic<String>('c'): 3
-        }),
-      );
-      final instanceB = NonImmutable();
-      // ignore: unrelated_type_equality_checks
-      expect(instanceA == instanceB, false);
-    });
-
     test('should return false when values are different', () {
       final instanceA = Generic(
         ImMap({
@@ -247,13 +197,6 @@ void main() {
       final instanceB = Generic(Other('foo'));
       expect(instanceA == instanceB, true);
       expect(instanceA.hashCode == instanceB.hashCode, true);
-    });
-
-    test('should return false when compared to non-immutable', () {
-      final instanceA = Generic(Other('foo'));
-      final instanceB = NonImmutable();
-      // ignore: unrelated_type_equality_checks
-      expect(instanceA == instanceB, false);
     });
 
     test('should return false when values are different', () {
@@ -289,18 +232,6 @@ void main() {
       );
       expect(instanceA == instanceB, true);
       expect(instanceA.hashCode == instanceB.hashCode, true);
-    });
-
-    test('should return false when compared to non-immutable', () {
-      final instanceA = Complex(
-        name: 'Joe',
-        age: 40,
-        hairColor: Color.black,
-        children: ['Junior'].immut,
-      );
-      final instanceB = NonImmutable();
-      // ignore: unrelated_type_equality_checks
-      expect(instanceA == instanceB, false);
     });
 
     test('should return false when values are different', () {

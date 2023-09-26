@@ -2,23 +2,21 @@ part of 'index.dart';
 
 @ShouldGenerate(r'''
 extension $AbtractImExt<T> on Abtract<T> {
-  List<Object?> get _$props => [id, aValue];
+  dynamic _eq() => (id, aValue);
 }
 
-mixin _$AbtractMixin implements IEquatable {
+mixin _$AbtractMixin<T> {
   @override
-  List<Object?> get props => $AbtractImExt(this as Abtract)._$props;
+  int get hashCode => (this as Abtract)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
-
-  @override
-  bool operator ==(Object other) => eq(this, other);
-
-  @override
-  String toString() {
-    return 'Abtract(id: ${props[0]}, aValue: ${props[1]})';
+  bool operator ==(covariant Abtract<T> other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as Abtract)._eq();
   }
+
+  @override
+  String toString() => (this as Abtract)._eq().toString();
 }
 ''')
 @ImModel()
@@ -32,27 +30,24 @@ abstract class Abtract<T> {
 
 @ShouldGenerate(r'''
 extension $AbtractChildImExt<T> on AbtractChild<T> {
-  List<Object?> get _$props => [integer];
+  dynamic _eq() => (id, aValue, integer);
 
   // ignore: library_private_types_in_public_api
   _$IAbtractChildCopy<T> get copyWith => _$AbtractChildCopy<T>(this);
 }
 
-mixin _$AbtractChildMixin on IEquatable {
+mixin _$AbtractChildMixin<T> {
   @override
-  List<Object?> get props =>
-      [...super.props, ...$AbtractChildImExt(this as AbtractChild)._$props];
+  int get hashCode => (this as AbtractChild)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
-
-  @override
-  bool operator ==(Object other) => eq(this, other);
-
-  @override
-  String toString() {
-    return 'AbtractChild(integer: ${props[0]})';
+  bool operator ==(covariant AbtractChild<T> other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as AbtractChild)._eq();
   }
+
+  @override
+  String toString() => (this as AbtractChild)._eq().toString();
 }
 
 abstract interface class _$IAbtractChildCopy<T> {

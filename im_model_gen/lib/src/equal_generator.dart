@@ -2,51 +2,35 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:im_model_gen/src/class_hierarchy_info.dart';
 import 'package:im_model_gen/src/gen_result.dart';
 import 'package:im_model_gen/src/immutable_annotation.dart';
+import 'package:im_model_gen/src/utils.dart';
 
 class _EqualMixinTemplate {
   const _EqualMixinTemplate();
 
   GenResult generate(
     InterfaceElement classElement, {
-    required String extensionName,
-    required bool genSuperProps,
     required List<String> props,
   }) {
     final className = classElement.name;
     final mixinName = '_\$${className}Mixin';
 
-    final superProps = genSuperProps ? '...super.props,' : '';
-
-    final on = genSuperProps ? 'on' : 'implements';
-    final open = genSuperProps ? '[' : '';
-    final close = genSuperProps ? ']' : '';
-    final spreadOp = genSuperProps ? '...' : '';
-
-    var propIndex = 0;
-    final toString = props.map((prop) {
-      return '$prop: \${props[${propIndex++}]}';
-    }).join(', ');
-
     final generatedCode = '''
-      mixin $mixinName $on IEquatable {
+      mixin $mixinName${typeParametersString(classElement, false)} {
         @override
-        List<Object?> get props => $open$superProps$spreadOp$extensionName(this as $className)._\$props$close;
+        int get hashCode => (this as $className)._eq().hashCode;
 
         @override
-        int get hashCode => const Hash().hash(this, props);
-
-        @override
-        bool operator ==(Object other) => eq(this, other);
-
-        @override
-        String toString() {
-          return '$className($toString)';
+        bool operator ==(covariant $className${typeParametersString(classElement, true)} other) {
+          if (identical(this, other)) return true;
+          return other._eq() == (this as $className)._eq();
         }
+
+        @override
+        String toString() => (this as $className)._eq().toString();
       }
       ''';
 
-    final extensionCode =
-        'List<Object?> get _\$props => [${props.join(', ')}];';
+    final extensionCode = 'dynamic _eq() => (${props.join(', ')});';
 
     return GenResult(
       generatedCode: generatedCode,
@@ -64,17 +48,25 @@ class EqualGenerator {
   }) async {
     return const _EqualMixinTemplate().generate(
       classInfo.element,
-      extensionName: extensionName,
-      genSuperProps: classInfo.superClass != null,
       props: _generateEquality(classInfo),
     );
   }
 
   List<String> _generateEquality(ClassInfo classInfo) {
-    return classInfo.fields
+    final list = <String>[];
+
+    final superClass = classInfo.superClass;
+
+    if (superClass case var superClass?) {
+      list.addAll(_generateEquality(superClass));
+    }
+
+    list.addAll(classInfo.fields
         .where((field) => _includeField(classInfo.annotation, field))
         .map((field) => field.element.name)
-        .toList(growable: false);
+        .toList(growable: false));
+
+    return list;
   }
 
   bool _includeField(

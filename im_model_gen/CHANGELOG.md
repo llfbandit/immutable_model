@@ -1,3 +1,6 @@
+## 1.2.0
+- feat: Now generates everything from equality record.
+
 ## 1.1.0
 - feat: Add toString generation for equality members.
 

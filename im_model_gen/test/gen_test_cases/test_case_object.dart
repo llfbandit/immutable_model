@@ -2,26 +2,24 @@ part of 'index.dart';
 
 @ShouldGenerate(r'''
 extension $CastObjectImExt on CastObject {
-  List<Object?> get _$props => [dyn, obj, objOptional];
+  dynamic _eq() => (dyn, obj, objOptional);
 
   // ignore: library_private_types_in_public_api
   _$ICastObjectCopy get copyWith => _$CastObjectCopy(this);
 }
 
-mixin _$CastObjectMixin implements IEquatable {
+mixin _$CastObjectMixin {
   @override
-  List<Object?> get props => $CastObjectImExt(this as CastObject)._$props;
+  int get hashCode => (this as CastObject)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
-
-  @override
-  bool operator ==(Object other) => eq(this, other);
-
-  @override
-  String toString() {
-    return 'CastObject(dyn: ${props[0]}, obj: ${props[1]}, objOptional: ${props[2]})';
+  bool operator ==(covariant CastObject other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as CastObject)._eq();
   }
+
+  @override
+  String toString() => (this as CastObject)._eq().toString();
 }
 
 abstract interface class _$ICastObjectCopy {

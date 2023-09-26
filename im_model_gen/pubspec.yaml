@@ -1,5 +1,5 @@
 name: im_model_gen
-version: 1.1.0
+version: 1.2.0
 description: Annotation builder for immutable model to generate of `copyWith` and == (equal) operator..
 homepage: https://github.com/llfbandit/immutable_model/tree/master/im_model_gen
 
@@ -9,7 +9,7 @@ environment:
 dependencies:
   analyzer: ">=5.13.0 <7.0.0"
   build: ^2.3.1
-  im_model: ^1.0.0
+  im_model: ^1.1.0
   meta: ^1.9.1
   source_gen: ^1.4.0
 

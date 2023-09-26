@@ -2,12 +2,11 @@ import 'package:im_model/im_model.dart';
 
 part 'example.g.dart';
 
-/// Generic type => No need to forward it to the mixin.
 /// Inverted ignore flags on class => superseeded by fields
 /// [id] is not part of `copyWith`.
 /// Only [id] is part of equality.
 @ImModel(ignoreEqual: true, ignoreCopy: true)
-class Parent<T> with _$ParentMixin {
+class Parent<T> with _$ParentMixin<T> {
   @ImField(ignoreEqual: false)
   final String id;
   @ImField(ignoreCopy: false)
@@ -20,7 +19,7 @@ class Parent<T> with _$ParentMixin {
 /// [id] is not part of `copyWith`.
 /// Only [id] and [collection] are part of equality.
 @ImModel()
-class Child<T> extends Parent<T> with _$ChildMixin {
+class Child<T> extends Parent<T> with _$ChildMixin<T> {
   final ImList<int> collection;
 
   const Child(super.id, super.aValue, {required this.collection});
@@ -29,7 +28,7 @@ class Child<T> extends Parent<T> with _$ChildMixin {
 /// Usage of named constructor to make copies.
 /// [copyWith] is not available on this model.
 @ImModel(copyConstructor: 'named', ignoreCopy: true)
-class Child2<T> extends Child<T> with _$Child2Mixin {
+class Child2<T> extends Child<T> with _$Child2Mixin<T> {
   final bool foo;
 
   const Child2.named(
@@ -46,7 +45,7 @@ void main() {
   print(obj1 == obj2 ? '\u2705 equal!' : '\u274C Not equal');
 
   // obj1.collection.add(2);
-  // 'add' is deprecated and shouldn't be used. This collection is immutable and will throw exception at runtime.
+  // The method 'add' isn't defined for the type 'ImList'.
 
   // So now that we have a clear view in our source code, it's time to fix this!
   obj1 = obj1.copyWith(collection: obj1.collection.mut..add(2));

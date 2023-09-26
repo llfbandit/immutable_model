@@ -1,36 +1,32 @@
 part of 'index.dart';
 
-@ShouldGenerate(
-    r'''
+@ShouldGenerate(r'''
 extension $CollectionClassImExt<T extends Iterable<int>> on CollectionClass<T> {
-  List<Object?> get _$props => [
+  dynamic _eq() => (
         mandatoryList,
         optionalList,
         mandatoryMap,
         optionalMap,
         mandatorySet,
         optionalSet
-      ];
+      );
 
   // ignore: library_private_types_in_public_api
   _$ICollectionClassCopy<T> get copyWith => _$CollectionClassCopy<T>(this);
 }
 
-mixin _$CollectionClassMixin implements IEquatable {
+mixin _$CollectionClassMixin<T extends Iterable<int>> {
   @override
-  List<Object?> get props =>
-      $CollectionClassImExt(this as CollectionClass)._$props;
+  int get hashCode => (this as CollectionClass)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
-
-  @override
-  bool operator ==(Object other) => eq(this, other);
-
-  @override
-  String toString() {
-    return 'CollectionClass(mandatoryList: ${props[0]}, optionalList: ${props[1]}, mandatoryMap: ${props[2]}, optionalMap: ${props[3]}, mandatorySet: ${props[4]}, optionalSet: ${props[5]})';
+  bool operator ==(covariant CollectionClass<T> other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as CollectionClass)._eq();
   }
+
+  @override
+  String toString() => (this as CollectionClass)._eq().toString();
 }
 
 abstract interface class _$ICollectionClassCopy<T extends Iterable<int>> {

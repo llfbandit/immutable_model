@@ -7,27 +7,24 @@ part of 'basic_test.dart';
 // **************************************************************************
 
 extension $CopyNonOptionalImExt on CopyNonOptional {
-  List<Object?> get _$props => [id];
+  dynamic _eq() => (id);
 
   // ignore: library_private_types_in_public_api
   _$ICopyNonOptionalCopy get copyWith => _$CopyNonOptionalCopy(this);
 }
 
-mixin _$CopyNonOptionalMixin implements IEquatable {
+mixin _$CopyNonOptionalMixin {
   @override
-  List<Object?> get props =>
-      $CopyNonOptionalImExt(this as CopyNonOptional)._$props;
+  int get hashCode => (this as CopyNonOptional)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
-
-  @override
-  bool operator ==(Object other) => eq(this, other);
-
-  @override
-  String toString() {
-    return 'CopyNonOptional(id: ${props[0]})';
+  bool operator ==(covariant CopyNonOptional other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as CopyNonOptional)._eq();
   }
+
+  @override
+  String toString() => (this as CopyNonOptional)._eq().toString();
 }
 
 abstract interface class _$ICopyNonOptionalCopy {
@@ -52,26 +49,24 @@ class _$CopyNonOptionalCopy implements _$ICopyNonOptionalCopy {
 }
 
 extension $CopyOptionalImExt on CopyOptional {
-  List<Object?> get _$props => [id];
+  dynamic _eq() => (id);
 
   // ignore: library_private_types_in_public_api
   _$ICopyOptionalCopy get copyWith => _$CopyOptionalCopy(this);
 }
 
-mixin _$CopyOptionalMixin implements IEquatable {
+mixin _$CopyOptionalMixin {
   @override
-  List<Object?> get props => $CopyOptionalImExt(this as CopyOptional)._$props;
+  int get hashCode => (this as CopyOptional)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
-
-  @override
-  bool operator ==(Object other) => eq(this, other);
-
-  @override
-  String toString() {
-    return 'CopyOptional(id: ${props[0]})';
+  bool operator ==(covariant CopyOptional other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as CopyOptional)._eq();
   }
+
+  @override
+  String toString() => (this as CopyOptional)._eq().toString();
 }
 
 abstract interface class _$ICopyOptionalCopy {

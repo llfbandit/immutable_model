@@ -7,26 +7,24 @@ part of 'collection_test.dart';
 // **************************************************************************
 
 extension $CopyListImExt on CopyList {
-  List<Object?> get _$props => [coll];
+  dynamic _eq() => (coll);
 
   // ignore: library_private_types_in_public_api
   _$ICopyListCopy get copyWith => _$CopyListCopy(this);
 }
 
-mixin _$CopyListMixin implements IEquatable {
+mixin _$CopyListMixin {
   @override
-  List<Object?> get props => $CopyListImExt(this as CopyList)._$props;
+  int get hashCode => (this as CopyList)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
-
-  @override
-  bool operator ==(Object other) => eq(this, other);
-
-  @override
-  String toString() {
-    return 'CopyList(coll: ${props[0]})';
+  bool operator ==(covariant CopyList other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as CopyList)._eq();
   }
+
+  @override
+  String toString() => (this as CopyList)._eq().toString();
 }
 
 abstract interface class _$ICopyListCopy {
@@ -53,26 +51,24 @@ class _$CopyListCopy implements _$ICopyListCopy {
 }
 
 extension $CopyMapImExt on CopyMap {
-  List<Object?> get _$props => [coll];
+  dynamic _eq() => (coll);
 
   // ignore: library_private_types_in_public_api
   _$ICopyMapCopy get copyWith => _$CopyMapCopy(this);
 }
 
-mixin _$CopyMapMixin implements IEquatable {
+mixin _$CopyMapMixin {
   @override
-  List<Object?> get props => $CopyMapImExt(this as CopyMap)._$props;
+  int get hashCode => (this as CopyMap)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
-
-  @override
-  bool operator ==(Object other) => eq(this, other);
-
-  @override
-  String toString() {
-    return 'CopyMap(coll: ${props[0]})';
+  bool operator ==(covariant CopyMap other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as CopyMap)._eq();
   }
+
+  @override
+  String toString() => (this as CopyMap)._eq().toString();
 }
 
 abstract interface class _$ICopyMapCopy {
@@ -99,26 +95,24 @@ class _$CopyMapCopy implements _$ICopyMapCopy {
 }
 
 extension $CopySetImExt on CopySet {
-  List<Object?> get _$props => [coll];
+  dynamic _eq() => (coll);
 
   // ignore: library_private_types_in_public_api
   _$ICopySetCopy get copyWith => _$CopySetCopy(this);
 }
 
-mixin _$CopySetMixin implements IEquatable {
+mixin _$CopySetMixin {
   @override
-  List<Object?> get props => $CopySetImExt(this as CopySet)._$props;
+  int get hashCode => (this as CopySet)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
-
-  @override
-  bool operator ==(Object other) => eq(this, other);
-
-  @override
-  String toString() {
-    return 'CopySet(coll: ${props[0]})';
+  bool operator ==(covariant CopySet other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as CopySet)._eq();
   }
+
+  @override
+  String toString() => (this as CopySet)._eq().toString();
 }
 
 abstract interface class _$ICopySetCopy {
@@ -145,27 +139,24 @@ class _$CopySetCopy implements _$ICopySetCopy {
 }
 
 extension $CopyNestedListImExt on CopyNestedList {
-  List<Object?> get _$props => [coll];
+  dynamic _eq() => (coll);
 
   // ignore: library_private_types_in_public_api
   _$ICopyNestedListCopy get copyWith => _$CopyNestedListCopy(this);
 }
 
-mixin _$CopyNestedListMixin implements IEquatable {
+mixin _$CopyNestedListMixin {
   @override
-  List<Object?> get props =>
-      $CopyNestedListImExt(this as CopyNestedList)._$props;
+  int get hashCode => (this as CopyNestedList)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
-
-  @override
-  bool operator ==(Object other) => eq(this, other);
-
-  @override
-  String toString() {
-    return 'CopyNestedList(coll: ${props[0]})';
+  bool operator ==(covariant CopyNestedList other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as CopyNestedList)._eq();
   }
+
+  @override
+  String toString() => (this as CopyNestedList)._eq().toString();
 }
 
 abstract interface class _$ICopyNestedListCopy {

@@ -7,21 +7,24 @@ part of 'eq_test.dart';
 // **************************************************************************
 
 extension $GenericImExt<T extends Object> on Generic<T> {
-  List<Object?> get _$props => [value];
+  dynamic _eq() => (value);
 
   // ignore: library_private_types_in_public_api
   _$IGenericCopy<T> get copyWith => _$GenericCopy<T>(this);
 }
 
-mixin _$GenericMixin implements IEquatable {
+mixin _$GenericMixin<T extends Object> {
   @override
-  List<Object?> get props => $GenericImExt(this as Generic)._$props;
+  int get hashCode => (this as Generic)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
+  bool operator ==(covariant Generic<T> other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as Generic)._eq();
+  }
 
   @override
-  bool operator ==(Object other) => eq(this, other);
+  String toString() => (this as Generic)._eq().toString();
 }
 
 abstract interface class _$IGenericCopy<T extends Object> {
@@ -46,21 +49,24 @@ class _$GenericCopy<T extends Object> implements _$IGenericCopy<T> {
 }
 
 extension $OtherImExt on Other {
-  List<Object?> get _$props => [data];
+  dynamic _eq() => (data);
 
   // ignore: library_private_types_in_public_api
   _$IOtherCopy get copyWith => _$OtherCopy(this);
 }
 
-mixin _$OtherMixin implements IEquatable {
+mixin _$OtherMixin {
   @override
-  List<Object?> get props => $OtherImExt(this as Other)._$props;
+  int get hashCode => (this as Other)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
+  bool operator ==(covariant Other other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as Other)._eq();
+  }
 
   @override
-  bool operator ==(Object other) => eq(this, other);
+  String toString() => (this as Other)._eq().toString();
 }
 
 abstract interface class _$IOtherCopy {
@@ -85,21 +91,24 @@ class _$OtherCopy implements _$IOtherCopy {
 }
 
 extension $ComplexImExt on Complex {
-  List<Object?> get _$props => [name, age, hairColor, children];
+  dynamic _eq() => (name, age, hairColor, children);
 
   // ignore: library_private_types_in_public_api
   _$IComplexCopy get copyWith => _$ComplexCopy(this);
 }
 
-mixin _$ComplexMixin implements IEquatable {
+mixin _$ComplexMixin {
   @override
-  List<Object?> get props => $ComplexImExt(this as Complex)._$props;
+  int get hashCode => (this as Complex)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
+  bool operator ==(covariant Complex other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as Complex)._eq();
+  }
 
   @override
-  bool operator ==(Object other) => eq(this, other);
+  String toString() => (this as Complex)._eq().toString();
 }
 
 abstract interface class _$IComplexCopy {

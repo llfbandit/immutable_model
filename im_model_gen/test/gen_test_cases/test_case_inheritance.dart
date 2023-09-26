@@ -12,27 +12,24 @@ class Parent<T> {
 
 @ShouldGenerate(r'''
 extension $ChildImExt<T> on Child<T> {
-  List<Object?> get _$props => [collection];
+  dynamic _eq() => (id, collection);
 
   // ignore: library_private_types_in_public_api
   _$IChildCopy<T> get copyWith => _$ChildCopy<T>(this);
 }
 
-mixin _$ChildMixin on IEquatable {
+mixin _$ChildMixin<T> {
   @override
-  List<Object?> get props =>
-      [...super.props, ...$ChildImExt(this as Child)._$props];
+  int get hashCode => (this as Child)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
-
-  @override
-  bool operator ==(Object other) => eq(this, other);
-
-  @override
-  String toString() {
-    return 'Child(collection: ${props[0]})';
+  bool operator ==(covariant Child<T> other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as Child)._eq();
   }
+
+  @override
+  String toString() => (this as Child)._eq().toString();
 }
 
 abstract interface class _$IChildCopy<T> {

@@ -7,27 +7,24 @@ part of 'nullability_test.dart';
 // **************************************************************************
 
 extension $TestNullabilityImExt on TestNullability {
-  List<Object?> get _$props => [dynField, coll];
+  dynamic _eq() => (dynField, coll);
 
   // ignore: library_private_types_in_public_api
   _$ITestNullabilityCopy get copyWith => _$TestNullabilityCopy(this);
 }
 
-mixin _$TestNullabilityMixin implements IEquatable {
+mixin _$TestNullabilityMixin {
   @override
-  List<Object?> get props =>
-      $TestNullabilityImExt(this as TestNullability)._$props;
+  int get hashCode => (this as TestNullability)._eq().hashCode;
 
   @override
-  int get hashCode => const Hash().hash(this, props);
-
-  @override
-  bool operator ==(Object other) => eq(this, other);
-
-  @override
-  String toString() {
-    return 'TestNullability(dynField: ${props[0]}, coll: ${props[1]})';
+  bool operator ==(covariant TestNullability other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as TestNullability)._eq();
   }
+
+  @override
+  String toString() => (this as TestNullability)._eq().toString();
 }
 
 abstract interface class _$ITestNullabilityCopy {
