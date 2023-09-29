@@ -41,8 +41,8 @@ class _$BasicClassCopy<T extends Iterable<int>>
     Object? optional = const $ImCopy(),
   }) {
     return BasicClass<T>(
-      id: id == const $ImCopy() || id == null ? _value.id : id as String,
-      optional: optional == const $ImCopy() ? _value.optional : optional as T?,
+      id: const $ImCopy() == id || id == null ? _value.id : id as String,
+      optional: const $ImCopy() == optional ? _value.optional : optional as T?,
       immutable: _value.immutable,
       nullableImmutable: _value.nullableImmutable,
     );

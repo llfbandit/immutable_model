@@ -45,10 +45,10 @@ class _$TestNullabilityCopy implements _$ITestNullabilityCopy {
     Object? coll = const $ImCopy(),
   }) {
     return TestNullability(
-      dynField == const $ImCopy() || dynField == null
+      const $ImCopy() == dynField || dynField == null
           ? _value.dynField
           : dynField as dynamic,
-      coll == const $ImCopy() || coll == null
+      const $ImCopy() == coll || coll == null
           ? _value.coll
           : ImList(coll as List<int>),
     );

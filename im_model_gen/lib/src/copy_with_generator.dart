@@ -71,7 +71,7 @@ class _CopyImplTemplate {
         final nullCheck = v.nullable ? '' : '|| ${v.element.name} == null';
 
         return '''$param
-        ${v.element.name} == const \$ImCopy() $nullCheck
+        const \$ImCopy() == ${v.element.name} $nullCheck
         ? _value.${v.element.name}
         : ${_convertToImmutable(v)},''';
       },

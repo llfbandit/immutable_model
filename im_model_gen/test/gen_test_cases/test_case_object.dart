@@ -42,10 +42,10 @@ class _$CastObjectCopy implements _$ICastObjectCopy {
     Object? dyn = const $ImCopy(),
   }) {
     return CastObject(
-      obj: obj == const $ImCopy() || obj == null ? _value.obj : obj,
+      obj: const $ImCopy() == obj || obj == null ? _value.obj : obj,
       objOptional:
-          objOptional == const $ImCopy() ? _value.objOptional : objOptional,
-      dyn: dyn == const $ImCopy() || dyn == null ? _value.dyn : dyn as dynamic,
+          const $ImCopy() == objOptional ? _value.objOptional : objOptional,
+      dyn: const $ImCopy() == dyn || dyn == null ? _value.dyn : dyn as dynamic,
     );
   }
 }

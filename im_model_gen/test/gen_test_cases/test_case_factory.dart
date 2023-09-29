@@ -38,7 +38,7 @@ class _$FactoryCopy implements _$IFactoryCopy {
     Object? coll = const $ImCopy(),
   }) {
     return Factory(
-      coll: coll == const $ImCopy() || coll == null
+      coll: const $ImCopy() == coll || coll == null
           ? _value.coll
           : ImList(coll as List<String>),
     );

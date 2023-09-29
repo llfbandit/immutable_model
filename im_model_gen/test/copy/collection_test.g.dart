@@ -43,7 +43,7 @@ class _$CopyListCopy implements _$ICopyListCopy {
     Object? coll = const $ImCopy(),
   }) {
     return CopyList(
-      coll: coll == const $ImCopy() || coll == null
+      coll: const $ImCopy() == coll || coll == null
           ? _value.coll
           : ImList(coll as List<String>),
     );
@@ -87,7 +87,7 @@ class _$CopyMapCopy implements _$ICopyMapCopy {
     Object? coll = const $ImCopy(),
   }) {
     return CopyMap(
-      coll: coll == const $ImCopy() || coll == null
+      coll: const $ImCopy() == coll || coll == null
           ? _value.coll
           : ImMap(coll as Map<String, String>),
     );
@@ -131,7 +131,7 @@ class _$CopySetCopy implements _$ICopySetCopy {
     Object? coll = const $ImCopy(),
   }) {
     return CopySet(
-      coll: coll == const $ImCopy() || coll == null
+      coll: const $ImCopy() == coll || coll == null
           ? _value.coll
           : ImSet(coll as Set<String>),
     );
@@ -175,7 +175,7 @@ class _$CopyNestedListCopy implements _$ICopyNestedListCopy {
     Object? coll = const $ImCopy(),
   }) {
     return CopyNestedList(
-      coll: coll == const $ImCopy() || coll == null
+      coll: const $ImCopy() == coll || coll == null
           ? _value.coll
           : ImList(coll as List<ImList<String>>),
     );

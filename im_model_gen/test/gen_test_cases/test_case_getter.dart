@@ -38,7 +38,7 @@ class _$GetterCopy implements _$IGetterCopy {
     Object? id = const $ImCopy(),
   }) {
     return Getter(
-      id: id == const $ImCopy() || id == null ? _value.id : id as String,
+      id: const $ImCopy() == id || id == null ? _value.id : id as String,
     );
   }
 }

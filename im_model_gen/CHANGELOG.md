@@ -1,3 +1,6 @@
+## 1.2.1
+- fix: copy generation with covariant comparisons.
+
 ## 1.2.0
 - feat: Now generates everything from equality record.
 

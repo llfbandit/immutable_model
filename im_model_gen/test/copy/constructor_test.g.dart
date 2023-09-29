@@ -43,7 +43,7 @@ class _$CopyNamedConstructorCopy implements _$ICopyNamedConstructorCopy {
     Object? id = const $ImCopy(),
   }) {
     return CopyNamedConstructor._(
-      id: id == const $ImCopy() ? _value.id : id as String?,
+      id: const $ImCopy() == id ? _value.id : id as String?,
     );
   }
 }
@@ -88,8 +88,8 @@ class _$CopyMultiConstructorsCopy implements _$ICopyMultiConstructorsCopy {
     Object? field = const $ImCopy(),
   }) {
     return CopyMultiConstructors.first(
-      id: id == const $ImCopy() ? _value.id : id as String?,
-      field: field == const $ImCopy() || field == null
+      id: const $ImCopy() == id ? _value.id : id as String?,
+      field: const $ImCopy() == field || field == null
           ? _value.field
           : field as String,
     );
@@ -135,7 +135,7 @@ class _$DefaultValuesConstructorCopy
     Object? anotherField = const $ImCopy(),
   }) {
     return DefaultValuesConstructor._(
-      anotherField: anotherField == const $ImCopy()
+      anotherField: const $ImCopy() == anotherField
           ? _value.anotherField
           : anotherField as String?,
     );
@@ -183,10 +183,10 @@ class _$PositionedFieldsCopy implements _$IPositionedFieldsCopy {
     Object? namedOne = const $ImCopy(),
   }) {
     return PositionedFields(
-      pOne == const $ImCopy() || pOne == null ? _value.pOne : pOne as String,
-      pTwo == const $ImCopy() || pTwo == null ? _value.pTwo : pTwo as String,
+      const $ImCopy() == pOne || pOne == null ? _value.pOne : pOne as String,
+      const $ImCopy() == pTwo || pTwo == null ? _value.pTwo : pTwo as String,
       namedOne:
-          namedOne == const $ImCopy() ? _value.namedOne : namedOne as String?,
+          const $ImCopy() == namedOne ? _value.namedOne : namedOne as String?,
     );
   }
 }

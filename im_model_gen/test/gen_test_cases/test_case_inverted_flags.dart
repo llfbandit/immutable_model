@@ -39,7 +39,7 @@ class _$InvertedCopy<T> implements _$IInvertedCopy<T> {
   }) {
     return Inverted<T>(
       _value.id,
-      aValue == const $ImCopy() ? _value.aValue : aValue as T?,
+      const $ImCopy() == aValue ? _value.aValue : aValue as T?,
     );
   }
 }

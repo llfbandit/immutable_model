@@ -70,9 +70,9 @@ class _$AbtractChildCopy<T> implements _$IAbtractChildCopy<T> {
     Object? integer = const $ImCopy(),
   }) {
     return AbtractChild<T>(
-      id == const $ImCopy() || id == null ? _value.id : id as String,
-      aValue == const $ImCopy() ? _value.aValue : aValue as T?,
-      integer == const $ImCopy() || integer == null
+      const $ImCopy() == id || id == null ? _value.id : id as String,
+      const $ImCopy() == aValue ? _value.aValue : aValue as T?,
+      const $ImCopy() == integer || integer == null
           ? _value.integer
           : integer as int,
     );

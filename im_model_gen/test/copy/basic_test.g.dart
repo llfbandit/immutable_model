@@ -43,7 +43,7 @@ class _$CopyNonOptionalCopy implements _$ICopyNonOptionalCopy {
     Object? id = const $ImCopy(),
   }) {
     return CopyNonOptional(
-      id: id == const $ImCopy() || id == null ? _value.id : id as String,
+      id: const $ImCopy() == id || id == null ? _value.id : id as String,
     );
   }
 }
@@ -85,7 +85,7 @@ class _$CopyOptionalCopy implements _$ICopyOptionalCopy {
     Object? id = const $ImCopy(),
   }) {
     return CopyOptional(
-      id: id == const $ImCopy() ? _value.id : id as String?,
+      id: const $ImCopy() == id ? _value.id : id as String?,
     );
   }
 }

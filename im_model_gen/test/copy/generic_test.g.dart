@@ -51,20 +51,20 @@ class _$GenericsCopy<G, T extends Iterable<G>>
     Object? nullableGeneric = const $ImCopy(),
   }) {
     return Generics<G, T>(
-      basicGeneric: basicGeneric == const $ImCopy() || basicGeneric == null
+      basicGeneric: const $ImCopy() == basicGeneric || basicGeneric == null
           ? _value.basicGeneric
           : ImList(basicGeneric as List<int>),
       genericTemplate:
-          genericTemplate == const $ImCopy() || genericTemplate == null
+          const $ImCopy() == genericTemplate || genericTemplate == null
               ? _value.genericTemplate
               : ImList(genericTemplate as List<T>),
-      deepNestedGeneric: deepNestedGeneric == const $ImCopy()
+      deepNestedGeneric: const $ImCopy() == deepNestedGeneric
           ? _value.deepNestedGeneric
           : deepNestedGeneric == null
               ? null
               : ImList(deepNestedGeneric as List<ImList<ImList<int?>?>>),
       nullableGeneric:
-          nullableGeneric == const $ImCopy() || nullableGeneric == null
+          const $ImCopy() == nullableGeneric || nullableGeneric == null
               ? _value.nullableGeneric
               : ImList(nullableGeneric as List<String?>),
     );

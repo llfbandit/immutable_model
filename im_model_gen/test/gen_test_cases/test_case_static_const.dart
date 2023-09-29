@@ -38,7 +38,7 @@ class _$StaticCopy implements _$IStaticCopy {
     Object? id = const $ImCopy(),
   }) {
     return Static(
-      id: id == const $ImCopy() || id == null ? _value.id : id as String,
+      id: const $ImCopy() == id || id == null ? _value.id : id as String,
     );
   }
 }
