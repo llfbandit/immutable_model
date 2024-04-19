@@ -191,7 +191,7 @@ class CopyWithGenerator {
     );
 
     final mixinCode = '''
-      ${"_\$I${classInfo.element.name}Copy$typeParametersNames get copyWith => _\$${classInfo.element.name}Copy$typeParametersNames(this as ${classInfo.element.name});"}
+      ${"_\$I${classInfo.element.name}Copy$typeParametersNames get copyWith => _\$${classInfo.element.name}Copy$typeParametersNames(this as ${classInfo.element.name}$typeParametersNames);"}
     ''';
 
     return GenResult(

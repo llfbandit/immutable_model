@@ -6,7 +6,7 @@ extension _$InvertedImExt<T> on Inverted<T> {
 }
 
 mixin _$InvertedMixin<T> {
-  _$IInvertedCopy<T> get copyWith => _$InvertedCopy<T>(this as Inverted);
+  _$IInvertedCopy<T> get copyWith => _$InvertedCopy<T>(this as Inverted<T>);
 
   @override
   int get hashCode => (this as Inverted)._eq().hashCode;

@@ -35,7 +35,7 @@ extension _$AbtractChildImExt<T> on AbtractChild<T> {
 
 mixin _$AbtractChildMixin<T> {
   _$IAbtractChildCopy<T> get copyWith =>
-      _$AbtractChildCopy<T>(this as AbtractChild);
+      _$AbtractChildCopy<T>(this as AbtractChild<T>);
 
   @override
   int get hashCode => (this as AbtractChild)._eq().hashCode;

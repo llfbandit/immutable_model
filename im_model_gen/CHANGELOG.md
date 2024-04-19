@@ -1,3 +1,6 @@
+## 1.2.3
+- fix: Generate type parameters if any to copyWith in mixin.
+
 ## 1.2.2
 - fix: Make generated extension private & move copyWith to mixin.
 

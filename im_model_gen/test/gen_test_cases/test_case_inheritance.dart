@@ -16,7 +16,7 @@ extension _$ChildImExt<T> on Child<T> {
 }
 
 mixin _$ChildMixin<T> {
-  _$IChildCopy<T> get copyWith => _$ChildCopy<T>(this as Child);
+  _$IChildCopy<T> get copyWith => _$ChildCopy<T>(this as Child<T>);
 
   @override
   int get hashCode => (this as Child)._eq().hashCode;

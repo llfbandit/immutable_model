@@ -15,7 +15,7 @@ extension _$CollectionClassImExt<T extends Iterable<int>>
 
 mixin _$CollectionClassMixin<T extends Iterable<int>> {
   _$ICollectionClassCopy<T> get copyWith =>
-      _$CollectionClassCopy<T>(this as CollectionClass);
+      _$CollectionClassCopy<T>(this as CollectionClass<T>);
 
   @override
   int get hashCode => (this as CollectionClass)._eq().hashCode;

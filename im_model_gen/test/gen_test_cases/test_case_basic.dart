@@ -6,7 +6,8 @@ extension _$BasicClassImExt<T extends Iterable<int>> on BasicClass<T> {
 }
 
 mixin _$BasicClassMixin<T extends Iterable<int>> {
-  _$IBasicClassCopy<T> get copyWith => _$BasicClassCopy<T>(this as BasicClass);
+  _$IBasicClassCopy<T> get copyWith =>
+      _$BasicClassCopy<T>(this as BasicClass<T>);
 
   @override
   int get hashCode => (this as BasicClass)._eq().hashCode;
