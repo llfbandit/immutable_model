@@ -12,10 +12,8 @@ class _EqualMixinTemplate {
     required List<String> props,
   }) {
     final className = classElement.name;
-    final mixinName = '_\$${className}Mixin';
 
-    final generatedCode = '''
-      mixin $mixinName${typeParametersString(classElement, false)} {
+    final mixinCode = '''
         @override
         int get hashCode => (this as $className)._eq().hashCode;
 
@@ -27,13 +25,12 @@ class _EqualMixinTemplate {
 
         @override
         String toString() => (this as $className)._eq().toString();
-      }
       ''';
 
     final extensionCode = 'dynamic _eq() => (${props.join(', ')});';
 
     return GenResult(
-      generatedCode: generatedCode,
+      mixinCode: mixinCode,
       extensionCode: extensionCode,
     );
   }

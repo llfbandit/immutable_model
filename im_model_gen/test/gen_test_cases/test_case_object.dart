@@ -1,14 +1,13 @@
 part of 'index.dart';
 
 @ShouldGenerate(r'''
-extension $CastObjectImExt on CastObject {
+extension _$CastObjectImExt on CastObject {
   dynamic _eq() => (dyn, obj, objOptional);
-
-  // ignore: library_private_types_in_public_api
-  _$ICastObjectCopy get copyWith => _$CastObjectCopy(this);
 }
 
 mixin _$CastObjectMixin {
+  _$ICastObjectCopy get copyWith => _$CastObjectCopy(this as CastObject);
+
   @override
   int get hashCode => (this as CastObject)._eq().hashCode;
 

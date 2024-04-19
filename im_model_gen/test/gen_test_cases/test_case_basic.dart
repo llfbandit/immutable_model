@@ -1,14 +1,13 @@
 part of 'index.dart';
 
 @ShouldGenerate(r'''
-extension $BasicClassImExt<T extends Iterable<int>> on BasicClass<T> {
+extension _$BasicClassImExt<T extends Iterable<int>> on BasicClass<T> {
   dynamic _eq() => (optional, immutable, nullableImmutable);
-
-  // ignore: library_private_types_in_public_api
-  _$IBasicClassCopy<T> get copyWith => _$BasicClassCopy<T>(this);
 }
 
 mixin _$BasicClassMixin<T extends Iterable<int>> {
+  _$IBasicClassCopy<T> get copyWith => _$BasicClassCopy<T>(this as BasicClass);
+
   @override
   int get hashCode => (this as BasicClass)._eq().hashCode;
 

@@ -1,14 +1,13 @@
 part of 'index.dart';
 
 @ShouldGenerate(r'''
-extension $InvertedImExt<T> on Inverted<T> {
+extension _$InvertedImExt<T> on Inverted<T> {
   dynamic _eq() => (id);
-
-  // ignore: library_private_types_in_public_api
-  _$IInvertedCopy<T> get copyWith => _$InvertedCopy<T>(this);
 }
 
 mixin _$InvertedMixin<T> {
+  _$IInvertedCopy<T> get copyWith => _$InvertedCopy<T>(this as Inverted);
+
   @override
   int get hashCode => (this as Inverted)._eq().hashCode;
 

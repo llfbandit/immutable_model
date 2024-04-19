@@ -1,7 +1,8 @@
 part of 'index.dart';
 
 @ShouldGenerate(r'''
-extension $CollectionClassImExt<T extends Iterable<int>> on CollectionClass<T> {
+extension _$CollectionClassImExt<T extends Iterable<int>>
+    on CollectionClass<T> {
   dynamic _eq() => (
         mandatoryList,
         optionalList,
@@ -10,12 +11,12 @@ extension $CollectionClassImExt<T extends Iterable<int>> on CollectionClass<T> {
         mandatorySet,
         optionalSet
       );
-
-  // ignore: library_private_types_in_public_api
-  _$ICollectionClassCopy<T> get copyWith => _$CollectionClassCopy<T>(this);
 }
 
 mixin _$CollectionClassMixin<T extends Iterable<int>> {
+  _$ICollectionClassCopy<T> get copyWith =>
+      _$CollectionClassCopy<T>(this as CollectionClass);
+
   @override
   int get hashCode => (this as CollectionClass)._eq().hashCode;
 

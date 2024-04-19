@@ -170,7 +170,7 @@ class CopyWithGenerator {
         (classInfo.annotation.ignoreCopy &&
             classInfo.fields
                 .every((f) => (f.annotation?.ignoreCopy ?? true)))) {
-      return const GenResult(generatedCode: '', extensionCode: '');
+      return const GenResult(mixinCode: '', extensionCode: '');
     }
 
     final typeParametersAnnotation = typeParametersString(
@@ -190,14 +190,14 @@ class CopyWithGenerator {
       parameters,
     );
 
-    final extensionCode = '''
-      // ignore: library_private_types_in_public_api
-      ${"_\$I${classInfo.element.name}Copy$typeParametersNames get copyWith => _\$${classInfo.element.name}Copy$typeParametersNames(this);"}
+    final mixinCode = '''
+      ${"_\$I${classInfo.element.name}Copy$typeParametersNames get copyWith => _\$${classInfo.element.name}Copy$typeParametersNames(this as ${classInfo.element.name});"}
     ''';
 
     return GenResult(
       generatedCode: generatedCode,
-      extensionCode: extensionCode,
+      extensionCode: '',
+      mixinCode: mixinCode,
     );
   }
 

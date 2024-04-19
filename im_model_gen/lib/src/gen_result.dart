@@ -1,7 +1,11 @@
 class GenResult {
-  const GenResult({required this.generatedCode, required this.extensionCode});
+  const GenResult({
+    this.mixinCode = '',
+    this.extensionCode = '',
+    this.generatedCode = '',
+  });
 
-  final String generatedCode;
-
+  final String mixinCode;
   final String extensionCode;
+  final String generatedCode;
 }

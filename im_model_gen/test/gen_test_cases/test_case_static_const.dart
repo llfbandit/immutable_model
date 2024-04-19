@@ -1,14 +1,13 @@
 part of 'index.dart';
 
 @ShouldGenerate(r'''
-extension $StaticImExt on Static {
+extension _$StaticImExt on Static {
   dynamic _eq() => (id, integer);
-
-  // ignore: library_private_types_in_public_api
-  _$IStaticCopy get copyWith => _$StaticCopy(this);
 }
 
 mixin _$StaticMixin {
+  _$IStaticCopy get copyWith => _$StaticCopy(this as Static);
+
   @override
   int get hashCode => (this as Static)._eq().hashCode;
 

@@ -34,28 +34,28 @@ class CopyNestedList with _$CopyNestedListMixin {
 void main() {
   test('CopyList', () {
     expect(
-      const CopyList(coll: ImList.empty()).copyWith(coll: ['test']).coll,
+      CopyList(coll: ImList.empty()).copyWith(coll: ['test']).coll,
       ['test'].immut,
     );
   });
 
   test('CopyMap', () {
     expect(
-      const CopyMap(coll: ImMap.empty()).copyWith(coll: {'test': 'test'}).coll,
+      CopyMap(coll: ImMap.empty()).copyWith(coll: {'test': 'test'}).coll,
       {'test': 'test'}.immut,
     );
   });
 
   test('CopySet', () {
     expect(
-      const CopySet(coll: ImSet.empty()).copyWith(coll: {'test'}).coll,
+      CopySet(coll: ImSet.empty()).copyWith(coll: {'test'}).coll,
       {'test'}.immut,
     );
   });
 
   test('CopyNestedList', () {
     expect(
-      const CopyNestedList(coll: ImList.empty()).copyWith(coll: [
+      CopyNestedList(coll: ImList.empty()).copyWith(coll: [
         ['test'].immut
       ]).coll,
       [

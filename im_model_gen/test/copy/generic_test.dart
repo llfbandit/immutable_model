@@ -20,7 +20,7 @@ class Generics<G, T extends Iterable<G>> with _$GenericsMixin<G, T> {
 
 void main() {
   test('Generics', () {
-    const generic = Generics<bool, ImList<bool>>(
+    final generic = Generics<bool, ImList<bool>>(
       basicGeneric: ImList.empty(),
       genericTemplate: ImList.empty(),
       nullableGeneric: ImList.empty(),

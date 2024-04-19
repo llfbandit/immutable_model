@@ -1,3 +1,6 @@
+## 1.2.2
+- fix: Make generated extension private & move copyWith to mixin.
+
 ## 1.2.1
 - fix: copy generation with covariant comparisons.
 
@@ -22,5 +25,4 @@
 - fix: lower dependency bounds.
 
 ## 1.0.0
-
 - Initial version.

@@ -1,14 +1,13 @@
 part of 'index.dart';
 
 @ShouldGenerate(r'''
-extension $GetterImExt on Getter {
+extension _$GetterImExt on Getter {
   dynamic _eq() => (id);
-
-  // ignore: library_private_types_in_public_api
-  _$IGetterCopy get copyWith => _$GetterCopy(this);
 }
 
 mixin _$GetterMixin {
+  _$IGetterCopy get copyWith => _$GetterCopy(this as Getter);
+
   @override
   int get hashCode => (this as Getter)._eq().hashCode;
 

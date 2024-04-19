@@ -26,19 +26,19 @@ class Example with _$ExampleMixin { // Associate your class with the generated m
   final String? name;
   final ImList<int> values; // ImList is part of this package.
 
-  const Example(this.id, {this.name, this.values = const ImList.empty()});
+  const Example(this.id, {this.name, required this.values});
 }
 ```
 
 ```dart
-const example = Example(id: 'id');
+const example = Example(id: 'id', values: ImList.empty());
 
 // Copy
 example.copyWith(text: 'test'); // Example(id: "id", text: test, values; [])
 example.copyWith(text: null); // Example(id: "id", text: null, values: [])
 
 // Equality
-const exampleTwo = Example(id: 'id');
+const exampleTwo = Example(id: 'id', values: ImList.empty());
 example == exampleTwo; // true
 example == exampleTwo.copyWith(values: [1]); // false
 
@@ -66,7 +66,7 @@ There are two annotations available.
   - ignoreEqual: allows to ignore the equality generation. Defaults to `null`.
 
 ## Collections
-This package provides immutable collections by simply wrapping the core ones.
+This package provides immutable/comparable/hashable collections by simply wrapping the core ones.
 
 You must prefix all your mutable collections to their immutable counterpart.
 - List => ImList
@@ -76,7 +76,7 @@ You must prefix all your mutable collections to their immutable counterpart.
 The code generator will provide error messages if it detects mutable collections.
 
 To facilitate mutation on collections there are two getters:
-- mut => to get a mutable version of the collection. You can use it at no cost, the collection is copied __only__ if you modify it.
+- mut => to get a mutable version of the collection. You can use it at __no cost__, the collection is copied __only__ if you modify it.
 - immut => to get the immutable version of the collection.
 
 Look at the example below for demonstration.

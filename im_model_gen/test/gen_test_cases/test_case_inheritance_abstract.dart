@@ -1,7 +1,7 @@
 part of 'index.dart';
 
 @ShouldGenerate(r'''
-extension $AbtractImExt<T> on Abtract<T> {
+extension _$AbtractImExt<T> on Abtract<T> {
   dynamic _eq() => (id, aValue);
 }
 
@@ -29,14 +29,14 @@ abstract class Abtract<T> {
 }
 
 @ShouldGenerate(r'''
-extension $AbtractChildImExt<T> on AbtractChild<T> {
+extension _$AbtractChildImExt<T> on AbtractChild<T> {
   dynamic _eq() => (id, aValue, integer);
-
-  // ignore: library_private_types_in_public_api
-  _$IAbtractChildCopy<T> get copyWith => _$AbtractChildCopy<T>(this);
 }
 
 mixin _$AbtractChildMixin<T> {
+  _$IAbtractChildCopy<T> get copyWith =>
+      _$AbtractChildCopy<T>(this as AbtractChild);
+
   @override
   int get hashCode => (this as AbtractChild)._eq().hashCode;
 

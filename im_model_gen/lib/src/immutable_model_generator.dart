@@ -26,11 +26,12 @@ class ImmutableModelGenerator extends GeneratorForAnnotation<ImModel> {
       annotation,
     );
 
-    final extName = '\$${classElement.name}ImExt';
+    final extName = '_\$${classElement.name}ImExt';
+    final mixinName = '_\$${classElement.name}Mixin';
 
     final result = await Future.wait([
-      const EqualGenerator().generate(classInfo, extensionName: extName),
       const CopyWithGenerator().generate(classInfo),
+      const EqualGenerator().generate(classInfo, extensionName: extName),
     ], eagerError: true);
 
     final typeParametersAnnotation = typeParametersString(classElement, false);
@@ -38,14 +39,16 @@ class ImmutableModelGenerator extends GeneratorForAnnotation<ImModel> {
 
     return '''
       extension $extName$typeParametersAnnotation on ${classElement.name}$typeParametersNames {
-        ${result[0].extensionCode}
-
         ${result[1].extensionCode}
       }
 
-      ${result[0].generatedCode}
+      mixin $mixinName$typeParametersAnnotation {
+        ${result[0].mixinCode}
 
-      ${result[1].generatedCode}
+        ${result[1].mixinCode}
+      }      
+
+      ${result[0].generatedCode}
     ''';
   }
 }

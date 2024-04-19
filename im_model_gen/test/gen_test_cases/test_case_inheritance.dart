@@ -11,14 +11,13 @@ class Parent<T> {
 }
 
 @ShouldGenerate(r'''
-extension $ChildImExt<T> on Child<T> {
+extension _$ChildImExt<T> on Child<T> {
   dynamic _eq() => (id, collection);
-
-  // ignore: library_private_types_in_public_api
-  _$IChildCopy<T> get copyWith => _$ChildCopy<T>(this);
 }
 
 mixin _$ChildMixin<T> {
+  _$IChildCopy<T> get copyWith => _$ChildCopy<T>(this as Child);
+
   @override
   int get hashCode => (this as Child)._eq().hashCode;
 

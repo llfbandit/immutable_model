@@ -1,14 +1,13 @@
 part of 'index.dart';
 
 @ShouldGenerate(r'''
-extension $FactoryImExt on Factory {
+extension _$FactoryImExt on Factory {
   dynamic _eq() => (coll);
-
-  // ignore: library_private_types_in_public_api
-  _$IFactoryCopy get copyWith => _$FactoryCopy(this);
 }
 
 mixin _$FactoryMixin {
+  _$IFactoryCopy get copyWith => _$FactoryCopy(this as Factory);
+
   @override
   int get hashCode => (this as Factory)._eq().hashCode;
 
