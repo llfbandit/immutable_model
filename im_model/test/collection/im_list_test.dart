@@ -20,7 +20,7 @@ void main() {
     });
 
     test('empty constructor', () {
-      expect(const ImList<int>.empty().length, 0);
+      expect(ImList<int>.empty().length, 0);
     });
 
     test('does not implement List', () {
@@ -86,11 +86,11 @@ void main() {
     });
 
     test('Iterable.isEmpty', () {
-      expect(const ImList<int>.empty().isEmpty, true);
+      expect(ImList<int>.empty().isEmpty, true);
     });
 
     test('Iterable.isNotEmpty', () {
-      expect(const ImList<int>.empty().isNotEmpty, false);
+      expect(ImList<int>.empty().isNotEmpty, false);
     });
 
     test('Iterable<E>', () {

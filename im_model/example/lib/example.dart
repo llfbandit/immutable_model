@@ -35,7 +35,7 @@ class Child2<T> extends Child<T> with _$Child2Mixin<T> {
     super.id,
     super.aValue,
     this.foo, {
-    super.collection = const ImList.empty(),
+    required super.collection,
   });
 }
 

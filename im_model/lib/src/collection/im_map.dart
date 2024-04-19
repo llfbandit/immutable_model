@@ -3,7 +3,7 @@ import 'package:im_model/src/collection/internal/copy_on_write_map.dart';
 
 /// A [Map] that is immutable.
 class ImMap<K, V> {
-  ImMap._(Map<K, V> other) : _inner = Map<K, V>.from(other);
+  ImMap._(Map<K, V> other) : _inner = Map<K, V>.of(other);
 
   factory ImMap([Map<K, V>? other]) {
     if (other == null) {
@@ -15,9 +15,10 @@ class ImMap<K, V> {
     return ImMap._(other);
   }
 
-  const ImMap.empty() : _inner = const {};
+  ImMap.empty() : _inner = <K, V>{};
 
   final Map<K, V> _inner;
+  int? _hashCode;
 
   /// Gets a mutable copy of the collection [ImMap.toMap]
   Map<K, V> get mut => toMap();
@@ -44,7 +45,7 @@ class ImMap<K, V> {
   /// pairs in any order. Then, the `hashCode` is guaranteed to be the same.
   @override
   int get hashCode {
-    return const Hash().hashIterable(
+    return _hashCode ??= const Hash().hashIterable(
       _inner.keys
           .map((key) => const Hash().hash2(key.hashCode, _inner[key].hashCode))
           .toList(growable: false)

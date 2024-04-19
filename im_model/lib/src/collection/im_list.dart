@@ -3,7 +3,7 @@ import 'package:im_model/src/collection/internal/copy_on_write_list.dart';
 
 /// A [List] that is immutable.
 class ImList<E> implements Iterable<E> {
-  ImList._(Iterable<E> items) : _inner = List<E>.from(items);
+  ImList._(Iterable<E> items) : _inner = List<E>.of(items);
 
   factory ImList([Iterable<E>? items]) {
     if (items == null) {
@@ -15,9 +15,10 @@ class ImList<E> implements Iterable<E> {
     return ImList._(items);
   }
 
-  const ImList.empty() : _inner = const [];
+  ImList.empty() : _inner = [];
 
   final List<E> _inner;
+  int? _hashCode;
 
   /// Gets a mutable copy of the collection [ImList.toList]
   List<E> get mut => toList(growable: true);
@@ -175,7 +176,9 @@ class ImList<E> implements Iterable<E> {
   /// A `ImList` is only equal to another with equal elements in
   /// the same order. Then, the `hashCode` is guaranteed to be the same.
   @override
-  int get hashCode => _inner.length ^ const Hash().hashIterable(_inner);
+  int get hashCode {
+    return _hashCode ??= _inner.length ^ const Hash().hashIterable(_inner);
+  }
 
   /// Deep equality.
   ///

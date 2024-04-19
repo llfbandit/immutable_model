@@ -1,3 +1,6 @@
+## 1.1.1
+- fix: Remove empty constructor as const.
+
 ## 1.1.0
 - feat: Remove equality methods.
 

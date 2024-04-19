@@ -19,7 +19,7 @@ void main() {
     });
 
     test('empty constructor', () {
-      expect(const ImMap<int, int>.empty().length, 0);
+      expect(ImMap<int, int>.empty().length, 0);
     });
 
     test('instantiates empty by default', () {

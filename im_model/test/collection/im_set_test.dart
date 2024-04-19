@@ -18,14 +18,14 @@ void main() {
     });
 
     test('empty constructor', () {
-      expect(const ImSet<int>.empty().length, 0);
+      expect(ImSet<int>.empty().length, 0);
     });
 
     test('length', () {
       final coll = ImSet({'foo', 'bar'});
       expect(coll.length, 2);
 
-      expect(const ImSet<int>.empty().length, 0);
+      expect(ImSet<int>.empty().length, 0);
     });
 
     test('iterator', () {
