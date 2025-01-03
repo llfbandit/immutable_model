@@ -1,3 +1,6 @@
+## 1.2.1
+- fix: lower meta dependency bounds.
+
 ## 1.2.0
 - chore: Updated the SDK lower bound to 3.6.
 - chore: Updated dependencies.
@@ -20,5 +23,4 @@
 - chore: lower test dependency bounds.
 
 ## 1.0.0
-
 - Initial version.
