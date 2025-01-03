@@ -9,7 +9,7 @@ Project targets:
 - to be not too intrusive.
 
 ## Requirements
-Requirement dart SDK >= 3.0.0
+Requirement dart SDK >= 3.6.0
 
 ## Usage
 

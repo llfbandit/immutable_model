@@ -22,11 +22,7 @@ mixin _$CastObjectMixin {
 }
 
 abstract interface class _$ICastObjectCopy {
-  CastObject call({
-    Object? obj,
-    Object? objOptional,
-    dynamic dyn,
-  });
+  CastObject call({Object? obj, Object? objOptional, dynamic dyn});
 }
 
 class _$CastObjectCopy implements _$ICastObjectCopy {

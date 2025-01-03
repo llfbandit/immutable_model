@@ -274,7 +274,7 @@ class ConstructorParameterInfo extends FieldInfo {
           element: fieldInfo.element,
           nullable: fieldInfo.element.type.nullabilitySuffix !=
               NullabilitySuffix.none,
-          type: fieldInfo.element.type.getDisplayString(withNullability: true),
+          type: fieldInfo.element.type.getDisplayString(),
         );
 
   /// True if the field is positioned in the constructor

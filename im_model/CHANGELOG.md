@@ -1,3 +1,7 @@
+## 1.2.0
+- chore: Updated the SDK lower bound to 3.6.
+- chore: Updated dependencies.
+
 ## 1.1.1
 - fix: Remove empty constructor as const.
 

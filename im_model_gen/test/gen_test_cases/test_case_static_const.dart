@@ -22,9 +22,7 @@ mixin _$StaticMixin {
 }
 
 abstract interface class _$IStaticCopy {
-  Static call({
-    String? id,
-  });
+  Static call({String? id});
 }
 
 class _$StaticCopy implements _$IStaticCopy {
@@ -33,9 +31,7 @@ class _$StaticCopy implements _$IStaticCopy {
   final Static _value;
 
   @override
-  Static call({
-    Object? id = const $ImCopy(),
-  }) {
+  Static call({Object? id = const $ImCopy()}) {
     return Static(
       id: const $ImCopy() == id || id == null ? _value.id : id as String,
     );

@@ -23,10 +23,7 @@ mixin _$BasicClassMixin<T extends Iterable<int>> {
 }
 
 abstract interface class _$IBasicClassCopy<T extends Iterable<int>> {
-  BasicClass<T> call({
-    String? id,
-    T? optional,
-  });
+  BasicClass<T> call({String? id, T? optional});
 }
 
 class _$BasicClassCopy<T extends Iterable<int>>

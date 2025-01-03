@@ -22,9 +22,7 @@ mixin _$GetterMixin {
 }
 
 abstract interface class _$IGetterCopy {
-  Getter call({
-    String? id,
-  });
+  Getter call({String? id});
 }
 
 class _$GetterCopy implements _$IGetterCopy {
@@ -33,9 +31,7 @@ class _$GetterCopy implements _$IGetterCopy {
   final Getter _value;
 
   @override
-  Getter call({
-    Object? id = const $ImCopy(),
-  }) {
+  Getter call({Object? id = const $ImCopy()}) {
     return Getter(
       id: const $ImCopy() == id || id == null ? _value.id : id as String,
     );

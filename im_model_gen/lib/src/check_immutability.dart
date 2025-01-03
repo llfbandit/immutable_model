@@ -55,7 +55,7 @@ class CheckImmutability {
 
         if (nestedCollRegex.hasMatch(type)) {
           throw InvalidGenerationSourceError(
-            '"${parameter.getDisplayString(withNullability: true)}" is a mutable nested collection, you must use "ImList/ImMap/ImSet" instead to ensure immutability.',
+            '"${parameter.getDisplayString()}" is a mutable nested collection, you must use "ImList/ImMap/ImSet" instead to ensure immutability.',
             element: parameter,
           );
         }

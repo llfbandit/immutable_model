@@ -11,6 +11,12 @@ ide:
 
 command:
   bootstrap:
+    environment:
+      sdk: ">=3.6.0 <4.0.0"
+    dependencies:
+      # Linter rules (https://pub.dev/packages/lints)
+      lints: ^5.1.1
+
     runPubGetInParallel: true
 
   version:

@@ -22,9 +22,7 @@ mixin _$InvertedMixin<T> {
 }
 
 abstract interface class _$IInvertedCopy<T> {
-  Inverted<T> call({
-    T? aValue,
-  });
+  Inverted<T> call({T? aValue});
 }
 
 class _$InvertedCopy<T> implements _$IInvertedCopy<T> {
@@ -33,9 +31,7 @@ class _$InvertedCopy<T> implements _$IInvertedCopy<T> {
   final Inverted<T> _value;
 
   @override
-  Inverted<T> call({
-    Object? aValue = const $ImCopy(),
-  }) {
+  Inverted<T> call({Object? aValue = const $ImCopy()}) {
     return Inverted<T>(
       _value.id,
       const $ImCopy() == aValue ? _value.aValue : aValue as T?,

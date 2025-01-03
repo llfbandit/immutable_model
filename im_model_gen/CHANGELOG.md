@@ -1,3 +1,7 @@
+## 1.3.0
+- chore: Updated the SDK lower bound to 3.6.
+- chore: Updated dependencies.
+
 ## 1.2.3
 - fix: Generate type parameters if any to copyWith in mixin.
 

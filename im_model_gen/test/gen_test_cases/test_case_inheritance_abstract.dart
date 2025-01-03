@@ -51,11 +51,7 @@ mixin _$AbtractChildMixin<T> {
 }
 
 abstract interface class _$IAbtractChildCopy<T> {
-  AbtractChild<T> call({
-    String? id,
-    T? aValue,
-    int? integer,
-  });
+  AbtractChild<T> call({String? id, T? aValue, int? integer});
 }
 
 class _$AbtractChildCopy<T> implements _$IAbtractChildCopy<T> {

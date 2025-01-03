@@ -105,7 +105,7 @@ class ClassHierarchyInfo {
       return FieldInfo(
         element: field,
         nullable: field.type.nullabilitySuffix != NullabilitySuffix.none,
-        type: field.type.getDisplayString(withNullability: true),
+        type: field.type.getDisplayString(),
         annotation: _readFieldAnnotation(field),
       );
     }).toList(growable: false);
