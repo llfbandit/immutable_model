@@ -10,7 +10,7 @@ dependencies:
   analyzer: '>=6.9.0 <8.0.0'  # https://pub.dev/packages/analyzer
   build: ^2.4.2               # https://pub.dev/packages/build
   im_model: ^1.1.1
-  meta: ^1.16.0               # https://pub.dev/packages/meta
+  meta: ^1.15.0               # https://pub.dev/packages/meta
   source_gen: ^2.0.0          # https://pub.dev/packages/source_gen
 
 dev_dependencies:
