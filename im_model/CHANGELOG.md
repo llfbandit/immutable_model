@@ -1,3 +1,6 @@
+## 1.3.0
+- chore: Updated the SDK lower bound to 3.8.
+
 ## 1.2.1
 - fix: lower meta dependency bounds.
 

@@ -1,13 +1,13 @@
-import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:im_model_gen/src/utils.dart';
 import 'package:source_gen/source_gen.dart';
 
 class CheckImmutability {
   CheckImmutability();
 
-  ClassElement check(Element element) {
+  ClassElement2 check(Element2 element) {
     // Check if the annotation is set up on class element
-    if (element is! ClassElement) {
+    if (element is! ClassElement2) {
       throw InvalidGenerationSourceError(
         'Only classes can be annotated with "ImModel". "$element" is not a class.',
         element: element,
@@ -15,7 +15,7 @@ class CheckImmutability {
     }
 
     // Check class members
-    for (var field in element.fields) {
+    for (var field in element.fields2) {
       // isSynthetic is to detect getter
       if (!field.isSynthetic && !field.isFinal && !field.isConst) {
         throw InvalidGenerationSourceError(
@@ -46,16 +46,16 @@ class CheckImmutability {
       }
     }
 
-    for (var constructor in element.constructors) {
+    for (var constructor in element.constructors2) {
       // Don't check for immutable collections in factory contructors.
       if (constructor.isFactory) continue;
 
-      for (var parameter in constructor.parameters) {
+      for (var parameter in constructor.formalParameters) {
         final type = parameter.type.toString();
 
         if (nestedCollRegex.hasMatch(type)) {
           throw InvalidGenerationSourceError(
-            '"${parameter.getDisplayString()}" is a mutable nested collection, you must use "ImList/ImMap/ImSet" instead to ensure immutability.',
+            '"${parameter.displayString2()}" is a mutable nested collection, you must use "ImList/ImMap/ImSet" instead to ensure immutability.',
             element: parameter,
           );
         }

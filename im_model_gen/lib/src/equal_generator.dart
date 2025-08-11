@@ -1,4 +1,4 @@
-import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:im_model_gen/src/class_hierarchy_info.dart';
 import 'package:im_model_gen/src/gen_result.dart';
 import 'package:im_model_gen/src/immutable_annotation.dart';
@@ -8,10 +8,10 @@ class _EqualMixinTemplate {
   const _EqualMixinTemplate();
 
   GenResult generate(
-    InterfaceElement classElement, {
+    InterfaceElement2 classElement, {
     required List<String> props,
   }) {
-    final className = classElement.name;
+    final className = classElement.name3;
 
     final mixinCode = '''
         @override
@@ -60,7 +60,7 @@ class EqualGenerator {
 
     list.addAll(classInfo.fields
         .where((field) => _includeField(classInfo.annotation, field))
-        .map((field) => field.element.name)
+        .map((field) => field.element.name3!)
         .toList(growable: false));
 
     return list;
@@ -72,8 +72,9 @@ class EqualGenerator {
   ) {
     if (field.element.isStatic) return false;
     if (field.element.isSynthetic) return false; // Getters
-    if (field.element.getter == null) return false;
-    if (field.element.name == 'props') return false;
+    if (field.element.getter2 == null) return false;
+    if (field.element.name3 == 'props') return false;
+    if (field.element.name3 == null) return false;
 
     if (field.annotation != null) {
       return !(field.annotation!.ignoreEqual ?? classAnnotation.ignoreEqual);

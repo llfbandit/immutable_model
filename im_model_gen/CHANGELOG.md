@@ -1,3 +1,10 @@
+## 1.4.0
+- chore: Updated the SDK lower bound to 3.8.
+- chore: Migrated to new analyzer element2 APIs.
+- chore: Updated `analyzer` to '>=7.0.0 <9.0.0'.
+- chore: Updated `build` to ^3.0.0.
+- chore: Updated `source_gen` to ^3.0.0.
+
 ## 1.3.1
 - fix: lower meta dependency bounds.
 

@@ -1,5 +1,5 @@
 name: im_model
-version: 1.2.1
+version: 1.3.0
 description: Annotation for immutable model to generate `copyWith` and == (equal) operator.
 homepage: https://github.com/llfbandit/immutable_model/tree/master/im_model
 
@@ -10,6 +10,6 @@ dependencies:
   meta: ^1.15.0               # https://pub.dev/packages/meta
 
 dev_dependencies:
-  lints: ^5.1.1               # https://pub.dev/packages/lints
+  lints: ^6.0.0               # https://pub.dev/packages/lints
 
   test: ^1.19.4               # https://pub.dev/packages/test

@@ -1,12 +1,10 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:analyzer/dart/constant/value.dart';
-import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
-import 'package:im_model_gen/src/utils.dart';
-import 'package:source_gen/source_gen.dart';
-
 import 'package:im_model/im_model.dart';
 import 'package:im_model_gen/src/immutable_annotation.dart';
+import 'package:im_model_gen/src/utils.dart';
+import 'package:source_gen/source_gen.dart';
 
 class ClassInfo {
   ClassInfo({
@@ -21,7 +19,7 @@ class ClassInfo {
   ClassInfo? superClass;
 
   /// Class element itself.
-  final InterfaceElement element;
+  final InterfaceElement2 element;
 
   /// The annotation attached to the class.
   final ImModelAnnotation annotation;
@@ -42,7 +40,7 @@ class FieldInfo {
   });
 
   // Field element itself.
-  final FieldElement element;
+  final FieldElement2 element;
 
   /// If the type is nullable.
   final bool nullable;
@@ -61,7 +59,7 @@ class ClassHierarchyInfo {
   final List<ClassInfo> classesInfo = [];
 
   ClassInfo getClassInfo(
-    ClassElement element,
+    ClassElement2 element,
     ConstantReader reader,
   ) {
     final existingClassInfo = _lookup(element);
@@ -74,14 +72,14 @@ class ClassHierarchyInfo {
     return classInfo;
   }
 
-  ClassInfo? _lookup(InterfaceElement element) {
+  ClassInfo? _lookup(InterfaceElement2 element) {
     return classesInfo.firstWhereOrNull(
       (classInfo) {
-        if (classInfo.element.name == element.name) return true;
+        if (classInfo.element.name3 == element.name3) return true;
 
         var superClass = classInfo.superClass;
         while (superClass != null) {
-          if (superClass.element.name == element.name) {
+          if (superClass.element.name3 == element.name3) {
             return true;
           }
           superClass = superClass.superClass;
@@ -93,13 +91,13 @@ class ClassHierarchyInfo {
   }
 
   ClassInfo _createClassInfo(
-    InterfaceElement element,
+    InterfaceElement2 element,
     ConstantReader reader,
     bool isAbstract,
   ) {
     final annotation = _readClassAnnotation(reader);
 
-    final fields = element.fields
+    final fields = element.fields2
         .where((field) => _includeField(annotation, field))
         .map((field) {
       return FieldInfo(
@@ -129,7 +127,7 @@ class ClassHierarchyInfo {
         _createClassInfo(
           ssClass,
           ConstantReader(superClass.annotation),
-          ssClass is ClassElement ? ssClass.isAbstract : true,
+          ssClass is ClassElement2 ? ssClass.isAbstract : true,
         );
 
     classInfo.superClass = superClassInfo;
@@ -137,16 +135,16 @@ class ClassHierarchyInfo {
     _addSuperClasses(superClassInfo);
   }
 
-  ({InterfaceElement superClass, DartObject annotation})? _getSuperClass(
-      InterfaceElement element) {
+  ({InterfaceElement2 superClass, DartObject annotation})? _getSuperClass(
+      InterfaceElement2 element) {
     final checkedSupertype = element.supertype;
     if (checkedSupertype == null) return null;
 
     const checker = TypeChecker.fromRuntime(ImModel);
-    final annotation = checker.firstAnnotationOf(checkedSupertype.element);
+    final annotation = checker.firstAnnotationOf(checkedSupertype.element3);
 
     return (annotation is DartObject)
-        ? (superClass: checkedSupertype.element, annotation: annotation)
+        ? (superClass: checkedSupertype.element3, annotation: annotation)
         : null;
   }
 
@@ -162,7 +160,7 @@ class ClassHierarchyInfo {
     );
   }
 
-  ImFieldAnnotation? _readFieldAnnotation(FieldElement element) {
+  ImFieldAnnotation? _readFieldAnnotation(FieldElement2 element) {
     const checker = TypeChecker.fromRuntime(ImField);
     final annotation = checker.firstAnnotationOf(element);
     if (annotation is! DartObject) {
@@ -178,11 +176,11 @@ class ClassHierarchyInfo {
 
   bool _includeField(
     ImModelAnnotation classAnnotation,
-    FieldElement fieldElement,
+    FieldElement2 fieldElement,
   ) {
     if (fieldElement.isStatic) return false;
-    if (fieldElement.getter == null) return false;
-    if (fieldElement.name == 'props') return false;
+    if (fieldElement.getter2 == null) return false;
+    if (fieldElement.name3 == 'props') return false;
 
     return true;
   }

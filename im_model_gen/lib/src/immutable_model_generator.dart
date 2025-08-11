@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:build/build.dart';
 import 'package:im_model/im_model.dart';
 import 'package:im_model_gen/src/check_immutability.dart';
@@ -14,8 +14,8 @@ class ImmutableModelGenerator extends GeneratorForAnnotation<ImModel> {
   final ClassHierarchyInfo classHierarchyInfo = ClassHierarchyInfo();
 
   @override
-  FutureOr<String> generateForAnnotatedElement(
-    Element element,
+  dynamic generateForAnnotatedElement(
+    Element2 element,
     ConstantReader annotation,
     BuildStep buildStep,
   ) async {
@@ -26,8 +26,8 @@ class ImmutableModelGenerator extends GeneratorForAnnotation<ImModel> {
       annotation,
     );
 
-    final extName = '_\$${classElement.name}ImExt';
-    final mixinName = '_\$${classElement.name}Mixin';
+    final extName = '_\$${classElement.name3}ImExt';
+    final mixinName = '_\$${classElement.name3}Mixin';
 
     final result = await Future.wait([
       const CopyWithGenerator().generate(classInfo),
@@ -38,7 +38,7 @@ class ImmutableModelGenerator extends GeneratorForAnnotation<ImModel> {
     final typeParametersNames = typeParametersString(classElement, true);
 
     return '''
-      extension $extName$typeParametersAnnotation on ${classElement.name}$typeParametersNames {
+      extension $extName$typeParametersAnnotation on ${classElement.name3}$typeParametersNames {
         ${result[1].extensionCode}
       }
 
