@@ -1,3 +1,6 @@
+## 1.4.1
+- chore: Updated `build` to ^3.0.0.
+
 ## 1.4.0
 - chore: Updated the SDK lower bound to 3.8.
 - chore: Migrated to new analyzer element2 APIs.
