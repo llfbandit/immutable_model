@@ -1,4 +1,4 @@
-import 'package:analyzer/dart/element/element2.dart';
+import 'package:analyzer/dart/element/element.dart';
 import 'package:im_model_gen/src/class_hierarchy_info.dart';
 
 final nestedCollRegex = RegExp(r'(\WList<)|(\WMap<)|(\WSet<)');
@@ -26,10 +26,10 @@ extension IterableExtension<T> on Iterable<T> {
 /// If `nameOnly` is `true`: `class MyClass<T extends String, Y>` returns `<T, Y>`.
 ///
 /// If `nameOnly` is `false`: `class MyClass<T extends String, Y>` returns `<T extends String, Y>`.
-String typeParametersString(InterfaceElement2 classElement, bool nameOnly) {
-  final names = classElement.typeParameters2
+String typeParametersString(InterfaceElement classElement, bool nameOnly) {
+  final names = classElement.typeParameters
       .map(
-        (e) => nameOnly ? e.name3 : e.displayString2(),
+        (e) => nameOnly ? e.name : e.displayString(),
       )
       .join(',');
 
@@ -38,7 +38,7 @@ String typeParametersString(InterfaceElement2 classElement, bool nameOnly) {
 
 FieldInfo? lookupFieldInfo(ClassInfo classInfo, String fieldName) {
   final fieldInfo = classInfo.fields.firstWhereOrNull((e) {
-    return e.element.name3 == fieldName;
+    return e.element.name == fieldName;
   });
 
   if (fieldInfo != null) {
@@ -51,7 +51,7 @@ FieldInfo? lookupFieldInfo(ClassInfo classInfo, String fieldName) {
 
 ClassInfo? lookupClassInfoFromField(ClassInfo classInfo, String fieldName) {
   final fieldInfo = classInfo.fields.firstWhereOrNull((e) {
-    return e.element.name3 == fieldName;
+    return e.element.name == fieldName;
   });
 
   if (fieldInfo != null) {

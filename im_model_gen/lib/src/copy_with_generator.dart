@@ -1,4 +1,4 @@
-import 'package:analyzer/dart/element/element2.dart';
+import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:im_model_gen/src/class_hierarchy_info.dart';
 import 'package:im_model_gen/src/gen_result.dart';
@@ -52,9 +52,9 @@ class _CopyImplTemplate {
           final type = (v.type.endsWith('?') || v.isDynamic)
               ? _convertToMutable(v)
               : '${_convertToMutable(v)}?';
-          return '$r $type ${v.element.name3},';
+          return '$r $type ${v.element.name},';
         } else {
-          return '$r Object? ${v.element.name3} = const \$ImCopy(),';
+          return '$r Object? ${v.element.name} = const \$ImCopy(),';
         }
       },
     );
@@ -62,17 +62,17 @@ class _CopyImplTemplate {
     final parameters = sortedFields.fold<String>(
       '',
       (r, v) {
-        final param = '$r ${v.isPositional ? '' : '${v.element.name3}:'}';
+        final param = '$r ${v.isPositional ? '' : '${v.element.name}:'}';
 
         if (_ignoreCopy(classInfo, v)) {
-          return '$param _value.${v.element.name3},';
+          return '$param _value.${v.element.name},';
         }
 
-        final nullCheck = v.nullable ? '' : '|| ${v.element.name3} == null';
+        final nullCheck = v.nullable ? '' : '|| ${v.element.name} == null';
 
         return '''$param
-        const \$ImCopy() == ${v.element.name3} $nullCheck
-        ? _value.${v.element.name3}
+        const \$ImCopy() == ${v.element.name} $nullCheck
+        ? _value.${v.element.name}
         : ${_convertToImmutable(v)},''';
       },
     );
@@ -114,34 +114,34 @@ class _CopyImplTemplate {
       final mutParam = _convertToMutable(param, keepOptional: false);
 
       if (param.nullable) {
-        return '${param.element.name3} == null ? null : ImList(${param.element.name3} as $mutParam)';
+        return '${param.element.name} == null ? null : ImList(${param.element.name} as $mutParam)';
       } else {
-        return 'ImList(${param.element.name3} as $mutParam)';
+        return 'ImList(${param.element.name} as $mutParam)';
       }
     }
     if (imMapRegex.hasMatch(type)) {
       final mutParam = _convertToMutable(param, keepOptional: false);
 
       if (param.nullable) {
-        return '${param.element.name3} == null ? null : ImMap(${param.element.name3} as $mutParam)';
+        return '${param.element.name} == null ? null : ImMap(${param.element.name} as $mutParam)';
       } else {
-        return 'ImMap(${param.element.name3} as $mutParam)';
+        return 'ImMap(${param.element.name} as $mutParam)';
       }
     }
     if (imSetRegex.hasMatch(type)) {
       final mutParam = _convertToMutable(param, keepOptional: false);
 
       if (param.nullable) {
-        return '${param.element.name3} == null ? null : ImSet(${param.element.name3} as $mutParam)';
+        return '${param.element.name} == null ? null : ImSet(${param.element.name} as $mutParam)';
       } else {
-        return 'ImSet(${param.element.name3} as $mutParam)';
+        return 'ImSet(${param.element.name} as $mutParam)';
       }
     }
 
     if (param.type == 'Object' || param.type == 'Object?') {
-      return param.element.name3;
+      return param.element.name;
     } else {
-      return '${param.element.name3} as ${param.type}';
+      return '${param.element.name} as ${param.type}';
     }
   }
 
@@ -151,7 +151,7 @@ class _CopyImplTemplate {
       return fieldIgnoreCopy;
     }
 
-    if (field.element.name3 case final name?) {
+    if (field.element.name case final name?) {
       return lookupClassInfoFromField(
             classInfo,
             name,
@@ -188,14 +188,14 @@ class CopyWithGenerator {
 
     final generatedCode = _CopyInterfaceTemplate().gen(
       classInfo,
-      classInfo.element.name3!,
+      classInfo.element.name!,
       typeParametersAnnotation,
       typeParametersNames,
       parameters,
     );
 
     final mixinCode = '''
-      ${"_\$I${classInfo.element.name3}Copy$typeParametersNames get copyWith => _\$${classInfo.element.name3}Copy$typeParametersNames(this as ${classInfo.element.name3}$typeParametersNames);"}
+      ${"_\$I${classInfo.element.name}Copy$typeParametersNames get copyWith => _\$${classInfo.element.name}Copy$typeParametersNames(this as ${classInfo.element.name}$typeParametersNames);"}
     ''';
 
     return GenResult(
@@ -209,10 +209,10 @@ class CopyWithGenerator {
     final constructor = classInfo.annotation.copyConstructor;
 
     final targetConstructor = constructor != null
-        ? classInfo.element.getNamedConstructor2(constructor)
-        : classInfo.element.unnamedConstructor2;
+        ? classInfo.element.getNamedConstructor(constructor)
+        : classInfo.element.unnamedConstructor;
 
-    if (targetConstructor is! ConstructorElement2) {
+    if (targetConstructor is! ConstructorElement) {
       if (constructor != null) {
         throw InvalidGenerationSourceError(
           'Named Constructor "$constructor" constructor is missing.',
@@ -220,7 +220,7 @@ class CopyWithGenerator {
         );
       } else {
         throw InvalidGenerationSourceError(
-          'Default constructor for "${classInfo.element.name3}" is missing.',
+          'Default constructor for "${classInfo.element.name}" is missing.',
           element: classInfo.element,
         );
       }
@@ -229,7 +229,7 @@ class CopyWithGenerator {
     final parameters = targetConstructor.formalParameters;
     if (parameters.isEmpty) {
       throw InvalidGenerationSourceError(
-        'Constructor "${classInfo.element.name3}" has no parameters.',
+        'Constructor "${classInfo.element.name}" has no parameters.',
         element: classInfo.element,
       );
     }
@@ -237,11 +237,11 @@ class CopyWithGenerator {
     final fields = <ConstructorParameterInfo>[];
 
     for (final parameter in parameters) {
-      final fieldInfo = lookupFieldInfo(classInfo, parameter.name3!);
+      final fieldInfo = lookupFieldInfo(classInfo, parameter.name!);
 
       if (fieldInfo == null) {
         throw InvalidGenerationSourceError(
-          'Constructor parameter "${parameter.name3}" is not a class member.',
+          'Constructor parameter "${parameter.name}" is not a class member.',
           element: classInfo.element,
         );
       }
@@ -257,7 +257,7 @@ class CopyWithGenerator {
     for (final field in fields) {
       if (!field.isParameterNullable && field.nullable) {
         throw InvalidGenerationSourceError(
-          'Constructor parameter and class field nullability mismatch. "${field.element.name3}" is not nullable when the corresponding class field is nullable. Please fix this.',
+          'Constructor parameter and class field nullability mismatch. "${field.element.name}" is not nullable when the corresponding class field is nullable. Please fix this.',
           element: field.element,
         );
       }

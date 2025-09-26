@@ -57,34 +57,28 @@ class _$CollectionClassCopy<T extends Iterable<int>>
     Object? optionalSet = const $ImCopy(),
   }) {
     return CollectionClass<T>(
-      mandatoryList:
-          const $ImCopy() == mandatoryList || mandatoryList == null
-              ? _value.mandatoryList
-              : ImList(mandatoryList as List<int>),
-      optionalList:
-          const $ImCopy() == optionalList
-              ? _value.optionalList
-              : optionalList as T?,
-      mandatoryMap:
-          const $ImCopy() == mandatoryMap || mandatoryMap == null
-              ? _value.mandatoryMap
-              : ImMap(mandatoryMap as Map<String, bool>),
-      optionalMap:
-          const $ImCopy() == optionalMap
-              ? _value.optionalMap
-              : optionalMap == null
-              ? null
-              : ImMap(optionalMap as Map<String, bool>),
-      mandatorySet:
-          const $ImCopy() == mandatorySet || mandatorySet == null
-              ? _value.mandatorySet
-              : ImSet(mandatorySet as Set<String>),
-      optionalSet:
-          const $ImCopy() == optionalSet
-              ? _value.optionalSet
-              : optionalSet == null
-              ? null
-              : ImSet(optionalSet as Set<String>),
+      mandatoryList: const $ImCopy() == mandatoryList || mandatoryList == null
+          ? _value.mandatoryList
+          : ImList(mandatoryList as List<int>),
+      optionalList: const $ImCopy() == optionalList
+          ? _value.optionalList
+          : optionalList as T?,
+      mandatoryMap: const $ImCopy() == mandatoryMap || mandatoryMap == null
+          ? _value.mandatoryMap
+          : ImMap(mandatoryMap as Map<String, bool>),
+      optionalMap: const $ImCopy() == optionalMap
+          ? _value.optionalMap
+          : optionalMap == null
+          ? null
+          : ImMap(optionalMap as Map<String, bool>),
+      mandatorySet: const $ImCopy() == mandatorySet || mandatorySet == null
+          ? _value.mandatorySet
+          : ImSet(mandatorySet as Set<String>),
+      optionalSet: const $ImCopy() == optionalSet
+          ? _value.optionalSet
+          : optionalSet == null
+          ? null
+          : ImSet(optionalSet as Set<String>),
     );
   }
 }

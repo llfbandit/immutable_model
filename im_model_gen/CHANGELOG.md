@@ -1,3 +1,6 @@
+## 1.5.0
+- chore: Updated `build` and `source_gen` to ^4.0.0.
+
 ## 1.4.1
 - chore: Updated `build` to ^3.0.0.
 

@@ -38,8 +38,9 @@ class _$CastObjectCopy implements _$ICastObjectCopy {
   }) {
     return CastObject(
       obj: const $ImCopy() == obj || obj == null ? _value.obj : obj,
-      objOptional:
-          const $ImCopy() == objOptional ? _value.objOptional : objOptional,
+      objOptional: const $ImCopy() == objOptional
+          ? _value.objOptional
+          : objOptional,
       dyn: const $ImCopy() == dyn || dyn == null ? _value.dyn : dyn as dynamic,
     );
   }

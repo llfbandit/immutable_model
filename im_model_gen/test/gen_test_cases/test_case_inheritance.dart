@@ -48,10 +48,9 @@ class _$ChildCopy<T> implements _$IChildCopy<T> {
     return Child<T>(
       _value.id,
       const $ImCopy() == aValue ? _value.aValue : aValue as T?,
-      collection:
-          const $ImCopy() == collection || collection == null
-              ? _value.collection
-              : ImList(collection as List<int>),
+      collection: const $ImCopy() == collection || collection == null
+          ? _value.collection
+          : ImList(collection as List<int>),
     );
   }
 }
