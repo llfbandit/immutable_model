@@ -4,14 +4,15 @@ version: 1.0.0
 publish_to: none
 
 environment:
-  sdk: ">=3.6.0 <4.0.0"
+  sdk: ^3.8.0
+
+resolution: workspace
 
 dependencies:
-  im_model:
-    path: ../
+  im_model: any
 
 dev_dependencies:
-  lints: ^2.1.1
+  lints: ^6.0.0
   build_runner: ^2.4.0
   
   im_model_gen: ^1.0.0

@@ -1,7 +1,77 @@
 name: im_model_workspace
 
+publish_to: none
+
 environment:
-  sdk: '>=3.6.0 <4.0.0'
+  sdk: ^3.8.0
 
 dev_dependencies:
-  melos: ^6.2.0
+  melos: ^7.3.0
+
+workspace:
+  - im_model
+  - im_model/example
+  - im_model_gen
+
+#### MELOS section ####
+
+melos:
+  # Don't generate intellij files
+  ide:
+    intellij: false
+
+  command:
+    bootstrap:
+      environment:
+        sdk: ^3.8.0
+      dependencies:
+        # Linter rules (https://pub.dev/packages/lints)
+        lints: ^6.0.0
+
+      runPubGetInParallel: true
+
+    version:
+      # Only allow versioning to happen on main branch.
+      branch: main
+      # Additionally build a changelog at the root of the workspace.
+      workspaceChangelog: false
+
+  scripts:
+    format:
+      description: Format Dart code.
+      run: dart format .
+
+    format:check:
+      description: Check formatting of Dart code.
+      run: dart format --output none --set-exit-if-changed .
+
+    generate:
+      description: Generate Dart code.
+      run: dart run build_runner build --delete-conflicting-outputs
+      exec:
+        concurrency: 1
+        # orderDependents: true
+        depends-on: "build_runner"
+
+    test:
+      run: melos run test:package --no-select
+      description: Run all Flutter tests in this project.
+
+    test:coverage:
+      run: melos exec --dir-exists="test" -c 1 --fail-fast -- "dart test --coverage="coverage""
+
+    test:coverage:report:
+      run: melos test:coverage && melos test:coverage:convert && melos coverage:merge && melos coverage:report
+
+    test:coverage:convert:
+      run: melos exec --dir-exists="test" -c 1 --fail-fast -- "format_coverage --lcov --in=coverage --out=coverage/coverage.lcov --report-on=lib"
+
+    coverage:merge:
+      description: Merge all packages coverage trace files ignoring data related to generated files.
+      run: >
+        coverde rm MELOS_ROOT_PATH/coverage/coverage.lcov &&
+        melos exec --file-exists=coverage/coverage.lcov -- "coverde filter --input ./coverage/coverage.lcov --output MELOS_ROOT_PATH/coverage/coverage.lcov --filters '\.g\.dart'"
+
+    coverage:report:
+      description: Generate HTML report
+      run: coverde report -i coverage/coverage.lcov
