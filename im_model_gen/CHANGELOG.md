@@ -1,3 +1,6 @@
+## 1.7.0
+- chore: Updated `analyzer` to '>=8.1.1 <11.0.0'
+
 ## 1.6.0
 - chore: Updated `analyzer` to '>=8.1.1 <10.0.0'
 - chore: Updated workspace with melos 7.x
