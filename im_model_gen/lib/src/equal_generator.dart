@@ -13,7 +13,8 @@ class _EqualMixinTemplate {
   }) {
     final className = classElement.name;
 
-    final mixinCode = '''
+    final mixinCode =
+        '''
         @override
         int get hashCode => (this as $className)._eq().hashCode;
 
@@ -29,10 +30,7 @@ class _EqualMixinTemplate {
 
     final extensionCode = 'dynamic _eq() => (${props.join(', ')});';
 
-    return GenResult(
-      mixinCode: mixinCode,
-      extensionCode: extensionCode,
-    );
+    return GenResult(mixinCode: mixinCode, extensionCode: extensionCode);
   }
 }
 
@@ -58,20 +56,19 @@ class EqualGenerator {
       list.addAll(_generateEquality(superClass));
     }
 
-    list.addAll(classInfo.fields
-        .where((field) => _includeField(classInfo.annotation, field))
-        .map((field) => field.element.name!)
-        .toList(growable: false));
+    list.addAll(
+      classInfo.fields
+          .where((field) => _includeField(classInfo.annotation, field))
+          .map((field) => field.element.name!)
+          .toList(growable: false),
+    );
 
     return list;
   }
 
-  bool _includeField(
-    ImModelAnnotation classAnnotation,
-    FieldInfo field,
-  ) {
+  bool _includeField(ImModelAnnotation classAnnotation, FieldInfo field) {
     if (field.element.isStatic) return false;
-    if (field.element.isSynthetic) return false; // Getters
+    if (field.element.isOriginGetterSetter) return false; // Getters
     if (field.element.getter == null) return false;
     if (field.element.name == 'props') return false;
     if (field.element.name == null) return false;

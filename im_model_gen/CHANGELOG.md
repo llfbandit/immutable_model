@@ -1,3 +1,6 @@
+## 1.8.0
+- chore: Updated `analyzer` to '>=11.0.0 <13.0.0'
+
 ## 1.7.0
 - chore: Updated `analyzer` to '>=8.1.1 <11.0.0'
 

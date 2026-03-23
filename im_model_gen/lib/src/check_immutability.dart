@@ -17,7 +17,7 @@ class CheckImmutability {
     // Check class members
     for (var field in element.fields) {
       // isSynthetic is to detect getter
-      if (!field.isSynthetic && !field.isFinal && !field.isConst) {
+      if (!field.isOriginGetterSetter && !field.isFinal && !field.isConst) {
         throw InvalidGenerationSourceError(
           '"$field" is not final or const to ensure immutability.',
           element: field,
