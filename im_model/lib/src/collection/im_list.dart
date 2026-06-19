@@ -28,7 +28,7 @@ class ImList<E> implements Iterable<E> {
   E operator [](int index) => _inner[index];
 
   /// [List.+].
-  ImList<E> operator +(ImList<E> other) => ImList<E>(_inner + other._inner);
+  ImList<E> operator +(Iterable<E> other) => ImList<E>(_inner.followedBy(other));
 
   /// [List.reversed].
   Iterable<E> get reversed => _inner.reversed;
