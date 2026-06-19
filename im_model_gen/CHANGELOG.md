@@ -1,3 +1,10 @@
+## 1.9.1
+- fix: wrong superclass resolution under certain circumstances.
+- perf: Replace linear lookup.
+- perf: Pre-compute _ignoreCopy.
+- perf: Eliminate redundant regex calls in _convertToImmutable.
+- perf: Compute type parameter strings in a single pass.
+
 ## 1.9.0
 - feat: Supports private named parameters in constructors.
 - feat: Supports incoming Dart 3.13 primary constructors.
