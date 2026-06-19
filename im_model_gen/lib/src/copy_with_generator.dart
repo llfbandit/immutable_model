@@ -107,39 +107,22 @@ class _CopyImplTemplate {
     final type = param.type;
     final name = param.parameterName;
 
+    final String imWrapper;
     if (imListRegex.hasMatch(type)) {
-      final mutParam = _convertToMutable(param, keepOptional: false);
-
-      if (param.nullable) {
-        return '$name == null ? null : ImList($name as $mutParam)';
-      } else {
-        return 'ImList($name as $mutParam)';
-      }
-    }
-    if (imMapRegex.hasMatch(type)) {
-      final mutParam = _convertToMutable(param, keepOptional: false);
-
-      if (param.nullable) {
-        return '$name == null ? null : ImMap($name as $mutParam)';
-      } else {
-        return 'ImMap($name as $mutParam)';
-      }
-    }
-    if (imSetRegex.hasMatch(type)) {
-      final mutParam = _convertToMutable(param, keepOptional: false);
-
-      if (param.nullable) {
-        return '$name == null ? null : ImSet($name as $mutParam)';
-      } else {
-        return 'ImSet($name as $mutParam)';
-      }
-    }
-
-    if (param.type == 'Object' || param.type == 'Object?') {
-      return name;
+      imWrapper = 'ImList';
+    } else if (imMapRegex.hasMatch(type)) {
+      imWrapper = 'ImMap';
+    } else if (imSetRegex.hasMatch(type)) {
+      imWrapper = 'ImSet';
     } else {
-      return '$name as ${param.type}';
+      return (type == 'Object' || type == 'Object?') ? name : '$name as $type';
     }
+
+    // All Im* types share the same prefix length ("Im" = 2 chars).
+    final mutType = type.substring(2, param.nullable ? type.length - 1 : null);
+    return param.nullable
+        ? '$name == null ? null : $imWrapper($name as $mutType)'
+        : '$imWrapper($name as $mutType)';
   }
 
   bool _ignoreCopy(ClassInfo classInfo, ConstructorParameterInfo field) {
