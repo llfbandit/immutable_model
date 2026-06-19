@@ -62,7 +62,7 @@ class ImMap<K, V> {
     if (other.length != length) return false;
     if (other.hashCode != hashCode) return false;
     for (var key in keys) {
-      if (other[key] != this[key]) return false;
+      if (!other.containsKey(key) || other[key] != this[key]) return false;
     }
     return true;
   }
@@ -76,7 +76,7 @@ class ImMap<K, V> {
   V? operator [](Object? key) => _inner[key];
 
   /// [Map.containsKey].
-  bool containsKey(Object key) => _inner.containsKey(key);
+  bool containsKey(Object? key) => _inner.containsKey(key);
 
   /// [Map.containsValue].
   bool containsValue(Object value) => _inner.containsValue(value);
