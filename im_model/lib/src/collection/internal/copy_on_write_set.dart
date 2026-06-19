@@ -17,13 +17,15 @@ class CopyOnWriteSet<E> implements Set<E> {
   E? lookup(Object? object) => _set.lookup(object);
 
   @override
-  Set<E> intersection(Set<Object?> other) => _set.intersection(other);
+  Set<E> intersection(Set<Object?> other) =>
+      CopyOnWriteSet<E>(_set.intersection(other));
 
   @override
-  Set<E> union(Set<E> other) => _set.union(other);
+  Set<E> union(Set<E> other) => CopyOnWriteSet<E>(_set.union(other));
 
   @override
-  Set<E> difference(Set<Object?> other) => _set.difference(other);
+  Set<E> difference(Set<Object?> other) =>
+      CopyOnWriteSet<E>(_set.difference(other));
 
   @override
   bool containsAll(Iterable<Object?> other) => _set.containsAll(other);
