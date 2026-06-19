@@ -21,10 +21,7 @@ class ImmutableModelGenerator extends GeneratorForAnnotation<ImModel> {
   ) async {
     final classElement = CheckImmutability().check(element);
 
-    final classInfo = classHierarchyInfo.getClassInfo(
-      classElement,
-      annotation,
-    );
+    final classInfo = classHierarchyInfo.getClassInfo(classElement, annotation);
 
     final extName = '_\$${classElement.name}ImExt';
     final mixinName = '_\$${classElement.name}Mixin';
@@ -34,19 +31,18 @@ class ImmutableModelGenerator extends GeneratorForAnnotation<ImModel> {
       const EqualGenerator().generate(classInfo, extensionName: extName),
     ], eagerError: true);
 
-    final typeParametersAnnotation = typeParametersString(classElement, false);
-    final typeParametersNames = typeParametersString(classElement, true);
+    final typeParams = typeParameterStrings(classElement);
 
     return '''
-      extension $extName$typeParametersAnnotation on ${classElement.name}$typeParametersNames {
+      extension $extName${typeParams.annotation} on ${classElement.name}${typeParams.names} {
         ${result[1].extensionCode}
       }
 
-      mixin $mixinName$typeParametersAnnotation {
+      mixin $mixinName${typeParams.annotation} {
         ${result[0].mixinCode}
 
         ${result[1].mixinCode}
-      }      
+      }
 
       ${result[0].generatedCode}
     ''';

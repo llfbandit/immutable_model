@@ -15,10 +15,11 @@ class _CopyInterfaceTemplate {
     List<ConstructorParameterInfo> parameters,
   ) {
     final typeAnnotation = type + typeParameterNames;
+    final impl = _CopyImplTemplate();
 
     return '''
       abstract interface class _\$I${type}Copy$typeParameters {
-        ${_CopyImplTemplate().gen(classInfo, typeAnnotation, parameters, true)};
+        ${impl.gen(classInfo, typeAnnotation, parameters, true)};
       }
 
       class _\$${type}Copy$typeParameters implements _\$I${type}Copy$typeParameterNames {
@@ -27,7 +28,7 @@ class _CopyInterfaceTemplate {
         final $type$typeParameterNames _value;
 
         @override
-        ${_CopyImplTemplate().gen(classInfo, typeAnnotation, parameters, false)}
+        ${impl.gen(classInfo, typeAnnotation, parameters, false)}
       }
     ''';
   }
@@ -41,7 +42,9 @@ class _CopyImplTemplate {
     List<ConstructorParameterInfo> sortedFields,
     bool isAbstract,
   ) {
-    final ignoreFlags = {for (final v in sortedFields) v: _ignoreCopy(classInfo, v)};
+    final ignoreFlags = {
+      for (final v in sortedFields) v: _ignoreCopy(classInfo, v),
+    };
 
     final constructorInput = sortedFields.fold<String>('', (r, v) {
       if (ignoreFlags[v]!) {
@@ -155,23 +158,19 @@ class CopyWithGenerator {
       return const GenResult(mixinCode: '', extensionCode: '');
     }
 
-    final typeParametersAnnotation = typeParametersString(
-      classInfo.element,
-      false,
-    );
-    final typeParametersNames = typeParametersString(classInfo.element, true);
+    final typeParams = typeParameterStrings(classInfo.element);
 
     final generatedCode = _CopyInterfaceTemplate().gen(
       classInfo,
       classInfo.element.name!,
-      typeParametersAnnotation,
-      typeParametersNames,
+      typeParams.annotation,
+      typeParams.names,
       parameters,
     );
 
     final mixinCode =
         '''
-      ${"_\$I${classInfo.element.name}Copy$typeParametersNames get copyWith => _\$${classInfo.element.name}Copy$typeParametersNames(this as ${classInfo.element.name}$typeParametersNames);"}
+      ${"_\$I${classInfo.element.name}Copy${typeParams.names} get copyWith => _\$${classInfo.element.name}Copy${typeParams.names}(this as ${classInfo.element.name}${typeParams.names});"}
     ''';
 
     return GenResult(

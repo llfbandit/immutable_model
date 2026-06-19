@@ -28,12 +28,24 @@ extension IterableExtension<T> on Iterable<T> {
 /// If `nameOnly` is `false`: `class MyClass<T extends String, Y>` returns `<T extends String, Y>`.
 String typeParametersString(InterfaceElement classElement, bool nameOnly) {
   final names = classElement.typeParameters
-      .map(
-        (e) => nameOnly ? e.name : e.displayString(),
-      )
+      .map((e) => nameOnly ? e.name : e.displayString())
       .join(',');
 
   return (names.isNotEmpty) ? '<$names>' : '';
+}
+
+/// Returns both the full annotation string and the name-only string in a single pass.
+///
+/// Equivalent to calling [typeParametersString] twice but iterates [typeParameters] once.
+({String annotation, String names}) typeParameterStrings(
+  InterfaceElement classElement,
+) {
+  final params = classElement.typeParameters;
+  if (params.isEmpty) return (annotation: '', names: '');
+  return (
+    annotation: '<${params.map((e) => e.displayString()).join(',')}>',
+    names: '<${params.map((e) => e.name).join(',')}>',
+  );
 }
 
 FieldInfo? lookupFieldInfo(ClassInfo classInfo, String fieldName) {
