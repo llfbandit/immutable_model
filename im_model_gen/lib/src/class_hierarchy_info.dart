@@ -162,7 +162,15 @@ class ClassHierarchyInfo {
 
   ImFieldAnnotation? _readFieldAnnotation(FieldElement element) {
     const checker = TypeChecker.typeNamed(ImField);
-    final annotation = checker.firstAnnotationOf(element);
+    // For primary constructor fields, @ImField is placed on the constructor
+    // parameter (the declaring formal), not on the field itself.
+    final annotationTarget = checker.hasAnnotationOf(element)
+        ? element
+        : (element.declaringFormalParameter as Element?);
+
+    final annotation = annotationTarget != null
+        ? checker.firstAnnotationOf(annotationTarget)
+        : null;
     if (annotation is! DartObject) {
       return null;
     }
