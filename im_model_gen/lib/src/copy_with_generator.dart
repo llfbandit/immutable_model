@@ -41,41 +41,35 @@ class _CopyImplTemplate {
     List<ConstructorParameterInfo> sortedFields,
     bool isAbstract,
   ) {
-    final constructorInput = sortedFields.fold<String>(
-      '',
-      (r, v) {
-        if (_ignoreCopy(classInfo, v)) {
-          return r;
-        }
+    final constructorInput = sortedFields.fold<String>('', (r, v) {
+      if (_ignoreCopy(classInfo, v)) {
+        return r;
+      }
 
-        if (isAbstract) {
-          final type = (v.type.endsWith('?') || v.isDynamic)
-              ? _convertToMutable(v)
-              : '${_convertToMutable(v)}?';
-          return '$r $type ${v.element.name},';
-        } else {
-          return '$r Object? ${v.element.name} = const \$ImCopy(),';
-        }
-      },
-    );
+      if (isAbstract) {
+        final type = (v.type.endsWith('?') || v.isDynamic)
+            ? _convertToMutable(v)
+            : '${_convertToMutable(v)}?';
+        return '$r $type ${v.parameterName},';
+      } else {
+        return '$r Object? ${v.parameterName} = const \$ImCopy(),';
+      }
+    });
 
-    final parameters = sortedFields.fold<String>(
-      '',
-      (r, v) {
-        final param = '$r ${v.isPositional ? '' : '${v.element.name}:'}';
+    final parameters = sortedFields.fold<String>('', (r, v) {
+      final param = '$r ${v.isPositional ? '' : '${v.parameterName}:'}';
 
-        if (_ignoreCopy(classInfo, v)) {
-          return '$param _value.${v.element.name},';
-        }
+      if (_ignoreCopy(classInfo, v)) {
+        return '$param _value.${v.element.name},';
+      }
 
-        final nullCheck = v.nullable ? '' : '|| ${v.element.name} == null';
+      final nullCheck = v.nullable ? '' : '|| ${v.parameterName} == null';
 
-        return '''$param
-        const \$ImCopy() == ${v.element.name} $nullCheck
+      return '''$param
+        const \$ImCopy() == ${v.parameterName} $nullCheck
         ? _value.${v.element.name}
         : ${_convertToImmutable(v)},''';
-      },
-    );
+    });
 
     final constructorBody = isAbstract
         ? ''
@@ -109,39 +103,40 @@ class _CopyImplTemplate {
 
   String? _convertToImmutable(ConstructorParameterInfo param) {
     final type = param.type;
+    final name = param.parameterName;
 
     if (imListRegex.hasMatch(type)) {
       final mutParam = _convertToMutable(param, keepOptional: false);
 
       if (param.nullable) {
-        return '${param.element.name} == null ? null : ImList(${param.element.name} as $mutParam)';
+        return '$name == null ? null : ImList($name as $mutParam)';
       } else {
-        return 'ImList(${param.element.name} as $mutParam)';
+        return 'ImList($name as $mutParam)';
       }
     }
     if (imMapRegex.hasMatch(type)) {
       final mutParam = _convertToMutable(param, keepOptional: false);
 
       if (param.nullable) {
-        return '${param.element.name} == null ? null : ImMap(${param.element.name} as $mutParam)';
+        return '$name == null ? null : ImMap($name as $mutParam)';
       } else {
-        return 'ImMap(${param.element.name} as $mutParam)';
+        return 'ImMap($name as $mutParam)';
       }
     }
     if (imSetRegex.hasMatch(type)) {
       final mutParam = _convertToMutable(param, keepOptional: false);
 
       if (param.nullable) {
-        return '${param.element.name} == null ? null : ImSet(${param.element.name} as $mutParam)';
+        return '$name == null ? null : ImSet($name as $mutParam)';
       } else {
-        return 'ImSet(${param.element.name} as $mutParam)';
+        return 'ImSet($name as $mutParam)';
       }
     }
 
     if (param.type == 'Object' || param.type == 'Object?') {
-      return param.element.name;
+      return name;
     } else {
-      return '${param.element.name} as ${param.type}';
+      return '$name as ${param.type}';
     }
   }
 
@@ -152,10 +147,7 @@ class _CopyImplTemplate {
     }
 
     if (field.element.name case final name?) {
-      return lookupClassInfoFromField(
-            classInfo,
-            name,
-          )?.annotation.ignoreCopy ??
+      return lookupClassInfoFromField(classInfo, name)?.annotation.ignoreCopy ??
           false;
     }
 
@@ -172,8 +164,9 @@ class CopyWithGenerator {
     // Copy is fully ignored
     if (classInfo.isAbstract ||
         (classInfo.annotation.ignoreCopy &&
-            classInfo.fields
-                .every((f) => (f.annotation?.ignoreCopy ?? true)))) {
+            classInfo.fields.every(
+              (f) => (f.annotation?.ignoreCopy ?? true),
+            ))) {
       return const GenResult(mixinCode: '', extensionCode: '');
     }
 
@@ -181,10 +174,7 @@ class CopyWithGenerator {
       classInfo.element,
       false,
     );
-    final typeParametersNames = typeParametersString(
-      classInfo.element,
-      true,
-    );
+    final typeParametersNames = typeParametersString(classInfo.element, true);
 
     final generatedCode = _CopyInterfaceTemplate().gen(
       classInfo,
@@ -194,7 +184,8 @@ class CopyWithGenerator {
       parameters,
     );
 
-    final mixinCode = '''
+    final mixinCode =
+        '''
       ${"_\$I${classInfo.element.name}Copy$typeParametersNames get copyWith => _\$${classInfo.element.name}Copy$typeParametersNames(this as ${classInfo.element.name}$typeParametersNames);"}
     ''';
 
@@ -237,7 +228,14 @@ class CopyWithGenerator {
     final fields = <ConstructorParameterInfo>[];
 
     for (final parameter in parameters) {
-      final fieldInfo = lookupFieldInfo(classInfo, parameter.name!);
+      // For private field formals (this._id), the analyzer returns the public
+      // name without underscore as parameter.name (e.g. "id"). The actual
+      // private field name (e.g. "_id") is obtained from the field element.
+      final fieldName = parameter is FieldFormalParameterElement
+          ? (parameter.field?.name ?? parameter.name!)
+          : parameter.name!;
+
+      final fieldInfo = lookupFieldInfo(classInfo, fieldName);
 
       if (fieldInfo == null) {
         throw InvalidGenerationSourceError(
@@ -246,12 +244,15 @@ class CopyWithGenerator {
         );
       }
 
-      fields.add(ConstructorParameterInfo(
-        fieldInfo,
-        isPositional: parameter.isPositional,
-        isParameterNullable:
-            parameter.type.nullabilitySuffix != NullabilitySuffix.none,
-      ));
+      fields.add(
+        ConstructorParameterInfo(
+          fieldInfo,
+          isPositional: parameter.isPositional,
+          isParameterNullable:
+              parameter.type.nullabilitySuffix != NullabilitySuffix.none,
+          parameterName: parameter.name!,
+        ),
+      );
     }
 
     for (final field in fields) {
@@ -273,17 +274,23 @@ class ConstructorParameterInfo extends FieldInfo {
     FieldInfo fieldInfo, {
     required this.isPositional,
     required this.isParameterNullable,
+    required this.parameterName,
   }) : super(
-          annotation: fieldInfo.annotation,
-          element: fieldInfo.element,
-          nullable: fieldInfo.element.type.nullabilitySuffix !=
-              NullabilitySuffix.none,
-          type: fieldInfo.element.type.getDisplayString(),
-        );
+         annotation: fieldInfo.annotation,
+         element: fieldInfo.element,
+         nullable:
+             fieldInfo.element.type.nullabilitySuffix != NullabilitySuffix.none,
+         type: fieldInfo.element.type.getDisplayString(),
+       );
 
   /// True if the field is positioned in the constructor
   final bool isPositional;
 
   /// True if the field is optional in the constructor
   final bool isParameterNullable;
+
+  /// The name used in the constructor call (public name).
+  /// For private fields like `_id`, this is `"id"` (without underscore),
+  /// which is how Dart exposes private field formals as named parameters.
+  final String parameterName;
 }

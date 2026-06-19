@@ -10,5 +10,6 @@ part 'test_case_inheritance_abstract.dart';
 part 'test_case_inverted_flags.dart';
 part 'test_case_no_copy.dart';
 part 'test_case_object.dart';
+part 'test_case_private_named_parameters.dart';
 part 'test_case_static_const.dart';
 part 'test_cases_exceptions.dart';

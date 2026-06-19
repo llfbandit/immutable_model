@@ -4,7 +4,7 @@ description: Annotation builder for immutable model to generate of `copyWith` an
 homepage: https://github.com/llfbandit/immutable_model/tree/master/im_model_gen
 
 environment:
-  sdk: ^3.9.0
+  sdk: ^3.12.0
 
 resolution: workspace
 
