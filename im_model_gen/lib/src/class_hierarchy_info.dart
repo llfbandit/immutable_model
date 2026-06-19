@@ -3,7 +3,6 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:im_model/im_model.dart';
 import 'package:im_model_gen/src/immutable_annotation.dart';
-import 'package:im_model_gen/src/utils.dart';
 import 'package:source_gen/source_gen.dart';
 
 class ClassInfo {
@@ -56,7 +55,7 @@ class FieldInfo {
 }
 
 class ClassHierarchyInfo {
-  final List<ClassInfo> classesInfo = [];
+  final Map<String, ClassInfo> _classes = {};
 
   ClassInfo getClassInfo(
     ClassElement element,
@@ -66,29 +65,13 @@ class ClassHierarchyInfo {
     if (existingClassInfo != null) return existingClassInfo;
 
     final classInfo = _createClassInfo(element, reader, element.isAbstract);
-    classesInfo.add(classInfo);
+    _classes[element.name!] = classInfo;
     _addSuperClasses(classInfo);
 
     return classInfo;
   }
 
-  ClassInfo? _lookup(InterfaceElement element) {
-    return classesInfo.firstWhereOrNull(
-      (classInfo) {
-        if (classInfo.element.name == element.name) return true;
-
-        var superClass = classInfo.superClass;
-        while (superClass != null) {
-          if (superClass.element.name == element.name) {
-            return true;
-          }
-          superClass = superClass.superClass;
-        }
-
-        return false;
-      },
-    );
-  }
+  ClassInfo? _lookup(InterfaceElement element) => _classes[element.name];
 
   ClassInfo _createClassInfo(
     InterfaceElement element,
@@ -123,12 +106,15 @@ class ClassHierarchyInfo {
 
     final ssClass = superClass.superClass;
 
-    final superClassInfo = _lookup(ssClass) ??
-        _createClassInfo(
-          ssClass,
-          ConstantReader(superClass.annotation),
-          ssClass is ClassElement ? ssClass.isAbstract : true,
-        );
+    final superClassInfo = _lookup(ssClass) ?? () {
+      final info = _createClassInfo(
+        ssClass,
+        ConstantReader(superClass.annotation),
+        ssClass is ClassElement ? ssClass.isAbstract : true,
+      );
+      _classes[ssClass.name!] = info;
+      return info;
+    }();
 
     classInfo.superClass = superClassInfo;
 
