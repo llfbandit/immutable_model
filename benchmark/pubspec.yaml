@@ -1,0 +1,12 @@
+name: benchmark
+publish_to: none
+
+environment:
+  sdk: ^3.12.0
+
+resolution: workspace
+
+dependencies:
+  im_model: any
+  benchmark_harness: ^2.4.0
+  built_collection: ^5.1.1

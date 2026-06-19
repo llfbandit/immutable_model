@@ -12,6 +12,7 @@ workspace:
   - im_model
   - im_model/example
   - im_model_gen
+  - benchmark
 
 #### MELOS section ####
 

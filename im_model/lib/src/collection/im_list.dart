@@ -3,11 +3,11 @@ import 'package:im_model/src/collection/internal/copy_on_write_list.dart';
 
 /// A [List] that is immutable.
 class ImList<E> implements Iterable<E> {
-  ImList._(Iterable<E> items) : _inner = List<E>.of(items);
+  ImList._(Iterable<E> items) : _inner = List<E>.of(items, growable: false);
 
   factory ImList([Iterable<E>? items]) {
     if (items == null) {
-      return ImList._(<E>[]);
+      return ImList.empty();
     } else if (items is ImList<E>) {
       return items;
     }
@@ -15,7 +15,7 @@ class ImList<E> implements Iterable<E> {
     return ImList._(items);
   }
 
-  ImList.empty() : _inner = [];
+  ImList.empty() : _inner = const [];
 
   final List<E> _inner;
   int? _hashCode;
@@ -28,7 +28,8 @@ class ImList<E> implements Iterable<E> {
   E operator [](int index) => _inner[index];
 
   /// [List.+].
-  ImList<E> operator +(Iterable<E> other) => ImList<E>(_inner.followedBy(other));
+  ImList<E> operator +(Iterable<E> other) =>
+      ImList<E>(_inner.followedBy(other));
 
   /// [List.reversed].
   Iterable<E> get reversed => _inner.reversed;
@@ -176,9 +177,8 @@ class ImList<E> implements Iterable<E> {
   /// A `ImList` is only equal to another with equal elements in
   /// the same order. Then, the `hashCode` is guaranteed to be the same.
   @override
-  int get hashCode {
-    return _hashCode ??= _inner.length ^ const Hash().hashIterable(_inner);
-  }
+  int get hashCode =>
+      _hashCode ??= _inner.length ^ const Hash().hashIterable(_inner);
 
   /// Deep equality.
   ///

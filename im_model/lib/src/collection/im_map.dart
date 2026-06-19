@@ -1,5 +1,5 @@
-import 'package:im_model/src/equality/equality_hash.dart';
 import 'package:im_model/src/collection/internal/copy_on_write_map.dart';
+import 'package:im_model/src/equality/equality_hash.dart';
 
 /// A [Map] that is immutable.
 class ImMap<K, V> {
@@ -7,7 +7,7 @@ class ImMap<K, V> {
 
   factory ImMap([Map<K, V>? other]) {
     if (other == null) {
-      return ImMap._(<K, V>{});
+      return ImMap.empty();
     } else if (other is ImMap<K, V>) {
       return other as ImMap<K, V>;
     }
@@ -15,7 +15,7 @@ class ImMap<K, V> {
     return ImMap._(other);
   }
 
-  ImMap.empty() : _inner = <K, V>{};
+  ImMap.empty() : _inner = const {};
 
   final Map<K, V> _inner;
   int? _hashCode;
@@ -44,12 +44,10 @@ class ImMap<K, V> {
   /// A `ImMap` is only equal to another with equal key/value
   /// pairs in any order. Then, the `hashCode` is guaranteed to be the same.
   @override
-  int get hashCode {
-    return _hashCode ??= _inner.entries.fold<int>(
-      0,
-      (h, e) => h ^ const Hash().hash2(e.key, e.value),
-    );
-  }
+  int get hashCode => _hashCode ??= _inner.entries.fold<int>(
+    0,
+    (h, e) => h ^ const Hash().hash2(e.key, e.value),
+  );
 
   /// Deep equality.
   ///
@@ -58,11 +56,13 @@ class ImMap<K, V> {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! ImMap) return false;
+    if (other is! ImMap<K, V>) return false;
     if (other.length != length) return false;
     if (other.hashCode != hashCode) return false;
-    for (var key in keys) {
-      if (!other.containsKey(key) || other[key] != this[key]) return false;
+    for (final MapEntry(:key, :value) in _inner.entries) {
+      final otherValue = other._inner[key];
+      if (otherValue != value) return false;
+      if (otherValue == null && !other._inner.containsKey(key)) return false;
     }
     return true;
   }
