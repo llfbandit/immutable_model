@@ -41,8 +41,10 @@ class _CopyImplTemplate {
     List<ConstructorParameterInfo> sortedFields,
     bool isAbstract,
   ) {
+    final ignoreFlags = {for (final v in sortedFields) v: _ignoreCopy(classInfo, v)};
+
     final constructorInput = sortedFields.fold<String>('', (r, v) {
-      if (_ignoreCopy(classInfo, v)) {
+      if (ignoreFlags[v]!) {
         return r;
       }
 
@@ -59,7 +61,7 @@ class _CopyImplTemplate {
     final parameters = sortedFields.fold<String>('', (r, v) {
       final param = '$r ${v.isPositional ? '' : '${v.parameterName}:'}';
 
-      if (_ignoreCopy(classInfo, v)) {
+      if (ignoreFlags[v]!) {
         return '$param _value.${v.element.name},';
       }
 
