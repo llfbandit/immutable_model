@@ -45,11 +45,9 @@ class ImMap<K, V> {
   /// pairs in any order. Then, the `hashCode` is guaranteed to be the same.
   @override
   int get hashCode {
-    return _hashCode ??= const Hash().hashIterable(
-      _inner.keys
-          .map((key) => const Hash().hash2(key.hashCode, _inner[key].hashCode))
-          .toList(growable: false)
-        ..sort(),
+    return _hashCode ??= _inner.entries.fold<int>(
+      0,
+      (h, e) => h ^ const Hash().hash2(e.key, e.value),
     );
   }
 

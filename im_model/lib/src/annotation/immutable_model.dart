@@ -29,12 +29,12 @@ class ImField {
 
   /// Prevent the field to be generated for `copyWith` method.
   ///
-  /// It superseeds the class annotation if needed.
+  /// It supersedes the class annotation if needed.
   final bool? ignoreCopy;
 
   /// Prevent the field to be compared on == (equal) operator.
   ///
-  /// It superseeds the class annotation if needed.
+  /// It supersedes the class annotation if needed.
   final bool? ignoreEqual;
 }
 

@@ -1,6 +1,5 @@
 import 'dart:collection';
 
-import 'package:im_model/src/equality/equality_hash.dart';
 import 'package:im_model/src/collection/internal/copy_on_write_set.dart';
 
 /// A [Set] that is immutable.
@@ -31,9 +30,7 @@ class ImSet<E> implements Iterable<E> {
   /// any order. Then, the `hashCode` is guaranteed to be the same.
   @override
   int get hashCode {
-    return _hashCode ??= const Hash().hashIterable(
-      _inner.map((e) => e.hashCode).toList(growable: false)..sort(),
-    );
+    return _hashCode ??= _inner.fold<int>(0, (h, e) => h ^ e.hashCode);
   }
 
   /// Deep equality.
