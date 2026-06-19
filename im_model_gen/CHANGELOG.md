@@ -1,3 +1,9 @@
+## 1.9.0
+- feat: Supports private named parameters in constructors.
+- feat: Supports incoming Dart 3.13 primary constructors.
+- chore: Allows analyzer `>=11.0.0 <15.0.0` range.
+- chore: Updated the SDK lower bound to 3.12.0.
+
 ## 1.8.0
 - chore: Updated `analyzer` to '>=11.0.0 <13.0.0'
 

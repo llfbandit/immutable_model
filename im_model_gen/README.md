@@ -1,164 +1,114 @@
-This library provides code generation for immutable models with value comparison `==` and `copyWith` methods.
+Code generator for immutable Dart models — adds `==` equality and `copyWith` to your classes with minimal boilerplate.
 
-Project targets:
-- Standard syntax.
-- errors before runtime.
-- Low source code generation, your IDE will be happy.
-- Improved output binary size.
-- Inheritance unlocked (while encouraging composition every day, "is-a" pattern is not bad).
-- to be not too intrusive.
+## Features
 
-## Requirements
-Requirement dart SDK >= 3.6.0
+- Standard Dart syntax — no custom factories or sealed classes required
+- Errors at generation time, not runtime
+- Small generated output — smaller binary, faster IDE
+- Enforces immutable collections
+- Supports inheritance
+
+## Setup
+
+```yaml
+# pubspec.yaml
+dependencies:
+  im_model: ^1.4.0
+
+dev_dependencies:
+  im_model_gen: ^1.4.0
+  build_runner: ^2.0.0
+```
 
 ## Usage
 
-#### Annotate your class with `ImModel` annotation
+Annotate your class, add the generated mixin, and declare the part file:
 
 ```dart
 import 'package:im_model/im_model.dart';
 
-part 'example.g.dart'; // Declare generated part file
+part 'example.g.dart';
 
 @ImModel()
-class Example with _$ExampleMixin { // Associate your class with the generated mixin
+class Example with _$ExampleMixin {
   final String id;
   final String? name;
-  final ImList<int> values; // ImList is part of this package.
+  final ImList<int> values;
 
   const Example(this.id, {this.name, required this.values});
 }
 ```
 
-```dart
-const example = Example(id: 'id', values: ImList.empty());
-
-// Copy
-example.copyWith(text: 'test'); // Example(id: "id", text: test, values; [])
-example.copyWith(text: null); // Example(id: "id", text: null, values: [])
-
-// Equality
-const exampleTwo = Example(id: 'id', values: ImList.empty());
-example == exampleTwo; // true
-example == exampleTwo.copyWith(values: [1]); // false
-
-// Immutability
-// example.values.add(1); // 'add' is undefined.
-```
-
-#### Code generation command
+Run the generator:
 
 ```bash
-dart run build_runner build --delete-conflicting-outputs
+dart run build_runner build
 ```
 
-## More on features
+Then use the generated extensions:
 
-There are two annotations available.
+```dart
+const example = Example('id', values: ImList.empty());
 
-`ImModel` on classes with those parameters:
-  - ignoreCopy: allows to ignore the copy generation. Defaults to `false`.
-  - ignoreEqual: allows to ignore the equality generation. Defaults to `false`.
-  - copyConstructor: If needed, you can setup a named constructor for copy generation. Defaults to `null`.
+// Copy with new values
+example.copyWith(name: 'Alice'); // Example(id: id, name: Alice, values: [])
+example.copyWith(name: null);   // Example(id: id, name: null,  values: [])
 
-`ImModel` on class fields to superseed class annotation with those parameters:
-  - ignoreCopy: allows to ignore the copy generation. Defaults to `null`.
-  - ignoreEqual: allows to ignore the equality generation. Defaults to `null`.
+// Equality
+const other = Example('id', values: ImList.empty());
+example == other;                       // true
+example == other.copyWith(values: [1]); // false
+
+// Immutability — compile error:
+// example.values.add(1); // 'add' is undefined
+```
+
+## Annotations
+
+### `@ImModel`
+
+Applied to a class.
+
+| Parameter         | Default | Description                         |
+|-------------------|---------|-------------------------------------|
+| `ignoreCopy`      | `false` | Skip `copyWith` generation          |
+| `ignoreEqual`     | `false` | Skip `==` / `hashCode` generation   |
+| `copyConstructor` | `null`  | Named constructor to use for copies |
+
+### `@ImField`
+
+Applied to a field to override the class-level `@ImModel` settings.
+
+| Parameter     | Default | Description                        |
+|---------------|---------|------------------------------------|
+| `ignoreCopy`  | `false` | Exclude this field from `copyWith` |
+| `ignoreEqual` | `false` | Exclude this field from equality   |
 
 ## Collections
-This package provides immutable/comparable/hashable collections by simply wrapping the core ones.
 
-You must prefix all your mutable collections to their immutable counterpart.
-- List => ImList
-- Map => ImMap
-- Set => ImSet
+Replace mutable collections with their immutable counterparts:
 
-The code generator will provide error messages if it detects mutable collections.
+| Mutable     | Immutable     |
+|-------------|---------------|
+| `List<T>`   | `ImList<T>`   |
+| `Map<K, V>` | `ImMap<K, V>` |
+| `Set<T>`    | `ImSet<T>`    |
 
-To facilitate mutation on collections there are two getters:
-- mut => to get a mutable version of the collection. You can use it at __no cost__, the collection is copied __only__ if you modify it.
-- immut => to get the immutable version of the collection.
+The generator emits an error if it detects a mutable collection.
 
-Look at the example below for demonstration.
-
-⚠️ 
-
-- Obviously, like anywhere else, the collections are immutable only if the elements are immutable.
-
-- At this time, if you use a custom collection implementation, the package won't be able to detect it. So things like `MyFooList<int>` or `ImList<MyFooList<int>>` will be allowed, but `ImList<Set<int>>` or other variants won't.
-
-## Equality
-This package uses Dart 3 records to make `ImModel`s comparable.
-
-Also, an `ImModel` enforces equality on models of the same type.
-
-Now, things like `MyImModel() == Object()` will trigger an error at compile time.
-
-Finally, the performance is completely determined by Dart internal libraries, partially on Im* collections.
-
-## (More) advanced usage
-
-Now that we have all discovered, here's a full (fancy) example:
+Use `.mut` / `.immut` to switch between views — `.mut` is copy-on-write, so there's no allocation cost unless you actually modify it:
 
 ```dart
-/// Inverted ignore flags on class => superseeded by fields
-/// [id] is not part of `copyWith`.
-/// Only [id] is part of equality.
-@ImModel(ignoreEqual: true, ignoreCopy: true)
-class Parent<T> with _$ParentMixin<T> {
-  @ImField(ignoreEqual: false)
-  final String id;
-  @ImField(ignoreCopy: false)
-  final T? aValue;
-
-  const Parent(this.id, this.aValue);
-}
-
-/// [collection] class member is immutable (you can't use add, remove, ...).
-/// [id] is not part of `copyWith`.
-/// Only [id] and [collection] are part of equality.
-@ImModel()
-class Child<T> extends Parent<T> with _$ChildMixin<T> {
-  final ImList<int> collection;
-
-  const Child(super.id, super.aValue, {required this.collection});
-}
+obj = obj.copyWith(values: obj.values.mut..add(42));
+// Generated code wraps the result back to ImList automatically.
 ```
 
-```dart
-void main() {
-  var obj1 = Child('a', 0, collection: [1].immut);
-  var obj2 = Child('a', 0, collection: ImList([1]));
-  // obj1 == obj2 => true
+> Elements inside collections are not checked. `ImList<MyMutableClass>` is still mutable.
 
-  obj1 = obj1.copyWith(collection: obj1.collection.mut..add(2));
-  // obj1 == obj2 => false
+## vs Freezed
 
-  // Two things to notice here:
-  // - we used `mut` getter to mutate the initial collection for shorter syntax.
-  // - we didn't had to wrap again the collection to be immutable, this is done in generated code.
-
-  // obj1.copyWith(id: 'b');
-  // The named parameter 'id' isn't defined.
-}
-```
-
-## Improved output size
-
-Todo.
-
-For now, I'll give you my personal experience.
-
-I developed this package for professional needs and the resulting output size from a 8.2MB web app has decreased by 650KB => 8% (main.dart.js considered only).
-
-## What if I do love `Freezed`?
-
-This project diverges by targeting output size of your app and doesn't use "specific" syntax for the same result, improving our coding performance.
-
-Freezed does not guarantee in any way that your collections are immutable when coding.
-
-I consider this package not too intrusive to allow you to get away easily if you(we) find a more suitable or definitive solution.
-
-## Final word
-
-Made with two fingers and a keyboard late at night.
+- No special factory constructors or `@freezed` class shape
+- Mutable collections are caught at generation time
+- Lean generated output
+- No lock-in syntax — easy to migrate away from
+- Generated code is intentionally minimal. A production Flutter web app (8.2 MB) saw a **650 KB reduction** (~8% of `main.dart.js`) after migrating from Freezed.

@@ -1,0 +1,1 @@
+The example is located in the im_model package.

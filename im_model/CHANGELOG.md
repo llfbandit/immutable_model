@@ -1,3 +1,13 @@
+## 1.4.0
+- feat: Improve ImList/ImMap/ImSet performance (faster than built_collection!).
+- feat: Improve collection API: ImList.+ accepts any Iterable<E> instead of only ImList<E>
+- fix: CopyOnWriteSet.union/intersection/difference return CopyOnWriteSet<E>
+- fix: ImMap.== can falsely equate maps with null values.
+- chore: Added benchmarks to compare with built_collection.
+- chore: Add tests for 100% code coverage.
+- chore: Updated the SDK lower bound to 3.12.0.
+- chore: Updated README.md.
+
 ## 1.3.0
 - chore: Updated the SDK lower bound to 3.8.
 
