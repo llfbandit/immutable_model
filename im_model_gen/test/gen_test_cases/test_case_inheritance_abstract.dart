@@ -1,34 +1,6 @@
 part of 'index.dart';
 
 @ShouldGenerate(r'''
-extension _$AbtractImExt<T> on Abtract<T> {
-  dynamic _eq() => (id, aValue);
-}
-
-mixin _$AbtractMixin<T> {
-  @override
-  int get hashCode => (this as Abtract)._eq().hashCode;
-
-  @override
-  bool operator ==(covariant Abtract<T> other) {
-    if (identical(this, other)) return true;
-    return other._eq() == (this as Abtract)._eq();
-  }
-
-  @override
-  String toString() => (this as Abtract)._eq().toString();
-}
-''')
-@ImModel()
-abstract class Abtract<T> {
-  const Abtract(this.id, this.aValue);
-
-  @ImField(ignoreCopy: false)
-  final String id;
-  final T? aValue;
-}
-
-@ShouldGenerate(r'''
 extension _$AbtractChildImExt<T> on AbtractChild<T> {
   dynamic _eq() => (id, aValue, integer);
 }
@@ -80,4 +52,32 @@ class AbtractChild<T> extends Abtract<T> {
   const AbtractChild(super.id, super.aValue, this.integer);
 
   final int integer;
+}
+
+@ShouldGenerate(r'''
+extension _$AbtractImExt<T> on Abtract<T> {
+  dynamic _eq() => (id, aValue);
+}
+
+mixin _$AbtractMixin<T> {
+  @override
+  int get hashCode => (this as Abtract)._eq().hashCode;
+
+  @override
+  bool operator ==(covariant Abtract<T> other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as Abtract)._eq();
+  }
+
+  @override
+  String toString() => (this as Abtract)._eq().toString();
+}
+''')
+@ImModel()
+abstract class Abtract<T> {
+  const Abtract(this.id, this.aValue);
+
+  @ImField(ignoreCopy: false)
+  final String id;
+  final T? aValue;
 }

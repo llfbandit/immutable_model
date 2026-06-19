@@ -87,23 +87,15 @@ class _CopyImplTemplate {
     return "$typeAnnotation${namedConstructor == null ? "" : ".$namedConstructor"}";
   }
 
-  String _convertToMutable(
-    ConstructorParameterInfo param, {
-    bool keepOptional = true,
-  }) {
+  String _convertToMutable(ConstructorParameterInfo param) {
     final type = param.type;
-    var index = 0;
-
-    if (imListRegex.hasMatch(type) ||
-        imMapRegex.hasMatch(type) ||
-        imSetRegex.hasMatch(type)) {
-      index = 2; // Remove Im
-    }
-
-    return type.substring(
-      index,
-      (!keepOptional && param.nullable) ? type.length - 1 : null,
-    );
+    final index =
+        (imListRegex.hasMatch(type) ||
+            imMapRegex.hasMatch(type) ||
+            imSetRegex.hasMatch(type))
+        ? 2
+        : 0;
+    return type.substring(index);
   }
 
   String? _convertToImmutable(ConstructorParameterInfo param) {

@@ -57,10 +57,7 @@ class FieldInfo {
 class ClassHierarchyInfo {
   final Map<String, ClassInfo> _classes = {};
 
-  ClassInfo getClassInfo(
-    ClassElement element,
-    ConstantReader reader,
-  ) {
+  ClassInfo getClassInfo(ClassElement element, ConstantReader reader) {
     final existingClassInfo = _lookup(element);
     if (existingClassInfo != null) return existingClassInfo;
 
@@ -83,13 +80,14 @@ class ClassHierarchyInfo {
     final fields = element.fields
         .where((field) => _includeField(annotation, field))
         .map((field) {
-      return FieldInfo(
-        element: field,
-        nullable: field.type.nullabilitySuffix != NullabilitySuffix.none,
-        type: field.type.getDisplayString(),
-        annotation: _readFieldAnnotation(field),
-      );
-    }).toList(growable: false);
+          return FieldInfo(
+            element: field,
+            nullable: field.type.nullabilitySuffix != NullabilitySuffix.none,
+            type: field.type.getDisplayString(),
+            annotation: _readFieldAnnotation(field),
+          );
+        })
+        .toList(growable: false);
 
     return ClassInfo(
       superClass: null,
@@ -106,15 +104,17 @@ class ClassHierarchyInfo {
 
     final ssClass = superClass.superClass;
 
-    final superClassInfo = _lookup(ssClass) ?? () {
-      final info = _createClassInfo(
-        ssClass,
-        ConstantReader(superClass.annotation),
-        ssClass is ClassElement ? ssClass.isAbstract : true,
-      );
-      _classes[ssClass.name!] = info;
-      return info;
-    }();
+    final superClassInfo =
+        _lookup(ssClass) ??
+        () {
+          final info = _createClassInfo(
+            ssClass,
+            ConstantReader(superClass.annotation),
+            ssClass is ClassElement ? ssClass.isAbstract : true,
+          );
+          _classes[ssClass.name!] = info;
+          return info;
+        }();
 
     classInfo.superClass = superClassInfo;
 
@@ -122,15 +122,16 @@ class ClassHierarchyInfo {
   }
 
   ({InterfaceElement superClass, DartObject annotation})? _getSuperClass(
-      InterfaceElement element) {
-    final checkedSupertype = element.supertype;
-    if (checkedSupertype == null) return null;
+    InterfaceElement element,
+  ) {
+    final supertype = element.supertype;
+    if (supertype == null) return null;
 
     const checker = TypeChecker.typeNamed(ImModel);
-    final annotation = checker.firstAnnotationOf(checkedSupertype.element);
+    final annotation = checker.firstAnnotationOf(supertype.element);
 
     return (annotation is DartObject)
-        ? (superClass: checkedSupertype.element, annotation: annotation)
+        ? (superClass: supertype.element, annotation: annotation)
         : null;
   }
 

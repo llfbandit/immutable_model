@@ -88,3 +88,13 @@ class TestNestedMap {
 
   final ImMap<String, List<List<int>>> coll;
 }
+
+@ShouldThrow(
+  'Constructor parameter "nonField" is not a class member.',
+)
+@ImModel()
+class NonMemberParam {
+  NonMemberParam({required int nonField}) : field = nonField;
+
+  final int field;
+}

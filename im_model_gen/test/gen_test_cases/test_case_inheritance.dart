@@ -1,5 +1,44 @@
 part of 'index.dart';
 
+@ShouldGenerate(r'''
+extension _$ParentImExt<T> on Parent<T> {
+  dynamic _eq() => (id);
+}
+
+mixin _$ParentMixin<T> {
+  _$IParentCopy<T> get copyWith => _$ParentCopy<T>(this as Parent<T>);
+
+  @override
+  int get hashCode => (this as Parent)._eq().hashCode;
+
+  @override
+  bool operator ==(covariant Parent<T> other) {
+    if (identical(this, other)) return true;
+    return other._eq() == (this as Parent)._eq();
+  }
+
+  @override
+  String toString() => (this as Parent)._eq().toString();
+}
+
+abstract interface class _$IParentCopy<T> {
+  Parent<T> call({T? aValue});
+}
+
+class _$ParentCopy<T> implements _$IParentCopy<T> {
+  const _$ParentCopy(this._value);
+
+  final Parent<T> _value;
+
+  @override
+  Parent<T> call({Object? aValue = const $ImCopy()}) {
+    return Parent<T>(
+      _value.id,
+      const $ImCopy() == aValue ? _value.aValue : aValue as T?,
+    );
+  }
+}
+''')
 @ImModel(ignoreEqual: true, ignoreCopy: true)
 class Parent<T> {
   const Parent(this.id, this.aValue);
