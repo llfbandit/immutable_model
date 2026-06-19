@@ -288,6 +288,58 @@ void main() {
       expect(
           CopyOnWriteList([1, 'two', 3], false).whereType<String>(), ['two']);
     });
+
+    test('Iterable.single', () {
+      expect(CopyOnWriteList([42], false).single, 42);
+      expect(() => CopyOnWriteList([1, 2], false).single, throwsA(anything));
+    });
+
+    test('Iterable.toList', () {
+      final list = CopyOnWriteList([1, 2, 3], false).toList();
+      expect(list, [1, 2, 3]);
+    });
+
+    test('List.length setter', () {
+      final list = CopyOnWriteList<int>([1, 2, 3], true)..length = 2;
+      expect(list, [1, 2]);
+    });
+
+    test('List[]= setter', () {
+      final list = CopyOnWriteList<int>([1, 2, 3], true)..[1] = 9;
+      expect(list, [1, 9, 3]);
+    });
+
+    test('List.first setter', () {
+      final list = CopyOnWriteList<int>([1, 2, 3], true)..first = 9;
+      expect(list, [9, 2, 3]);
+    });
+
+    test('List.last setter', () {
+      final list = CopyOnWriteList<int>([1, 2, 3], true)..last = 9;
+      expect(list, [1, 2, 9]);
+    });
+
+    test('List.setRange', () {
+      final list = CopyOnWriteList<int>([1, 2, 3], true)
+        ..setRange(0, 2, [9, 8]);
+      expect(list, [9, 8, 3]);
+    });
+
+    test('List.removeRange', () {
+      final list = CopyOnWriteList<int>([1, 2, 3], true)..removeRange(1, 3);
+      expect(list, [1]);
+    });
+
+    test('List.fillRange', () {
+      final list = CopyOnWriteList<int>([1, 2, 3], true)..fillRange(0, 2, 0);
+      expect(list, [0, 0, 3]);
+    });
+
+    test('List.replaceRange', () {
+      final list = CopyOnWriteList<int>([1, 2, 3], true)
+        ..replaceRange(1, 2, [9, 8]);
+      expect(list, [1, 9, 8, 3]);
+    });
   });
 }
 

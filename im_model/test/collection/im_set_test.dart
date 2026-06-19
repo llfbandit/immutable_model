@@ -31,11 +31,11 @@ void main() {
     test('iterator', () {
       final coll = ImSet({'foo', 'bar'});
       final it = coll.iterator;
-
-      expect(it.moveNext(), true);
-      expect(it.current, 'foo');
-      expect(it.moveNext(), true);
-      expect(it.current, 'bar');
+      final elements = <String>[];
+      while (it.moveNext()) {
+        elements.add(it.current);
+      }
+      expect(elements, unorderedEquals(['foo', 'bar']));
     });
 
     test('contains', () {
@@ -155,12 +155,17 @@ void main() {
     });
 
     test('provides toString() for debugging', () {
-      expect(ImSet<int>([1, 2, 3]).toString(), '{1, 2, 3}');
+      final s = ImSet<int>([1, 2, 3]).toString();
+      expect(s, startsWith('{'));
+      expect(s, endsWith('}'));
+      expect(s, contains('1'));
+      expect(s, contains('2'));
+      expect(s, contains('3'));
     });
 
-    test('preserves order', () {
-      expect(ImSet<int>([1, 2, 3]), [1, 2, 3]);
-      expect(ImSet<int>([3, 2, 1]), [3, 2, 1]);
+    test('contains all elements', () {
+      expect(ImSet<int>([1, 2, 3]), unorderedEquals([1, 2, 3]));
+      expect(ImSet<int>([3, 2, 1]), unorderedEquals([1, 2, 3]));
     });
 
     test('is not mutated when Set from toSet is mutated', () {

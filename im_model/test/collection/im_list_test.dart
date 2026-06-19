@@ -221,5 +221,15 @@ void main() {
     test('Iterable.whereType', () {
       expect(ImList<Object>([1, 'two', 3]).whereType<String>(), ['two']);
     });
+
+    test('toString', () {
+      expect(ImList<int>([1, 2, 3]).toString(), '[1, 2, 3]');
+    });
+
+    test('== identical', () {
+      final list = ImList<int>([1, 2, 3]);
+      // ignore: unrelated_type_equality_checks
+      expect(list == list, isTrue);
+    });
   });
 }

@@ -444,4 +444,28 @@ void main() {
       });
     });
   });
+
+  group('Hash', () {
+    test('hash produces same value for same inputs', () {
+      const h = Hash();
+      final a = h.hash(Object(), ['x', 1]);
+      final b = h.hash(Object(), ['x', 1]);
+      expect(a, b);
+    });
+
+    test('hash differs for different props', () {
+      const h = Hash();
+      final a = h.hash(Object(), ['x']);
+      final b = h.hash(Object(), ['y']);
+      expect(a, isNot(b));
+    });
+  });
+
+  group('Annotations', () {
+    test('ImField can be instantiated', () {
+      const field = ImField(ignoreCopy: true, ignoreEqual: false);
+      expect(field.ignoreCopy, isTrue);
+      expect(field.ignoreEqual, isFalse);
+    });
+  });
 }

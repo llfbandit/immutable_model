@@ -184,5 +184,54 @@ void main() {
       expect(
           CopyOnWriteSet<Object>({1, 'two', 3}).whereType<String>(), ['two']);
     });
+
+    test('Iterable.isEmpty', () {
+      expect(CopyOnWriteSet<int>({}).isEmpty, isTrue);
+      expect(CopyOnWriteSet<int>({1}).isEmpty, isFalse);
+    });
+
+    test('Iterable.isNotEmpty', () {
+      expect(CopyOnWriteSet<int>({}).isNotEmpty, isFalse);
+      expect(CopyOnWriteSet<int>({1}).isNotEmpty, isTrue);
+    });
+
+    // Mutating.
+
+    test('Set.addAll', () {
+      final set = CopyOnWriteSet<int>({1})..addAll([2, 3]);
+      expect(set, {1, 2, 3});
+    });
+
+    test('Set.clear', () {
+      final set = CopyOnWriteSet<int>({1, 2})..clear();
+      expect(set, isEmpty);
+    });
+
+    test('Set.remove', () {
+      final set = CopyOnWriteSet<int>({1, 2});
+      expect(set.remove(2), isTrue);
+      expect(set.remove(9), isFalse);
+      expect((CopyOnWriteSet<int>({1, 2})..remove(2)), {1});
+    });
+
+    test('Set.removeWhere', () {
+      final set = CopyOnWriteSet<int>({1, 2, 3})..removeWhere((x) => x > 1);
+      expect(set, {1});
+    });
+
+    test('Set.retainWhere', () {
+      final set = CopyOnWriteSet<int>({1, 2, 3})..retainWhere((x) => x > 1);
+      expect(set, {2, 3});
+    });
+
+    test('Set.removeAll', () {
+      final set = CopyOnWriteSet<int>({1, 2, 3})..removeAll([1, 3]);
+      expect(set, {2});
+    });
+
+    test('Set.retainAll', () {
+      final set = CopyOnWriteSet<int>({1, 2, 3})..retainAll([1, 3]);
+      expect(set, {1, 3});
+    });
   });
 }

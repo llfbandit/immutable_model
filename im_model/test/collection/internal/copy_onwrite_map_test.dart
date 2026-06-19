@@ -139,5 +139,22 @@ void main() {
             ..updateAll((k, v) => v + k.toString())),
           {1: '11', 2: '22'});
     });
+
+    test('Map.cast', () {
+      final map = CopyOnWriteMap<int, String>({1: 'one'}).cast<int, Object>();
+      expect(map[1], 'one');
+    });
+
+    test('Map.map', () {
+      final result = CopyOnWriteMap<int, String>({1: 'a', 2: 'b'})
+          .map((k, v) => MapEntry(k * 2, v.toUpperCase()));
+      expect(result, {2: 'A', 4: 'B'});
+    });
+
+    test('Map.addEntries', () {
+      final map = CopyOnWriteMap<int, String>({1: '1'})
+        ..addEntries([const MapEntry(2, '2'), const MapEntry(3, '3')]);
+      expect(map, {1: '1', 2: '2', 3: '3'});
+    });
   });
 }
