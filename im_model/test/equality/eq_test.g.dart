@@ -6,14 +6,14 @@ part of 'eq_test.dart';
 // ImmutableModelGenerator
 // **************************************************************************
 
-extension $GenericImExt<T extends Object> on Generic<T> {
+extension _$GenericImExt<T extends Object> on Generic<T> {
   dynamic _eq() => (value);
-
-  // ignore: library_private_types_in_public_api
-  _$IGenericCopy<T> get copyWith => _$GenericCopy<T>(this);
 }
 
 mixin _$GenericMixin<T extends Object> {
+  $IGenericCopy<T, Generic<T>> get copyWith =>
+      $GenericCopy(this as Generic<T>, (v) => v);
+
   @override
   int get hashCode => (this as Generic)._eq().hashCode;
 
@@ -27,35 +27,33 @@ mixin _$GenericMixin<T extends Object> {
   String toString() => (this as Generic)._eq().toString();
 }
 
-abstract interface class _$IGenericCopy<T extends Object> {
-  Generic<T> call({
-    T? value,
-  });
+abstract interface class $IGenericCopy<T extends Object, $R> {
+  $R call({T? value});
 }
 
-class _$GenericCopy<T extends Object> implements _$IGenericCopy<T> {
-  const _$GenericCopy(this._value);
+class $GenericCopy<T extends Object, $R> implements $IGenericCopy<T, $R> {
+  const $GenericCopy(this._value, this._then);
 
   final Generic<T> _value;
+  final $R Function(Generic<T>) _then;
 
   @override
-  Generic<T> call({
-    Object? value = const $ImCopy(),
-  }) {
-    return Generic<T>(
-      value == const $ImCopy() || value == null ? _value.value : value as T,
+  $R call({Object? value = $undefined}) {
+    return _then(
+      Generic<T>(
+        $undefined == value || value == null ? _value.value : value as T,
+      ),
     );
   }
 }
 
-extension $OtherImExt on Other {
+extension _$OtherImExt on Other {
   dynamic _eq() => (data);
-
-  // ignore: library_private_types_in_public_api
-  _$IOtherCopy get copyWith => _$OtherCopy(this);
 }
 
 mixin _$OtherMixin {
+  $IOtherCopy<Other> get copyWith => $OtherCopy(this as Other, (v) => v);
+
   @override
   int get hashCode => (this as Other)._eq().hashCode;
 
@@ -69,35 +67,32 @@ mixin _$OtherMixin {
   String toString() => (this as Other)._eq().toString();
 }
 
-abstract interface class _$IOtherCopy {
-  Other call({
-    String? data,
-  });
+abstract interface class $IOtherCopy<$R> {
+  $R call({String? data});
 }
 
-class _$OtherCopy implements _$IOtherCopy {
-  const _$OtherCopy(this._value);
+class $OtherCopy<$R> implements $IOtherCopy<$R> {
+  const $OtherCopy(this._value, this._then);
 
   final Other _value;
+  final $R Function(Other) _then;
 
   @override
-  Other call({
-    Object? data = const $ImCopy(),
-  }) {
-    return Other(
-      data == const $ImCopy() || data == null ? _value.data : data as String,
+  $R call({Object? data = $undefined}) {
+    return _then(
+      Other($undefined == data || data == null ? _value.data : data as String),
     );
   }
 }
 
-extension $ComplexImExt on Complex {
+extension _$ComplexImExt on Complex {
   dynamic _eq() => (name, age, hairColor, children);
-
-  // ignore: library_private_types_in_public_api
-  _$IComplexCopy get copyWith => _$ComplexCopy(this);
 }
 
 mixin _$ComplexMixin {
+  $IComplexCopy<Complex> get copyWith =>
+      $ComplexCopy(this as Complex, (v) => v);
+
   @override
   int get hashCode => (this as Complex)._eq().hashCode;
 
@@ -111,37 +106,36 @@ mixin _$ComplexMixin {
   String toString() => (this as Complex)._eq().toString();
 }
 
-abstract interface class _$IComplexCopy {
-  Complex call({
-    String? name,
-    int? age,
-    Color? hairColor,
-    List<String>? children,
-  });
+abstract interface class $IComplexCopy<$R> {
+  $R call({String? name, int? age, Color? hairColor, List<String>? children});
 }
 
-class _$ComplexCopy implements _$IComplexCopy {
-  const _$ComplexCopy(this._value);
+class $ComplexCopy<$R> implements $IComplexCopy<$R> {
+  const $ComplexCopy(this._value, this._then);
 
   final Complex _value;
+  final $R Function(Complex) _then;
 
   @override
-  Complex call({
-    Object? name = const $ImCopy(),
-    Object? age = const $ImCopy(),
-    Object? hairColor = const $ImCopy(),
-    Object? children = const $ImCopy(),
+  $R call({
+    Object? name = $undefined,
+    Object? age = $undefined,
+    Object? hairColor = $undefined,
+    Object? children = $undefined,
   }) {
-    return Complex(
-      name: name == const $ImCopy() ? _value.name : name as String?,
-      age: age == const $ImCopy() ? _value.age : age as int?,
-      hairColor:
-          hairColor == const $ImCopy() ? _value.hairColor : hairColor as Color?,
-      children: children == const $ImCopy()
-          ? _value.children
-          : children == null
-              ? null
-              : ImList(children as List<String>),
+    return _then(
+      Complex(
+        name: $undefined == name ? _value.name : name as String?,
+        age: $undefined == age ? _value.age : age as int?,
+        hairColor: $undefined == hairColor
+            ? _value.hairColor
+            : hairColor as Color?,
+        children: $undefined == children
+            ? _value.children
+            : children == null
+            ? null
+            : ImList(children as List<String>),
+      ),
     );
   }
 }

@@ -19,7 +19,7 @@ class Bar with _$BarMixin {
 
 void main() {
   // This test ensures that the copy will compare
-  // const $ImCopy() == foo and not foo == const $ImCopy()
+  // $undefined == foo and not foo == $undefined
   // Since copy impl provides objects, there is no error at compile time.
   test('Copy im_model', () {
     expect(

@@ -84,6 +84,33 @@ Applied to a field to override the class-level `@ImModel` settings.
 | `ignoreCopy`  | `false` | Exclude this field from `copyWith` |
 | `ignoreEqual` | `false` | Exclude this field from equality   |
 
+## Chained `copyWith`
+
+For nested `@ImModel` classes, `copyWith` can chain directly into a nested
+field instead of manually re-nesting `copyWith(...)` calls at every level:
+
+```dart
+// Instead of:
+Album newAlbum = album.copyWith(
+  artist: album.artist.copyWith(
+    contact: album.artist.contact.copyWith(name: 'John Smith'),
+  ),
+);
+
+// Write:
+Album newAlbum = album.copyWith.artist.contact(name: 'John Smith');
+```
+
+For nullable nested fields:
+
+```dart
+album.copyWith.artist.backupContact?.call(name: 'John Smith');
+```
+
+A field is chainable when its declared type is itself an `@ImModel` class
+that generates a `copyWith` (i.e. not `abstract`, and not fully excluded via
+`ignoreCopy`).
+
 ## Collections
 
 Replace mutable collections with their immutable counterparts:
@@ -102,8 +129,6 @@ Use `.mut` / `.immut` to switch between views — `.mut` is copy-on-write, so th
 obj = obj.copyWith(values: obj.values.mut..add(42));
 // Generated code wraps the result back to ImList automatically.
 ```
-
-> Elements inside collections are not checked. `ImList<MyMutableClass>` is still mutable.
 
 ## vs Freezed
 

@@ -32,10 +32,14 @@ void main() {
     });
 
     test('List+', () {
-      expect(
-        ImList<int>([1, 2, 3]) + ImList<int>([4, 5, 6]),
-        [1, 2, 3, 4, 5, 6],
-      );
+      expect(ImList<int>([1, 2, 3]) + ImList<int>([4, 5, 6]), [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+      ]);
     });
 
     test('List.length', () {
@@ -128,8 +132,9 @@ void main() {
 
     test('Iterable.fold', () {
       expect(
-          ImList<int>([1, 2]).fold('', (x, y) => x.toString() + y.toString()),
-          '12');
+        ImList<int>([1, 2]).fold('', (x, y) => x.toString() + y.toString()),
+        '12',
+      );
     });
 
     test('Iterable.followedBy', () {
@@ -186,24 +191,32 @@ void main() {
 
     test('Iterable.firstWhere', () {
       expect(ImList<int>([1, 2]).firstWhere((x) => x == 2), 2);
-      expect(() => ImList<int>([1, 2]).firstWhere((x) => x == 3),
-          throwsA(anything));
+      expect(
+        () => ImList<int>([1, 2]).firstWhere((x) => x == 3),
+        throwsA(anything),
+      );
       expect(ImList<int>([1, 2]).firstWhere((x) => x == 3, orElse: () => 4), 4);
     });
 
     test('Iterable.lastWhere', () {
       expect(ImList<int>([1, 2]).lastWhere((x) => x == 2), 2);
-      expect(() => ImList<int>([1, 2]).lastWhere((x) => x == 3),
-          throwsA(anything));
+      expect(
+        () => ImList<int>([1, 2]).lastWhere((x) => x == 3),
+        throwsA(anything),
+      );
       expect(ImList<int>([1, 2]).lastWhere((x) => x == 3, orElse: () => 4), 4);
     });
 
     test('Iterable.singleWhere', () {
       expect(ImList<int>([1, 2]).singleWhere((x) => x == 2), 2);
-      expect(() => ImList<int>([1, 2]).singleWhere((x) => x == 3),
-          throwsA(anything));
-      expect(() => ImList<int>([1, 2]).singleWhere((x) => true),
-          throwsA(anything));
+      expect(
+        () => ImList<int>([1, 2]).singleWhere((x) => x == 3),
+        throwsA(anything),
+      );
+      expect(
+        () => ImList<int>([1, 2]).singleWhere((x) => true),
+        throwsA(anything),
+      );
       expect(ImList<int>([1, 2]).singleWhere((x) => x == 2), 2);
       expect(ImList<int>([1, 2]).singleWhere((x) => false, orElse: () => 7), 7);
     });
@@ -213,8 +226,10 @@ void main() {
     });
 
     test('Iterable.cast', () {
-      expect(ImList<int>([1, 2]).cast<Object>(),
-          const TypeMatcher<Iterable<Object>>());
+      expect(
+        ImList<int>([1, 2]).cast<Object>(),
+        const TypeMatcher<Iterable<Object>>(),
+      );
       expect(ImList<int>([1, 2]).cast<Object>(), [1, 2]);
     });
 

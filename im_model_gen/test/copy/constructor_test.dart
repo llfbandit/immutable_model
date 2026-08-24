@@ -5,28 +5,18 @@ part 'constructor_test.g.dart';
 
 @ImModel(copyConstructor: '_')
 class CopyNamedConstructor with _$CopyNamedConstructorMixin {
-  const CopyNamedConstructor._({
-    this.id,
-  });
+  const CopyNamedConstructor._({this.id});
 
   final String? id;
 }
 
 @ImModel(copyConstructor: 'first')
 class CopyMultiConstructors with _$CopyMultiConstructorsMixin {
-  const CopyMultiConstructors({
-    this.id,
-  }) : field = "test";
+  const CopyMultiConstructors({this.id}) : field = "test";
 
-  const CopyMultiConstructors.first({
-    this.id,
-    required this.field,
-  });
+  const CopyMultiConstructors.first({this.id, required this.field});
 
-  const CopyMultiConstructors.second({
-    this.id,
-    required this.field,
-  });
+  const CopyMultiConstructors.second({this.id, required this.field});
 
   final String? id;
   final String field;
@@ -43,11 +33,7 @@ class DefaultValuesConstructor with _$DefaultValuesConstructorMixin {
 
 @ImModel()
 class PositionedFields with _$PositionedFieldsMixin {
-  const PositionedFields(
-    this.pOne,
-    this.pTwo, {
-    this.namedOne,
-  });
+  const PositionedFields(this.pOne, this.pTwo, {this.namedOne});
 
   final String pOne;
   final String pTwo;
@@ -57,10 +43,7 @@ class PositionedFields with _$PositionedFieldsMixin {
 void main() {
   group('named constructor', () {
     test('CopyNamedConstructor', () {
-      expect(
-        const CopyNamedConstructor._().copyWith(id: 'test').id,
-        "test",
-      );
+      expect(const CopyNamedConstructor._().copyWith(id: 'test').id, "test");
 
       expect(
         const CopyNamedConstructor._(id: 'test').copyWith(id: null).id,
@@ -69,10 +52,7 @@ void main() {
     });
 
     test('CopyMultiConstructors', () {
-      expect(
-        const CopyMultiConstructors().copyWith(id: "test").id,
-        "test",
-      );
+      expect(const CopyMultiConstructors().copyWith(id: "test").id, "test");
 
       expect(
         const CopyMultiConstructors().copyWith(field: 'test123').field,

@@ -6,15 +6,15 @@ part of 'generic_test.dart';
 // ImmutableModelGenerator
 // **************************************************************************
 
-extension $GenericsImExt<G, T extends Iterable<G>> on Generics<G, T> {
+extension _$GenericsImExt<G, T extends Iterable<G>> on Generics<G, T> {
   dynamic _eq() =>
       (basicGeneric, genericTemplate, nullableGeneric, deepNestedGeneric);
-
-  // ignore: library_private_types_in_public_api
-  _$IGenericsCopy<G, T> get copyWith => _$GenericsCopy<G, T>(this);
 }
 
 mixin _$GenericsMixin<G, T extends Iterable<G>> {
+  $IGenericsCopy<G, T, Generics<G, T>> get copyWith =>
+      $GenericsCopy(this as Generics<G, T>, (v) => v);
+
   @override
   int get hashCode => (this as Generics)._eq().hashCode;
 
@@ -28,8 +28,8 @@ mixin _$GenericsMixin<G, T extends Iterable<G>> {
   String toString() => (this as Generics)._eq().toString();
 }
 
-abstract interface class _$IGenericsCopy<G, T extends Iterable<G>> {
-  Generics<G, T> call({
+abstract interface class $IGenericsCopy<G, T extends Iterable<G>, $R> {
+  $R call({
     List<int>? basicGeneric,
     List<T>? genericTemplate,
     List<ImList<ImList<int?>?>>? deepNestedGeneric,
@@ -37,36 +37,39 @@ abstract interface class _$IGenericsCopy<G, T extends Iterable<G>> {
   });
 }
 
-class _$GenericsCopy<G, T extends Iterable<G>>
-    implements _$IGenericsCopy<G, T> {
-  const _$GenericsCopy(this._value);
+class $GenericsCopy<G, T extends Iterable<G>, $R>
+    implements $IGenericsCopy<G, T, $R> {
+  const $GenericsCopy(this._value, this._then);
 
   final Generics<G, T> _value;
+  final $R Function(Generics<G, T>) _then;
 
   @override
-  Generics<G, T> call({
-    Object? basicGeneric = const $ImCopy(),
-    Object? genericTemplate = const $ImCopy(),
-    Object? deepNestedGeneric = const $ImCopy(),
-    Object? nullableGeneric = const $ImCopy(),
+  $R call({
+    Object? basicGeneric = $undefined,
+    Object? genericTemplate = $undefined,
+    Object? deepNestedGeneric = $undefined,
+    Object? nullableGeneric = $undefined,
   }) {
-    return Generics<G, T>(
-      basicGeneric: const $ImCopy() == basicGeneric || basicGeneric == null
-          ? _value.basicGeneric
-          : ImList(basicGeneric as List<int>),
-      genericTemplate:
-          const $ImCopy() == genericTemplate || genericTemplate == null
-              ? _value.genericTemplate
-              : ImList(genericTemplate as List<T>),
-      deepNestedGeneric: const $ImCopy() == deepNestedGeneric
-          ? _value.deepNestedGeneric
-          : deepNestedGeneric == null
-              ? null
-              : ImList(deepNestedGeneric as List<ImList<ImList<int?>?>>),
-      nullableGeneric:
-          const $ImCopy() == nullableGeneric || nullableGeneric == null
-              ? _value.nullableGeneric
-              : ImList(nullableGeneric as List<String?>),
+    return _then(
+      Generics<G, T>(
+        basicGeneric: $undefined == basicGeneric || basicGeneric == null
+            ? _value.basicGeneric
+            : ImList(basicGeneric as List<int>),
+        genericTemplate:
+            $undefined == genericTemplate || genericTemplate == null
+            ? _value.genericTemplate
+            : ImList(genericTemplate as List<T>),
+        deepNestedGeneric: $undefined == deepNestedGeneric
+            ? _value.deepNestedGeneric
+            : deepNestedGeneric == null
+            ? null
+            : ImList(deepNestedGeneric as List<ImList<ImList<int?>?>>),
+        nullableGeneric:
+            $undefined == nullableGeneric || nullableGeneric == null
+            ? _value.nullableGeneric
+            : ImList(nullableGeneric as List<String?>),
+      ),
     );
   }
 }

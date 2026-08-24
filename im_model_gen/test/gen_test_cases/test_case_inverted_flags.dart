@@ -6,7 +6,8 @@ extension _$InvertedImExt<T> on Inverted<T> {
 }
 
 mixin _$InvertedMixin<T> {
-  _$IInvertedCopy<T> get copyWith => _$InvertedCopy<T>(this as Inverted<T>);
+  $IInvertedCopy<T, Inverted<T>> get copyWith =>
+      $InvertedCopy(this as Inverted<T>, (v) => v);
 
   @override
   int get hashCode => (this as Inverted)._eq().hashCode;
@@ -21,20 +22,23 @@ mixin _$InvertedMixin<T> {
   String toString() => (this as Inverted)._eq().toString();
 }
 
-abstract interface class _$IInvertedCopy<T> {
-  Inverted<T> call({T? aValue});
+abstract interface class $IInvertedCopy<T, $R> {
+  $R call({T? aValue});
 }
 
-class _$InvertedCopy<T> implements _$IInvertedCopy<T> {
-  const _$InvertedCopy(this._value);
+class $InvertedCopy<T, $R> implements $IInvertedCopy<T, $R> {
+  const $InvertedCopy(this._value, this._then);
 
   final Inverted<T> _value;
+  final $R Function(Inverted<T>) _then;
 
   @override
-  Inverted<T> call({Object? aValue = const $ImCopy()}) {
-    return Inverted<T>(
-      _value.id,
-      const $ImCopy() == aValue ? _value.aValue : aValue as T?,
+  $R call({Object? aValue = $undefined}) {
+    return _then(
+      Inverted<T>(
+        _value.id,
+        $undefined == aValue ? _value.aValue : aValue as T?,
+      ),
     );
   }
 }

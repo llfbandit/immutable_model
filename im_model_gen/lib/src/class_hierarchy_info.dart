@@ -2,6 +2,7 @@ import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:im_model/im_model.dart';
+import 'package:im_model_gen/src/check_immutability.dart';
 import 'package:im_model_gen/src/immutable_annotation.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -55,20 +56,22 @@ class FieldInfo {
 }
 
 class ClassHierarchyInfo {
-  final Map<String, ClassInfo> _classes = {};
+  final Map<int, ClassInfo> _classes = {};
 
   ClassInfo getClassInfo(ClassElement element, ConstantReader reader) {
     final existingClassInfo = _lookup(element);
     if (existingClassInfo != null) return existingClassInfo;
 
+    CheckImmutability().check(element);
+
     final classInfo = _createClassInfo(element, reader, element.isAbstract);
-    _classes[element.name!] = classInfo;
+    _classes[element.id] = classInfo;
     _addSuperClasses(classInfo);
 
     return classInfo;
   }
 
-  ClassInfo? _lookup(InterfaceElement element) => _classes[element.name];
+  ClassInfo? _lookup(InterfaceElement element) => _classes[element.id];
 
   ClassInfo _createClassInfo(
     InterfaceElement element,
@@ -112,7 +115,7 @@ class ClassHierarchyInfo {
             ConstantReader(superClass.annotation),
             ssClass is ClassElement ? ssClass.isAbstract : true,
           );
-          _classes[ssClass.name!] = info;
+          _classes[ssClass.id] = info;
           return info;
         }();
 

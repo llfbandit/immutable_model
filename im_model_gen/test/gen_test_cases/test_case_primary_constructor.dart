@@ -7,8 +7,8 @@ extension _$PrimaryPositionalImExt on PrimaryPositional {
 }
 
 mixin _$PrimaryPositionalMixin {
-  _$IPrimaryPositionalCopy get copyWith =>
-      _$PrimaryPositionalCopy(this as PrimaryPositional);
+  $IPrimaryPositionalCopy<PrimaryPositional> get copyWith =>
+      $PrimaryPositionalCopy(this as PrimaryPositional, (v) => v);
 
   @override
   int get hashCode => (this as PrimaryPositional)._eq().hashCode;
@@ -23,23 +23,23 @@ mixin _$PrimaryPositionalMixin {
   String toString() => (this as PrimaryPositional)._eq().toString();
 }
 
-abstract interface class _$IPrimaryPositionalCopy {
-  PrimaryPositional call({String? id, int? value});
+abstract interface class $IPrimaryPositionalCopy<$R> {
+  $R call({String? id, int? value});
 }
 
-class _$PrimaryPositionalCopy implements _$IPrimaryPositionalCopy {
-  const _$PrimaryPositionalCopy(this._value);
+class $PrimaryPositionalCopy<$R> implements $IPrimaryPositionalCopy<$R> {
+  const $PrimaryPositionalCopy(this._value, this._then);
 
   final PrimaryPositional _value;
+  final $R Function(PrimaryPositional) _then;
 
   @override
-  PrimaryPositional call({
-    Object? id = const $ImCopy(),
-    Object? value = const $ImCopy(),
-  }) {
-    return PrimaryPositional(
-      const $ImCopy() == id || id == null ? _value.id : id as String,
-      const $ImCopy() == value || value == null ? _value.value : value as int,
+  $R call({Object? id = $undefined, Object? value = $undefined}) {
+    return _then(
+      PrimaryPositional(
+        $undefined == id || id == null ? _value.id : id as String,
+        $undefined == value || value == null ? _value.value : value as int,
+      ),
     );
   }
 }
@@ -54,7 +54,8 @@ extension _$PrimaryNamedImExt on PrimaryNamed {
 }
 
 mixin _$PrimaryNamedMixin {
-  _$IPrimaryNamedCopy get copyWith => _$PrimaryNamedCopy(this as PrimaryNamed);
+  $IPrimaryNamedCopy<PrimaryNamed> get copyWith =>
+      $PrimaryNamedCopy(this as PrimaryNamed, (v) => v);
 
   @override
   int get hashCode => (this as PrimaryNamed)._eq().hashCode;
@@ -69,27 +70,25 @@ mixin _$PrimaryNamedMixin {
   String toString() => (this as PrimaryNamed)._eq().toString();
 }
 
-abstract interface class _$IPrimaryNamedCopy {
-  PrimaryNamed call({String? id, int? optional});
+abstract interface class $IPrimaryNamedCopy<$R> {
+  $R call({String? id, int? optional});
 }
 
-class _$PrimaryNamedCopy implements _$IPrimaryNamedCopy {
-  const _$PrimaryNamedCopy(this._value);
+class $PrimaryNamedCopy<$R> implements $IPrimaryNamedCopy<$R> {
+  const $PrimaryNamedCopy(this._value, this._then);
 
   final PrimaryNamed _value;
+  final $R Function(PrimaryNamed) _then;
 
   @override
-  PrimaryNamed call({
-    Object? id = const $ImCopy(),
-    Object? optional = const $ImCopy(),
-  }) {
-    return PrimaryNamed(
-      id: const $ImCopy() == id || id == null ? _value.id : id as String,
-      optional: const $ImCopy() == optional
-          ? _value.optional
-          : optional as int?,
-      immutable: _value.immutable,
-      nullableImmutable: _value.nullableImmutable,
+  $R call({Object? id = $undefined, Object? optional = $undefined}) {
+    return _then(
+      PrimaryNamed(
+        id: $undefined == id || id == null ? _value.id : id as String,
+        optional: $undefined == optional ? _value.optional : optional as int?,
+        immutable: _value.immutable,
+        nullableImmutable: _value.nullableImmutable,
+      ),
     );
   }
 }

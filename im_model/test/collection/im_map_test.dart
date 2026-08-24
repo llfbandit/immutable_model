@@ -123,21 +123,25 @@ void main() {
 
     test('compares not equal to different type', () {
       expect(
-          // ignore: unrelated_type_equality_checks
-          ImMap<int, String>({1: '1', 2: '2', 3: '3'}) == '',
-          isFalse);
+        // ignore: unrelated_type_equality_checks
+        ImMap<int, String>({1: '1', 2: '2', 3: '3'}) == '',
+        isFalse,
+      );
     });
 
     test('compares not equal to different length ImMap', () {
       expect(
-          ImMap<int, String>({1: '1', 2: '2', 3: '3'}) ==
-              ImMap<int, String>({1: '1', 2: '2'}),
-          isFalse);
+        ImMap<int, String>({1: '1', 2: '2', 3: '3'}) ==
+            ImMap<int, String>({1: '1', 2: '2'}),
+        isFalse,
+      );
     });
 
     test('provides toString() for debugging', () {
-      expect(ImMap<int, String>({1: '1', 2: '2', 3: '3'}).toString(),
-          '{1: 1, 2: 2, 3: 3}');
+      expect(
+        ImMap<int, String>({1: '1', 2: '2', 3: '3'}).toString(),
+        '{1: 1, 2: 2, 3: 3}',
+      );
     });
 
     test('preserves key order', () {
@@ -192,10 +196,11 @@ void main() {
     });
 
     test('Map.values', () {
-      expect(
-        ImMap<int, String>({1: '1', 2: '2', 3: '3'}).values,
-        ['1', '2', '3'],
-      );
+      expect(ImMap<int, String>({1: '1', 2: '2', 3: '3'}).values, [
+        '1',
+        '2',
+        '3',
+      ]);
     });
 
     test('Map.entries', () {
@@ -205,10 +210,11 @@ void main() {
 
     test('Map.map', () {
       expect(
-          ImMap<int, String>({1: '1', 2: '2', 3: '3'})
-              .map((key, value) => MapEntry(value, key))
-              .asMap(),
-          {'1': 1, '2': 2, '3': 3});
+        ImMap<int, String>({1: '1', 2: '2', 3: '3'})
+            .map((key, value) => MapEntry(value, key))
+            .asMap(),
+        {'1': 1, '2': 2, '3': 3},
+      );
     });
   });
 }

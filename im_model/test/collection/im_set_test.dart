@@ -96,14 +96,8 @@ void main() {
     });
 
     test('can be converted to Set<E>', () {
-      expect(
-        ImSet<int>().toSet(),
-        const TypeMatcher<Set<int>>(),
-      );
-      expect(
-        ImSet<int>().toSet(),
-        isNot(const TypeMatcher<Set<String>>()),
-      );
+      expect(ImSet<int>().toSet(), const TypeMatcher<Set<int>>());
+      expect(ImSet<int>().toSet(), isNot(const TypeMatcher<Set<String>>()));
     });
 
     test('can be converted to an UnmodifiableSetView', () {
@@ -213,14 +207,8 @@ void main() {
     });
 
     test('Iterable<E>', () {
-      expect(
-        ImSet<int>(),
-        const TypeMatcher<Iterable<int>>(),
-      );
-      expect(
-        ImSet<int>(),
-        isNot(const TypeMatcher<Iterable<String>>()),
-      );
+      expect(ImSet<int>(), const TypeMatcher<Iterable<int>>());
+      expect(ImSet<int>(), isNot(const TypeMatcher<Iterable<String>>()));
     });
 
     test('Iterable.map', () {
@@ -252,8 +240,10 @@ void main() {
     });
 
     test('Iterable.fold', () {
-      expect(ImSet<int>([1, 2]).fold('', (x, y) => x.toString() + y.toString()),
-          '12');
+      expect(
+        ImSet<int>([1, 2]).fold('', (x, y) => x.toString() + y.toString()),
+        '12',
+      );
     });
 
     test('Iterable.followedBy', () {
@@ -315,24 +305,32 @@ void main() {
 
     test('Iterable.firstWhere', () {
       expect(ImSet<int>([1, 2]).firstWhere((x) => x == 2), 2);
-      expect(() => ImSet<int>([1, 2]).firstWhere((x) => x == 3),
-          throwsA(anything));
+      expect(
+        () => ImSet<int>([1, 2]).firstWhere((x) => x == 3),
+        throwsA(anything),
+      );
       expect(ImSet<int>([1, 2]).firstWhere((x) => x == 3, orElse: () => 4), 4);
     });
 
     test('Iterable.lastWhere', () {
       expect(ImSet<int>([1, 2]).lastWhere((x) => x == 2), 2);
       expect(
-          () => ImSet<int>([1, 2]).lastWhere((x) => x == 3), throwsA(anything));
+        () => ImSet<int>([1, 2]).lastWhere((x) => x == 3),
+        throwsA(anything),
+      );
       expect(ImSet<int>([1, 2]).lastWhere((x) => x == 3, orElse: () => 4), 4);
     });
 
     test('Iterable.singleWhere', () {
       expect(ImSet<int>([1, 2]).singleWhere((x) => x == 2), 2);
-      expect(() => ImSet<int>([1, 2]).singleWhere((x) => x == 3),
-          throwsA(anything));
       expect(
-          () => ImSet<int>([1, 2]).singleWhere((x) => true), throwsA(anything));
+        () => ImSet<int>([1, 2]).singleWhere((x) => x == 3),
+        throwsA(anything),
+      );
+      expect(
+        () => ImSet<int>([1, 2]).singleWhere((x) => true),
+        throwsA(anything),
+      );
       expect(ImSet<int>([1, 2]).singleWhere((x) => false, orElse: () => 7), 7);
     });
 
@@ -341,8 +339,10 @@ void main() {
     });
 
     test('Iterable.cast', () {
-      expect(ImSet<int>([1, 2]).cast<Object>(),
-          const TypeMatcher<Iterable<Object>>());
+      expect(
+        ImSet<int>([1, 2]).cast<Object>(),
+        const TypeMatcher<Iterable<Object>>(),
+      );
       expect(ImSet<int>([1, 2]).cast<Object>(), [1, 2]);
     });
 

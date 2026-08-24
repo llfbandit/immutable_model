@@ -1,3 +1,4 @@
+export 'src/copy_sentinel.dart';
 export 'src/annotation/immutable_model.dart';
 export 'src/collection/im_list.dart';
 export 'src/collection/im_map.dart';

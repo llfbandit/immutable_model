@@ -7,10 +7,11 @@ extension _$PrivateNamedParametersClassImExt<T extends Iterable<int>>
 }
 
 mixin _$PrivateNamedParametersClassMixin<T extends Iterable<int>> {
-  _$IPrivateNamedParametersClassCopy<T> get copyWith =>
-      _$PrivateNamedParametersClassCopy<T>(
-        this as PrivateNamedParametersClass<T>,
-      );
+  $IPrivateNamedParametersClassCopy<T, PrivateNamedParametersClass<T>>
+  get copyWith => $PrivateNamedParametersClassCopy(
+    this as PrivateNamedParametersClass<T>,
+    (v) => v,
+  );
 
   @override
   int get hashCode => (this as PrivateNamedParametersClass)._eq().hashCode;
@@ -25,28 +26,29 @@ mixin _$PrivateNamedParametersClassMixin<T extends Iterable<int>> {
   String toString() => (this as PrivateNamedParametersClass)._eq().toString();
 }
 
-abstract interface class _$IPrivateNamedParametersClassCopy<
-  T extends Iterable<int>
+abstract interface class $IPrivateNamedParametersClassCopy<
+  T extends Iterable<int>,
+  $R
 > {
-  PrivateNamedParametersClass<T> call({String? id, T? optional});
+  $R call({String? id, T? optional});
 }
 
-class _$PrivateNamedParametersClassCopy<T extends Iterable<int>>
-    implements _$IPrivateNamedParametersClassCopy<T> {
-  const _$PrivateNamedParametersClassCopy(this._value);
+class $PrivateNamedParametersClassCopy<T extends Iterable<int>, $R>
+    implements $IPrivateNamedParametersClassCopy<T, $R> {
+  const $PrivateNamedParametersClassCopy(this._value, this._then);
 
   final PrivateNamedParametersClass<T> _value;
+  final $R Function(PrivateNamedParametersClass<T>) _then;
 
   @override
-  PrivateNamedParametersClass<T> call({
-    Object? id = const $ImCopy(),
-    Object? optional = const $ImCopy(),
-  }) {
-    return PrivateNamedParametersClass<T>(
-      id: const $ImCopy() == id || id == null ? _value._id : id as String,
-      optional: const $ImCopy() == optional ? _value._optional : optional as T?,
-      immutable: _value._immutable,
-      nullableImmutable: _value._nullableImmutable,
+  $R call({Object? id = $undefined, Object? optional = $undefined}) {
+    return _then(
+      PrivateNamedParametersClass<T>(
+        id: $undefined == id || id == null ? _value._id : id as String,
+        optional: $undefined == optional ? _value._optional : optional as T?,
+        immutable: _value._immutable,
+        nullableImmutable: _value._nullableImmutable,
+      ),
     );
   }
 }

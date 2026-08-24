@@ -20,10 +20,7 @@ class ImModelAnnotation implements ImModel {
 
 /// The internal representation of `ImField` annotation.
 class ImFieldAnnotation implements ImField {
-  const ImFieldAnnotation({
-    this.ignoreCopy,
-    this.ignoreEqual,
-  });
+  const ImFieldAnnotation({this.ignoreCopy, this.ignoreEqual});
 
   @override
   final bool? ignoreCopy;

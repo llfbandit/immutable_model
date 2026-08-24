@@ -6,7 +6,8 @@ extension _$ParentImExt<T> on Parent<T> {
 }
 
 mixin _$ParentMixin<T> {
-  _$IParentCopy<T> get copyWith => _$ParentCopy<T>(this as Parent<T>);
+  $IParentCopy<T, Parent<T>> get copyWith =>
+      $ParentCopy(this as Parent<T>, (v) => v);
 
   @override
   int get hashCode => (this as Parent)._eq().hashCode;
@@ -21,20 +22,20 @@ mixin _$ParentMixin<T> {
   String toString() => (this as Parent)._eq().toString();
 }
 
-abstract interface class _$IParentCopy<T> {
-  Parent<T> call({T? aValue});
+abstract interface class $IParentCopy<T, $R> {
+  $R call({T? aValue});
 }
 
-class _$ParentCopy<T> implements _$IParentCopy<T> {
-  const _$ParentCopy(this._value);
+class $ParentCopy<T, $R> implements $IParentCopy<T, $R> {
+  const $ParentCopy(this._value, this._then);
 
   final Parent<T> _value;
+  final $R Function(Parent<T>) _then;
 
   @override
-  Parent<T> call({Object? aValue = const $ImCopy()}) {
-    return Parent<T>(
-      _value.id,
-      const $ImCopy() == aValue ? _value.aValue : aValue as T?,
+  $R call({Object? aValue = $undefined}) {
+    return _then(
+      Parent<T>(_value.id, $undefined == aValue ? _value.aValue : aValue as T?),
     );
   }
 }
@@ -55,7 +56,8 @@ extension _$ChildImExt<T> on Child<T> {
 }
 
 mixin _$ChildMixin<T> {
-  _$IChildCopy<T> get copyWith => _$ChildCopy<T>(this as Child<T>);
+  $IChildCopy<T, Child<T>> get copyWith =>
+      $ChildCopy(this as Child<T>, (v) => v);
 
   @override
   int get hashCode => (this as Child)._eq().hashCode;
@@ -70,26 +72,27 @@ mixin _$ChildMixin<T> {
   String toString() => (this as Child)._eq().toString();
 }
 
-abstract interface class _$IChildCopy<T> {
-  Child<T> call({T? aValue, List<int>? collection});
+abstract interface class $IChildCopy<T, $R> implements $IParentCopy<T, $R> {
+  @override
+  $R call({T? aValue, List<int>? collection});
 }
 
-class _$ChildCopy<T> implements _$IChildCopy<T> {
-  const _$ChildCopy(this._value);
+class $ChildCopy<T, $R> implements $IChildCopy<T, $R> {
+  const $ChildCopy(this._value, this._then);
 
   final Child<T> _value;
+  final $R Function(Child<T>) _then;
 
   @override
-  Child<T> call({
-    Object? aValue = const $ImCopy(),
-    Object? collection = const $ImCopy(),
-  }) {
-    return Child<T>(
-      _value.id,
-      const $ImCopy() == aValue ? _value.aValue : aValue as T?,
-      collection: const $ImCopy() == collection || collection == null
-          ? _value.collection
-          : ImList(collection as List<int>),
+  $R call({Object? aValue = $undefined, Object? collection = $undefined}) {
+    return _then(
+      Child<T>(
+        _value.id,
+        $undefined == aValue ? _value.aValue : aValue as T?,
+        collection: $undefined == collection || collection == null
+            ? _value.collection
+            : ImList(collection as List<int>),
+      ),
     );
   }
 }

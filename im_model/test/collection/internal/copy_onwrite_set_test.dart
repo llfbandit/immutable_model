@@ -19,14 +19,16 @@ void main() {
 
     test('Set.difference', () {
       expect(
-          CopyOnWriteSet<int>({1, 2, 3}).difference(CopyOnWriteSet<int>({1})),
-          [2, 3]);
+        CopyOnWriteSet<int>({1, 2, 3}).difference(CopyOnWriteSet<int>({1})),
+        [2, 3],
+      );
     });
 
     test('Set.intersection', () {
       expect(
-          CopyOnWriteSet<int>({1, 2, 3}).intersection(CopyOnWriteSet<int>({1})),
-          {1});
+        CopyOnWriteSet<int>({1, 2, 3}).intersection(CopyOnWriteSet<int>({1})),
+        {1},
+      );
     });
 
     test('Set.lookup', () {
@@ -35,8 +37,12 @@ void main() {
     });
 
     test('Set.union', () {
-      expect(CopyOnWriteSet<int>({1, 2, 3}).union(CopyOnWriteSet<int>({4})),
-          [1, 2, 3, 4]);
+      expect(CopyOnWriteSet<int>({1, 2, 3}).union(CopyOnWriteSet<int>({4})), [
+        1,
+        2,
+        3,
+        4,
+      ]);
     });
 
     // Iterable.
@@ -50,8 +56,12 @@ void main() {
     });
 
     test('Iterable.expand', () {
-      expect(
-          CopyOnWriteSet<int>({1, 2}).expand((x) => [x, x + 1]), [1, 2, 2, 3]);
+      expect(CopyOnWriteSet<int>({1, 2}).expand((x) => [x, x + 1]), [
+        1,
+        2,
+        2,
+        3,
+      ]);
     });
 
     test('Iterable.contains', () {
@@ -72,21 +82,25 @@ void main() {
 
     test('Iterable.fold', () {
       expect(
-          CopyOnWriteSet<int>({1, 2})
-              .fold('', (x, y) => x.toString() + y.toString()),
-          '12');
+        CopyOnWriteSet<int>({1, 2})
+            .fold('', (x, y) => x.toString() + y.toString()),
+        '12',
+      );
     });
 
     test('Iterable.followedBy', () {
       expect(
-          CopyOnWriteSet<int>({1, 2}).followedBy(CopyOnWriteSet<int>({3, 4})),
-          [1, 2, 3, 4]);
+        CopyOnWriteSet<int>({1, 2}).followedBy(CopyOnWriteSet<int>({3, 4})),
+        [1, 2, 3, 4],
+      );
     });
 
     test('Iterable.every', () {
       expect(CopyOnWriteSet<int>({1, 2}).every((x) => x == 1), isFalse);
       expect(
-          CopyOnWriteSet<int>({1, 2}).every((x) => x == 1 || x == 2), isTrue);
+        CopyOnWriteSet<int>({1, 2}).every((x) => x == 1 || x == 2),
+        isTrue,
+      );
     });
 
     test('Iterable.join', () {
@@ -100,13 +114,17 @@ void main() {
 
     test('Iterable.toSet', () {
       expect(
-          CopyOnWriteSet<int>({1, 2}).toSet(), const TypeMatcher<Set<int>>());
+        CopyOnWriteSet<int>({1, 2}).toSet(),
+        const TypeMatcher<Set<int>>(),
+      );
       expect(CopyOnWriteSet<int>({1, 2}).toSet(), {1, 2});
     });
 
     test('Iterable.toList', () {
       expect(
-          CopyOnWriteSet<int>({1, 2}).toList(), const TypeMatcher<List<int>>());
+        CopyOnWriteSet<int>({1, 2}).toList(),
+        const TypeMatcher<List<int>>(),
+      );
       expect(CopyOnWriteSet<int>({1, 2}).toList(), {1, 2});
     });
 
@@ -141,33 +159,42 @@ void main() {
 
     test('Iterable.firstWhere', () {
       expect(CopyOnWriteSet<int>({1, 2}).firstWhere((x) => x == 2), 2);
-      expect(() => CopyOnWriteSet<int>({1, 2}).firstWhere((x) => x == 3),
-          throwsA(anything));
       expect(
-          CopyOnWriteSet<int>({1, 2})
-              .firstWhere((x) => x == 3, orElse: () => 4),
-          4);
+        () => CopyOnWriteSet<int>({1, 2}).firstWhere((x) => x == 3),
+        throwsA(anything),
+      );
+      expect(
+        CopyOnWriteSet<int>({1, 2}).firstWhere((x) => x == 3, orElse: () => 4),
+        4,
+      );
     });
 
     test('Iterable.lastWhere', () {
       expect(CopyOnWriteSet<int>({1, 2}).lastWhere((x) => x == 2), 2);
-      expect(() => CopyOnWriteSet<int>({1, 2}).lastWhere((x) => x == 3),
-          throwsA(anything));
       expect(
-          CopyOnWriteSet<int>({1, 2}).lastWhere((x) => x == 3, orElse: () => 4),
-          4);
+        () => CopyOnWriteSet<int>({1, 2}).lastWhere((x) => x == 3),
+        throwsA(anything),
+      );
+      expect(
+        CopyOnWriteSet<int>({1, 2}).lastWhere((x) => x == 3, orElse: () => 4),
+        4,
+      );
     });
 
     test('Iterable.singleWhere', () {
       expect(CopyOnWriteSet<int>({1, 2}).singleWhere((x) => x == 2), 2);
-      expect(() => CopyOnWriteSet<int>({1, 2}).singleWhere((x) => x == 3),
-          throwsA(anything));
-      expect(() => CopyOnWriteSet<int>({1, 2}).singleWhere((x) => true),
-          throwsA(anything));
       expect(
-          CopyOnWriteSet<int>({1, 2})
-              .singleWhere((x) => false, orElse: () => 7),
-          7);
+        () => CopyOnWriteSet<int>({1, 2}).singleWhere((x) => x == 3),
+        throwsA(anything),
+      );
+      expect(
+        () => CopyOnWriteSet<int>({1, 2}).singleWhere((x) => true),
+        throwsA(anything),
+      );
+      expect(
+        CopyOnWriteSet<int>({1, 2}).singleWhere((x) => false, orElse: () => 7),
+        7,
+      );
     });
 
     test('Iterable.elementAt', () {
@@ -175,14 +202,17 @@ void main() {
     });
 
     test('Iterable.cast', () {
-      expect(CopyOnWriteSet<int>({1, 2}).cast<Object>(),
-          const TypeMatcher<Iterable<Object>>());
+      expect(
+        CopyOnWriteSet<int>({1, 2}).cast<Object>(),
+        const TypeMatcher<Iterable<Object>>(),
+      );
       expect(CopyOnWriteSet<int>({1, 2}).cast<Object>(), {1, 2});
     });
 
     test('Iterable.whereType', () {
-      expect(
-          CopyOnWriteSet<Object>({1, 'two', 3}).whereType<String>(), ['two']);
+      expect(CopyOnWriteSet<Object>({1, 'two', 3}).whereType<String>(), [
+        'two',
+      ]);
     });
 
     test('Iterable.isEmpty', () {

@@ -4,7 +4,7 @@ version: 1.0.0
 publish_to: none
 
 environment:
-  sdk: ^3.12.0
+  sdk: ^3.13.0
 
 resolution: workspace
 
@@ -15,4 +15,4 @@ dev_dependencies:
   lints: ^6.0.0
   build_runner: ^2.4.0
   
-  im_model_gen: ^1.0.0
+  im_model_gen: ^2.0.0

@@ -55,11 +55,15 @@ void main() {
 
   test('CopyNestedList', () {
     expect(
-      CopyNestedList(coll: ImList.empty()).copyWith(coll: [
-        ['test'].immut
-      ]).coll,
+      CopyNestedList(coll: ImList.empty())
+          .copyWith(
+            coll: [
+              ['test'].immut,
+            ],
+          )
+          .coll,
       [
-        ['test']
+        ['test'],
       ],
     );
   });

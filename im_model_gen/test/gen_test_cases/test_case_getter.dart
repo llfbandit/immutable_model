@@ -6,7 +6,7 @@ extension _$GetterImExt on Getter {
 }
 
 mixin _$GetterMixin {
-  _$IGetterCopy get copyWith => _$GetterCopy(this as Getter);
+  $IGetterCopy<Getter> get copyWith => $GetterCopy(this as Getter, (v) => v);
 
   @override
   int get hashCode => (this as Getter)._eq().hashCode;
@@ -21,19 +21,20 @@ mixin _$GetterMixin {
   String toString() => (this as Getter)._eq().toString();
 }
 
-abstract interface class _$IGetterCopy {
-  Getter call({String? id});
+abstract interface class $IGetterCopy<$R> {
+  $R call({String? id});
 }
 
-class _$GetterCopy implements _$IGetterCopy {
-  const _$GetterCopy(this._value);
+class $GetterCopy<$R> implements $IGetterCopy<$R> {
+  const $GetterCopy(this._value, this._then);
 
   final Getter _value;
+  final $R Function(Getter) _then;
 
   @override
-  Getter call({Object? id = const $ImCopy()}) {
-    return Getter(
-      id: const $ImCopy() == id || id == null ? _value.id : id as String,
+  $R call({Object? id = $undefined}) {
+    return _then(
+      Getter(id: $undefined == id || id == null ? _value.id : id as String),
     );
   }
 }

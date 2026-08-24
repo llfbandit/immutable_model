@@ -37,8 +37,3 @@ class ImField {
   /// It supersedes the class annotation if needed.
   final bool? ignoreEqual;
 }
-
-/// This is a placeholder object for fields with nullable values.
-class $ImCopy {
-  const $ImCopy();
-}

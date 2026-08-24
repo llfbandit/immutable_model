@@ -6,7 +6,7 @@ extension _$StaticImExt on Static {
 }
 
 mixin _$StaticMixin {
-  _$IStaticCopy get copyWith => _$StaticCopy(this as Static);
+  $IStaticCopy<Static> get copyWith => $StaticCopy(this as Static, (v) => v);
 
   @override
   int get hashCode => (this as Static)._eq().hashCode;
@@ -21,19 +21,20 @@ mixin _$StaticMixin {
   String toString() => (this as Static)._eq().toString();
 }
 
-abstract interface class _$IStaticCopy {
-  Static call({String? id});
+abstract interface class $IStaticCopy<$R> {
+  $R call({String? id});
 }
 
-class _$StaticCopy implements _$IStaticCopy {
-  const _$StaticCopy(this._value);
+class $StaticCopy<$R> implements $IStaticCopy<$R> {
+  const $StaticCopy(this._value, this._then);
 
   final Static _value;
+  final $R Function(Static) _then;
 
   @override
-  Static call({Object? id = const $ImCopy()}) {
-    return Static(
-      id: const $ImCopy() == id || id == null ? _value.id : id as String,
+  $R call({Object? id = $undefined}) {
+    return _then(
+      Static(id: $undefined == id || id == null ? _value.id : id as String),
     );
   }
 }

@@ -6,14 +6,14 @@ part of 'constructor_test.dart';
 // ImmutableModelGenerator
 // **************************************************************************
 
-extension $CopyNamedConstructorImExt on CopyNamedConstructor {
+extension _$CopyNamedConstructorImExt on CopyNamedConstructor {
   dynamic _eq() => (id);
-
-  // ignore: library_private_types_in_public_api
-  _$ICopyNamedConstructorCopy get copyWith => _$CopyNamedConstructorCopy(this);
 }
 
 mixin _$CopyNamedConstructorMixin {
+  $ICopyNamedConstructorCopy<CopyNamedConstructor> get copyWith =>
+      $CopyNamedConstructorCopy(this as CopyNamedConstructor, (v) => v);
+
   @override
   int get hashCode => (this as CopyNamedConstructor)._eq().hashCode;
 
@@ -27,36 +27,32 @@ mixin _$CopyNamedConstructorMixin {
   String toString() => (this as CopyNamedConstructor)._eq().toString();
 }
 
-abstract interface class _$ICopyNamedConstructorCopy {
-  CopyNamedConstructor call({
-    String? id,
-  });
+abstract interface class $ICopyNamedConstructorCopy<$R> {
+  $R call({String? id});
 }
 
-class _$CopyNamedConstructorCopy implements _$ICopyNamedConstructorCopy {
-  const _$CopyNamedConstructorCopy(this._value);
+class $CopyNamedConstructorCopy<$R> implements $ICopyNamedConstructorCopy<$R> {
+  const $CopyNamedConstructorCopy(this._value, this._then);
 
   final CopyNamedConstructor _value;
+  final $R Function(CopyNamedConstructor) _then;
 
   @override
-  CopyNamedConstructor call({
-    Object? id = const $ImCopy(),
-  }) {
-    return CopyNamedConstructor._(
-      id: const $ImCopy() == id ? _value.id : id as String?,
+  $R call({Object? id = $undefined}) {
+    return _then(
+      CopyNamedConstructor._(id: $undefined == id ? _value.id : id as String?),
     );
   }
 }
 
-extension $CopyMultiConstructorsImExt on CopyMultiConstructors {
+extension _$CopyMultiConstructorsImExt on CopyMultiConstructors {
   dynamic _eq() => (id, field);
-
-  // ignore: library_private_types_in_public_api
-  _$ICopyMultiConstructorsCopy get copyWith =>
-      _$CopyMultiConstructorsCopy(this);
 }
 
 mixin _$CopyMultiConstructorsMixin {
+  $ICopyMultiConstructorsCopy<CopyMultiConstructors> get copyWith =>
+      $CopyMultiConstructorsCopy(this as CopyMultiConstructors, (v) => v);
+
   @override
   int get hashCode => (this as CopyMultiConstructors)._eq().hashCode;
 
@@ -70,41 +66,38 @@ mixin _$CopyMultiConstructorsMixin {
   String toString() => (this as CopyMultiConstructors)._eq().toString();
 }
 
-abstract interface class _$ICopyMultiConstructorsCopy {
-  CopyMultiConstructors call({
-    String? id,
-    String? field,
-  });
+abstract interface class $ICopyMultiConstructorsCopy<$R> {
+  $R call({String? id, String? field});
 }
 
-class _$CopyMultiConstructorsCopy implements _$ICopyMultiConstructorsCopy {
-  const _$CopyMultiConstructorsCopy(this._value);
+class $CopyMultiConstructorsCopy<$R>
+    implements $ICopyMultiConstructorsCopy<$R> {
+  const $CopyMultiConstructorsCopy(this._value, this._then);
 
   final CopyMultiConstructors _value;
+  final $R Function(CopyMultiConstructors) _then;
 
   @override
-  CopyMultiConstructors call({
-    Object? id = const $ImCopy(),
-    Object? field = const $ImCopy(),
-  }) {
-    return CopyMultiConstructors.first(
-      id: const $ImCopy() == id ? _value.id : id as String?,
-      field: const $ImCopy() == field || field == null
-          ? _value.field
-          : field as String,
+  $R call({Object? id = $undefined, Object? field = $undefined}) {
+    return _then(
+      CopyMultiConstructors.first(
+        id: $undefined == id ? _value.id : id as String?,
+        field: $undefined == field || field == null
+            ? _value.field
+            : field as String,
+      ),
     );
   }
 }
 
-extension $DefaultValuesConstructorImExt on DefaultValuesConstructor {
+extension _$DefaultValuesConstructorImExt on DefaultValuesConstructor {
   dynamic _eq() => (id, field, anotherField);
-
-  // ignore: library_private_types_in_public_api
-  _$IDefaultValuesConstructorCopy get copyWith =>
-      _$DefaultValuesConstructorCopy(this);
 }
 
 mixin _$DefaultValuesConstructorMixin {
+  $IDefaultValuesConstructorCopy<DefaultValuesConstructor> get copyWith =>
+      $DefaultValuesConstructorCopy(this as DefaultValuesConstructor, (v) => v);
+
   @override
   int get hashCode => (this as DefaultValuesConstructor)._eq().hashCode;
 
@@ -118,38 +111,37 @@ mixin _$DefaultValuesConstructorMixin {
   String toString() => (this as DefaultValuesConstructor)._eq().toString();
 }
 
-abstract interface class _$IDefaultValuesConstructorCopy {
-  DefaultValuesConstructor call({
-    String? anotherField,
-  });
+abstract interface class $IDefaultValuesConstructorCopy<$R> {
+  $R call({String? anotherField});
 }
 
-class _$DefaultValuesConstructorCopy
-    implements _$IDefaultValuesConstructorCopy {
-  const _$DefaultValuesConstructorCopy(this._value);
+class $DefaultValuesConstructorCopy<$R>
+    implements $IDefaultValuesConstructorCopy<$R> {
+  const $DefaultValuesConstructorCopy(this._value, this._then);
 
   final DefaultValuesConstructor _value;
+  final $R Function(DefaultValuesConstructor) _then;
 
   @override
-  DefaultValuesConstructor call({
-    Object? anotherField = const $ImCopy(),
-  }) {
-    return DefaultValuesConstructor._(
-      anotherField: const $ImCopy() == anotherField
-          ? _value.anotherField
-          : anotherField as String?,
+  $R call({Object? anotherField = $undefined}) {
+    return _then(
+      DefaultValuesConstructor._(
+        anotherField: $undefined == anotherField
+            ? _value.anotherField
+            : anotherField as String?,
+      ),
     );
   }
 }
 
-extension $PositionedFieldsImExt on PositionedFields {
+extension _$PositionedFieldsImExt on PositionedFields {
   dynamic _eq() => (pOne, pTwo, namedOne);
-
-  // ignore: library_private_types_in_public_api
-  _$IPositionedFieldsCopy get copyWith => _$PositionedFieldsCopy(this);
 }
 
 mixin _$PositionedFieldsMixin {
+  $IPositionedFieldsCopy<PositionedFields> get copyWith =>
+      $PositionedFieldsCopy(this as PositionedFields, (v) => v);
+
   @override
   int get hashCode => (this as PositionedFields)._eq().hashCode;
 
@@ -163,30 +155,30 @@ mixin _$PositionedFieldsMixin {
   String toString() => (this as PositionedFields)._eq().toString();
 }
 
-abstract interface class _$IPositionedFieldsCopy {
-  PositionedFields call({
-    String? pOne,
-    String? pTwo,
-    String? namedOne,
-  });
+abstract interface class $IPositionedFieldsCopy<$R> {
+  $R call({String? pOne, String? pTwo, String? namedOne});
 }
 
-class _$PositionedFieldsCopy implements _$IPositionedFieldsCopy {
-  const _$PositionedFieldsCopy(this._value);
+class $PositionedFieldsCopy<$R> implements $IPositionedFieldsCopy<$R> {
+  const $PositionedFieldsCopy(this._value, this._then);
 
   final PositionedFields _value;
+  final $R Function(PositionedFields) _then;
 
   @override
-  PositionedFields call({
-    Object? pOne = const $ImCopy(),
-    Object? pTwo = const $ImCopy(),
-    Object? namedOne = const $ImCopy(),
+  $R call({
+    Object? pOne = $undefined,
+    Object? pTwo = $undefined,
+    Object? namedOne = $undefined,
   }) {
-    return PositionedFields(
-      const $ImCopy() == pOne || pOne == null ? _value.pOne : pOne as String,
-      const $ImCopy() == pTwo || pTwo == null ? _value.pTwo : pTwo as String,
-      namedOne:
-          const $ImCopy() == namedOne ? _value.namedOne : namedOne as String?,
+    return _then(
+      PositionedFields(
+        $undefined == pOne || pOne == null ? _value.pOne : pOne as String,
+        $undefined == pTwo || pTwo == null ? _value.pTwo : pTwo as String,
+        namedOne: $undefined == namedOne
+            ? _value.namedOne
+            : namedOne as String?,
+      ),
     );
   }
 }

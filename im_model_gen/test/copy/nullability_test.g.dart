@@ -6,14 +6,14 @@ part of 'nullability_test.dart';
 // ImmutableModelGenerator
 // **************************************************************************
 
-extension $TestNullabilityImExt on TestNullability {
+extension _$TestNullabilityImExt on TestNullability {
   dynamic _eq() => (dynField, coll);
-
-  // ignore: library_private_types_in_public_api
-  _$ITestNullabilityCopy get copyWith => _$TestNullabilityCopy(this);
 }
 
 mixin _$TestNullabilityMixin {
+  $ITestNullabilityCopy<TestNullability> get copyWith =>
+      $TestNullabilityCopy(this as TestNullability, (v) => v);
+
   @override
   int get hashCode => (this as TestNullability)._eq().hashCode;
 
@@ -27,30 +27,27 @@ mixin _$TestNullabilityMixin {
   String toString() => (this as TestNullability)._eq().toString();
 }
 
-abstract interface class _$ITestNullabilityCopy {
-  TestNullability call({
-    dynamic dynField,
-    List<int>? coll,
-  });
+abstract interface class $ITestNullabilityCopy<$R> {
+  $R call({dynamic dynField, List<int>? coll});
 }
 
-class _$TestNullabilityCopy implements _$ITestNullabilityCopy {
-  const _$TestNullabilityCopy(this._value);
+class $TestNullabilityCopy<$R> implements $ITestNullabilityCopy<$R> {
+  const $TestNullabilityCopy(this._value, this._then);
 
   final TestNullability _value;
+  final $R Function(TestNullability) _then;
 
   @override
-  TestNullability call({
-    Object? dynField = const $ImCopy(),
-    Object? coll = const $ImCopy(),
-  }) {
-    return TestNullability(
-      const $ImCopy() == dynField || dynField == null
-          ? _value.dynField
-          : dynField as dynamic,
-      const $ImCopy() == coll || coll == null
-          ? _value.coll
-          : ImList(coll as List<int>),
+  $R call({Object? dynField = $undefined, Object? coll = $undefined}) {
+    return _then(
+      TestNullability(
+        $undefined == dynField || dynField == null
+            ? _value.dynField
+            : dynField as dynamic,
+        $undefined == coll || coll == null
+            ? _value.coll
+            : ImList(coll as List<int>),
+      ),
     );
   }
 }

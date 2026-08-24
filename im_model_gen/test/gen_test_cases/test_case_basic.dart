@@ -6,8 +6,8 @@ extension _$BasicClassImExt<T extends Iterable<int>> on BasicClass<T> {
 }
 
 mixin _$BasicClassMixin<T extends Iterable<int>> {
-  _$IBasicClassCopy<T> get copyWith =>
-      _$BasicClassCopy<T>(this as BasicClass<T>);
+  $IBasicClassCopy<T, BasicClass<T>> get copyWith =>
+      $BasicClassCopy(this as BasicClass<T>, (v) => v);
 
   @override
   int get hashCode => (this as BasicClass)._eq().hashCode;
@@ -22,26 +22,26 @@ mixin _$BasicClassMixin<T extends Iterable<int>> {
   String toString() => (this as BasicClass)._eq().toString();
 }
 
-abstract interface class _$IBasicClassCopy<T extends Iterable<int>> {
-  BasicClass<T> call({String? id, T? optional});
+abstract interface class $IBasicClassCopy<T extends Iterable<int>, $R> {
+  $R call({String? id, T? optional});
 }
 
-class _$BasicClassCopy<T extends Iterable<int>>
-    implements _$IBasicClassCopy<T> {
-  const _$BasicClassCopy(this._value);
+class $BasicClassCopy<T extends Iterable<int>, $R>
+    implements $IBasicClassCopy<T, $R> {
+  const $BasicClassCopy(this._value, this._then);
 
   final BasicClass<T> _value;
+  final $R Function(BasicClass<T>) _then;
 
   @override
-  BasicClass<T> call({
-    Object? id = const $ImCopy(),
-    Object? optional = const $ImCopy(),
-  }) {
-    return BasicClass<T>(
-      id: const $ImCopy() == id || id == null ? _value.id : id as String,
-      optional: const $ImCopy() == optional ? _value.optional : optional as T?,
-      immutable: _value.immutable,
-      nullableImmutable: _value.nullableImmutable,
+  $R call({Object? id = $undefined, Object? optional = $undefined}) {
+    return _then(
+      BasicClass<T>(
+        id: $undefined == id || id == null ? _value.id : id as String,
+        optional: $undefined == optional ? _value.optional : optional as T?,
+        immutable: _value.immutable,
+        nullableImmutable: _value.nullableImmutable,
+      ),
     );
   }
 }

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:im_model/im_model.dart';
-import 'package:im_model_gen/src/check_immutability.dart';
 import 'package:im_model_gen/src/class_hierarchy_info.dart';
 import 'package:im_model_gen/src/copy_with_generator.dart';
 import 'package:im_model_gen/src/equal_generator.dart';
@@ -19,15 +18,24 @@ class ImmutableModelGenerator extends GeneratorForAnnotation<ImModel> {
     ConstantReader annotation,
     BuildStep buildStep,
   ) async {
-    final classElement = CheckImmutability().check(element);
+    if (element is! ClassElement) {
+      throw InvalidGenerationSourceError(
+        'Only classes can be annotated with "ImModel". "$element" is not a class.',
+        element: element,
+      );
+    }
+    final classElement = element;
 
+    // Immutability (final fields, ImList/ImMap/ImSet, ...) is validated once
+    // per class inside ClassHierarchyInfo.getClassInfo, whether the class is
+    // reached here or only discovered later as a nested copyWith field.
     final classInfo = classHierarchyInfo.getClassInfo(classElement, annotation);
 
     final extName = '_\$${classElement.name}ImExt';
     final mixinName = '_\$${classElement.name}Mixin';
 
     final result = await Future.wait([
-      const CopyWithGenerator().generate(classInfo),
+      const CopyWithGenerator().generate(classInfo, classHierarchyInfo),
       const EqualGenerator().generate(classInfo, extensionName: extName),
     ], eagerError: true);
 

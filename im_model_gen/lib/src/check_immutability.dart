@@ -5,15 +5,10 @@ import 'package:source_gen/source_gen.dart';
 class CheckImmutability {
   CheckImmutability();
 
-  ClassElement check(Element element) {
-    // Check if the annotation is set up on class element
-    if (element is! ClassElement) {
-      throw InvalidGenerationSourceError(
-        'Only classes can be annotated with "ImModel". "$element" is not a class.',
-        element: element,
-      );
-    }
-
+  /// Validates [element]'s fields and constructors against the immutability
+  /// constraints (final/const fields, ImList/ImMap/ImSet instead of mutable
+  /// collections, no mutable nested collections).
+  void check(ClassElement element) {
     // Check class members
     for (var field in element.fields) {
       // isSynthetic is to detect getter
@@ -61,7 +56,5 @@ class CheckImmutability {
         }
       }
     }
-
-    return element;
   }
 }

@@ -2,14 +2,39 @@ import 'package:im_model/im_model.dart';
 
 part 'example.g.dart';
 
-/// Inverted ignore flags on class => superseeded by fields
+/// Standard usage.
+@ImModel(/*ignoreCopy: false, ignoreEqual: false*/)
+class Basic with _$BasicMixin {
+  final String id;
+  final bool aValue;
+
+  Basic(this.id, this.aValue);
+}
+
+/// Usage of primary constructor.
+@ImModel()
+class PrimaryConstructor(final String id, final bool aValue)
+    with _$PrimaryConstructorMixin;
+
+/// Usage of named constructor to make copies.
+@ImModel(copyConstructor: 'named')
+class NamedConstructor<T> with _$NamedConstructorMixin {
+  final bool foo;
+
+  const NamedConstructor.named(this.foo);
+}
+
+///////////////////////////////////////////////////////////////
+/// Inheritance - Generics
+///////////////////////////////////////////////////////////////
+
 /// [id] is not part of `copyWith`.
 /// Only [id] is part of equality.
-@ImModel(ignoreEqual: true, ignoreCopy: true)
+@ImModel()
 class Parent<T> with _$ParentMixin<T> {
-  @ImField(ignoreEqual: false)
+  @ImField(ignoreCopy: true)
   final String id;
-  @ImField(ignoreCopy: false)
+  @ImField(ignoreEqual: true)
   final T? aValue;
 
   const Parent(this.id, this.aValue);
@@ -25,18 +50,31 @@ class Child<T> extends Parent<T> with _$ChildMixin<T> {
   const Child(super.id, super.aValue, {required this.collection});
 }
 
-/// Usage of named constructor to make copies.
-/// [copyWith] is not available on this model.
-@ImModel(copyConstructor: 'named', ignoreCopy: true)
-class Child2<T> extends Child<T> with _$Child2Mixin<T> {
-  final bool foo;
+///////////////////////////////////////////////////////////////
+/// Copy chaining
+///////////////////////////////////////////////////////////////
 
-  const Child2.named(
-    super.id,
-    super.aValue,
-    this.foo, {
-    required super.collection,
-  });
+@ImModel()
+class Album with _$AlbumMixin {
+  const Album({required this.title, required this.artist});
+
+  final String title;
+  final Artist artist;
+}
+
+@ImModel()
+class Artist with _$ArtistMixin {
+  const Artist({required this.name, required this.contact});
+
+  final String name;
+  final Contact contact;
+}
+
+@ImModel()
+class Contact with _$ContactMixin {
+  const Contact({required this.name});
+
+  final String name;
 }
 
 void main() {
@@ -57,4 +95,17 @@ void main() {
 
   // obj1.copyWith(id: 'b');
   // The named parameter 'id' isn't defined.
+
+  // Deep copy
+  const originalContact = 'Alice';
+  const contact = Contact(name: originalContact);
+  const artist = Artist(name: 'Bob', contact: contact);
+  var album = Album(title: 'Acme', artist: artist);
+
+  album = album.copyWith.artist.contact(name: 'Eve');
+
+  print(
+    'album.artist.contact changed from "$originalContact"'
+    ' to "${album.artist.contact.name}"',
+  );
 }

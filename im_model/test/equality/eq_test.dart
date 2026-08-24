@@ -119,13 +119,11 @@ void main() {
 
   group('Generic (map custom key)', () {
     test('should return true when instance is the same', () {
-      final instance = Generic(
-        {
-          Generic<String>('a'): 1,
-          Generic<String>('b'): 2,
-          Generic<String>('c'): 3
-        },
-      );
+      final instance = Generic({
+        Generic<String>('a'): 1,
+        Generic<String>('b'): 2,
+        Generic<String>('c'): 3,
+      });
       expect(instance == instance, true);
     });
 
@@ -134,14 +132,14 @@ void main() {
         ImMap({
           Generic<String>('a'): 1,
           Generic<String>('b'): 2,
-          Generic<String>('c'): 3
+          Generic<String>('c'): 3,
         }),
       );
       final instanceB = Generic(
         ImMap({
           Generic<String>('b'): 2,
           Generic<String>('a'): 1,
-          Generic<String>('c'): 3
+          Generic<String>('c'): 3,
         }),
       );
       expect(instanceA == instanceB, true);
@@ -153,14 +151,14 @@ void main() {
         ImMap({
           Generic<String>('a'): 1,
           Generic<String>('b'): 2,
-          Generic<String>('c'): 3
+          Generic<String>('c'): 3,
         }),
       );
       final instanceB = Generic(
         ImMap({
           Generic<String>('a'): 1,
           Generic<String>('b'): 2,
-          Generic<String>('c'): 3
+          Generic<String>('c'): 3,
         }),
       );
       expect(instanceA == instanceB, true);
@@ -172,14 +170,14 @@ void main() {
         ImMap({
           Generic<String>('a'): 1,
           Generic<String>('b'): 2,
-          Generic<String>('c'): 3
+          Generic<String>('c'): 3,
         }),
       );
       final instanceB = Generic(
         ImMap({
           Generic<String>('a'): 1,
           Generic<String>('b'): 2,
-          Generic<String>('c'): 2
+          Generic<String>('c'): 2,
         }),
       );
       expect(instanceA == instanceB, false);
@@ -315,27 +313,35 @@ void main() {
 
     group('Nested Iterable', () {
       test('should return when values are same', () {
-        final instanceA = Generic(ImList([
-          ImList(['A', 'B', 'C']),
-          ImList(['D', 'E', 'F'])
-        ]));
-        final instanceB = Generic(ImList([
-          ImList(['A', 'B', 'C']),
-          ImList(['D', 'E', 'F'])
-        ]));
+        final instanceA = Generic(
+          ImList([
+            ImList(['A', 'B', 'C']),
+            ImList(['D', 'E', 'F']),
+          ]),
+        );
+        final instanceB = Generic(
+          ImList([
+            ImList(['A', 'B', 'C']),
+            ImList(['D', 'E', 'F']),
+          ]),
+        );
         expect(instanceA == instanceB, true);
         expect(instanceA.hashCode == instanceB.hashCode, true);
       });
 
       test('should return when values are different', () {
-        final instanceA = Generic(ImList([
-          ImList(['A', 'B', 'C']),
-          ImList(['D', 'E', 'F'])
-        ]));
-        final instanceB = Generic(ImList([
-          ImList(['a', 'b', 'c']),
-          ImList(['d', 'e', 'f'])
-        ]));
+        final instanceA = Generic(
+          ImList([
+            ImList(['A', 'B', 'C']),
+            ImList(['D', 'E', 'F']),
+          ]),
+        );
+        final instanceB = Generic(
+          ImList([
+            ImList(['a', 'b', 'c']),
+            ImList(['d', 'e', 'f']),
+          ]),
+        );
         expect(instanceA != instanceB, true);
         expect(instanceA.hashCode != instanceB.hashCode, true);
       });
@@ -363,8 +369,7 @@ void main() {
         expect(instanceA.hashCode != instanceB.hashCode, true);
       });
 
-      test(
-          'should return different hashCode '
+      test('should return different hashCode '
           'when instance properties are different', () {
         final instanceA = Generic(ImList(['A', 'B']));
         final instanceB = Generic(ImList(['B']));
@@ -396,8 +401,7 @@ void main() {
         expect(instanceA.hashCode != instanceB.hashCode, true);
       });
 
-      test(
-          'should return different hashCode '
+      test('should return different hashCode '
           'when instance properties are different', () {
         final instanceA = Generic(ImMap({1: 'A', 2: 'B'}));
         final instanceB = Generic(ImMap({2: 'B'}));

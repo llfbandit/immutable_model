@@ -17,13 +17,7 @@ void main() {
   test('TestNullability', () {
     expect(TestNullability(1, [1].immut).copyWith(dynField: 2).dynField, 2);
     expect(TestNullability(1, [1].immut).copyWith(coll: [1]).dynField, 1);
-    expect(
-      TestNullability(null, [1].immut).copyWith(dynField: 1).dynField,
-      1,
-    );
-    expect(
-      TestNullability(null, [1].immut).copyWith(coll: [2]).dynField,
-      null,
-    );
+    expect(TestNullability(null, [1].immut).copyWith(dynField: 1).dynField, 1);
+    expect(TestNullability(null, [1].immut).copyWith(coll: [2]).dynField, null);
   });
 }

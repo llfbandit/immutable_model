@@ -6,14 +6,14 @@ part of 'collection_test.dart';
 // ImmutableModelGenerator
 // **************************************************************************
 
-extension $CopyListImExt on CopyList {
+extension _$CopyListImExt on CopyList {
   dynamic _eq() => (coll);
-
-  // ignore: library_private_types_in_public_api
-  _$ICopyListCopy get copyWith => _$CopyListCopy(this);
 }
 
 mixin _$CopyListMixin {
+  $ICopyListCopy<CopyList> get copyWith =>
+      $CopyListCopy(this as CopyList, (v) => v);
+
   @override
   int get hashCode => (this as CopyList)._eq().hashCode;
 
@@ -27,37 +27,36 @@ mixin _$CopyListMixin {
   String toString() => (this as CopyList)._eq().toString();
 }
 
-abstract interface class _$ICopyListCopy {
-  CopyList call({
-    List<String>? coll,
-  });
+abstract interface class $ICopyListCopy<$R> {
+  $R call({List<String>? coll});
 }
 
-class _$CopyListCopy implements _$ICopyListCopy {
-  const _$CopyListCopy(this._value);
+class $CopyListCopy<$R> implements $ICopyListCopy<$R> {
+  const $CopyListCopy(this._value, this._then);
 
   final CopyList _value;
+  final $R Function(CopyList) _then;
 
   @override
-  CopyList call({
-    Object? coll = const $ImCopy(),
-  }) {
-    return CopyList(
-      coll: const $ImCopy() == coll || coll == null
-          ? _value.coll
-          : ImList(coll as List<String>),
+  $R call({Object? coll = $undefined}) {
+    return _then(
+      CopyList(
+        coll: $undefined == coll || coll == null
+            ? _value.coll
+            : ImList(coll as List<String>),
+      ),
     );
   }
 }
 
-extension $CopyMapImExt on CopyMap {
+extension _$CopyMapImExt on CopyMap {
   dynamic _eq() => (coll);
-
-  // ignore: library_private_types_in_public_api
-  _$ICopyMapCopy get copyWith => _$CopyMapCopy(this);
 }
 
 mixin _$CopyMapMixin {
+  $ICopyMapCopy<CopyMap> get copyWith =>
+      $CopyMapCopy(this as CopyMap, (v) => v);
+
   @override
   int get hashCode => (this as CopyMap)._eq().hashCode;
 
@@ -71,37 +70,36 @@ mixin _$CopyMapMixin {
   String toString() => (this as CopyMap)._eq().toString();
 }
 
-abstract interface class _$ICopyMapCopy {
-  CopyMap call({
-    Map<String, String>? coll,
-  });
+abstract interface class $ICopyMapCopy<$R> {
+  $R call({Map<String, String>? coll});
 }
 
-class _$CopyMapCopy implements _$ICopyMapCopy {
-  const _$CopyMapCopy(this._value);
+class $CopyMapCopy<$R> implements $ICopyMapCopy<$R> {
+  const $CopyMapCopy(this._value, this._then);
 
   final CopyMap _value;
+  final $R Function(CopyMap) _then;
 
   @override
-  CopyMap call({
-    Object? coll = const $ImCopy(),
-  }) {
-    return CopyMap(
-      coll: const $ImCopy() == coll || coll == null
-          ? _value.coll
-          : ImMap(coll as Map<String, String>),
+  $R call({Object? coll = $undefined}) {
+    return _then(
+      CopyMap(
+        coll: $undefined == coll || coll == null
+            ? _value.coll
+            : ImMap(coll as Map<String, String>),
+      ),
     );
   }
 }
 
-extension $CopySetImExt on CopySet {
+extension _$CopySetImExt on CopySet {
   dynamic _eq() => (coll);
-
-  // ignore: library_private_types_in_public_api
-  _$ICopySetCopy get copyWith => _$CopySetCopy(this);
 }
 
 mixin _$CopySetMixin {
+  $ICopySetCopy<CopySet> get copyWith =>
+      $CopySetCopy(this as CopySet, (v) => v);
+
   @override
   int get hashCode => (this as CopySet)._eq().hashCode;
 
@@ -115,37 +113,36 @@ mixin _$CopySetMixin {
   String toString() => (this as CopySet)._eq().toString();
 }
 
-abstract interface class _$ICopySetCopy {
-  CopySet call({
-    Set<String>? coll,
-  });
+abstract interface class $ICopySetCopy<$R> {
+  $R call({Set<String>? coll});
 }
 
-class _$CopySetCopy implements _$ICopySetCopy {
-  const _$CopySetCopy(this._value);
+class $CopySetCopy<$R> implements $ICopySetCopy<$R> {
+  const $CopySetCopy(this._value, this._then);
 
   final CopySet _value;
+  final $R Function(CopySet) _then;
 
   @override
-  CopySet call({
-    Object? coll = const $ImCopy(),
-  }) {
-    return CopySet(
-      coll: const $ImCopy() == coll || coll == null
-          ? _value.coll
-          : ImSet(coll as Set<String>),
+  $R call({Object? coll = $undefined}) {
+    return _then(
+      CopySet(
+        coll: $undefined == coll || coll == null
+            ? _value.coll
+            : ImSet(coll as Set<String>),
+      ),
     );
   }
 }
 
-extension $CopyNestedListImExt on CopyNestedList {
+extension _$CopyNestedListImExt on CopyNestedList {
   dynamic _eq() => (coll);
-
-  // ignore: library_private_types_in_public_api
-  _$ICopyNestedListCopy get copyWith => _$CopyNestedListCopy(this);
 }
 
 mixin _$CopyNestedListMixin {
+  $ICopyNestedListCopy<CopyNestedList> get copyWith =>
+      $CopyNestedListCopy(this as CopyNestedList, (v) => v);
+
   @override
   int get hashCode => (this as CopyNestedList)._eq().hashCode;
 
@@ -159,25 +156,24 @@ mixin _$CopyNestedListMixin {
   String toString() => (this as CopyNestedList)._eq().toString();
 }
 
-abstract interface class _$ICopyNestedListCopy {
-  CopyNestedList call({
-    List<ImList<String>>? coll,
-  });
+abstract interface class $ICopyNestedListCopy<$R> {
+  $R call({List<ImList<String>>? coll});
 }
 
-class _$CopyNestedListCopy implements _$ICopyNestedListCopy {
-  const _$CopyNestedListCopy(this._value);
+class $CopyNestedListCopy<$R> implements $ICopyNestedListCopy<$R> {
+  const $CopyNestedListCopy(this._value, this._then);
 
   final CopyNestedList _value;
+  final $R Function(CopyNestedList) _then;
 
   @override
-  CopyNestedList call({
-    Object? coll = const $ImCopy(),
-  }) {
-    return CopyNestedList(
-      coll: const $ImCopy() == coll || coll == null
-          ? _value.coll
-          : ImList(coll as List<ImList<String>>),
+  $R call({Object? coll = $undefined}) {
+    return _then(
+      CopyNestedList(
+        coll: $undefined == coll || coll == null
+            ? _value.coll
+            : ImList(coll as List<ImList<String>>),
+      ),
     );
   }
 }

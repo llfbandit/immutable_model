@@ -1,3 +1,7 @@
+## 2.0.0
+- chore: Version bump to align with `im_model_gen` 2.0.0 (chained/deep `copyWith` support). No other breaking changes in this package itself.
+- chore: Updated the SDK lower bound to 3.13.0.
+
 ## 1.4.0
 - feat: Improve ImList/ImMap/ImSet performance (faster than built_collection!).
 - feat: Improve collection API: ImList.+ accepts any Iterable<E> instead of only ImList<E>

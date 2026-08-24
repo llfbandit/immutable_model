@@ -6,14 +6,13 @@ part of 'im_model_test.dart';
 // ImmutableModelGenerator
 // **************************************************************************
 
-extension $FooImExt on Foo {
+extension _$FooImExt on Foo {
   dynamic _eq() => (id);
-
-  // ignore: library_private_types_in_public_api
-  _$IFooCopy get copyWith => _$FooCopy(this);
 }
 
 mixin _$FooMixin {
+  $IFooCopy<Foo> get copyWith => $FooCopy(this as Foo, (v) => v);
+
   @override
   int get hashCode => (this as Foo)._eq().hashCode;
 
@@ -27,35 +26,31 @@ mixin _$FooMixin {
   String toString() => (this as Foo)._eq().toString();
 }
 
-abstract interface class _$IFooCopy {
-  Foo call({
-    String? id,
-  });
+abstract interface class $IFooCopy<$R> {
+  $R call({String? id});
 }
 
-class _$FooCopy implements _$IFooCopy {
-  const _$FooCopy(this._value);
+class $FooCopy<$R> implements $IFooCopy<$R> {
+  const $FooCopy(this._value, this._then);
 
   final Foo _value;
+  final $R Function(Foo) _then;
 
   @override
-  Foo call({
-    Object? id = const $ImCopy(),
-  }) {
-    return Foo(
-      id: const $ImCopy() == id || id == null ? _value.id : id as String,
+  $R call({Object? id = $undefined}) {
+    return _then(
+      Foo(id: $undefined == id || id == null ? _value.id : id as String),
     );
   }
 }
 
-extension $BarImExt on Bar {
+extension _$BarImExt on Bar {
   dynamic _eq() => (foo);
-
-  // ignore: library_private_types_in_public_api
-  _$IBarCopy get copyWith => _$BarCopy(this);
 }
 
 mixin _$BarMixin {
+  $IBarCopy<Bar> get copyWith => $BarCopy(this as Bar, (v) => v);
+
   @override
   int get hashCode => (this as Bar)._eq().hashCode;
 
@@ -69,23 +64,25 @@ mixin _$BarMixin {
   String toString() => (this as Bar)._eq().toString();
 }
 
-abstract interface class _$IBarCopy {
-  Bar call({
-    Foo? foo,
-  });
+abstract interface class $IBarCopy<$R> {
+  $R call({Foo? foo});
+  $IFooCopy<$R> get foo;
 }
 
-class _$BarCopy implements _$IBarCopy {
-  const _$BarCopy(this._value);
+class $BarCopy<$R> implements $IBarCopy<$R> {
+  const $BarCopy(this._value, this._then);
 
   final Bar _value;
+  final $R Function(Bar) _then;
 
   @override
-  Bar call({
-    Object? foo = const $ImCopy(),
-  }) {
-    return Bar(
-      foo: const $ImCopy() == foo || foo == null ? _value.foo : foo as Foo,
+  $R call({Object? foo = $undefined}) {
+    return _then(
+      Bar(foo: $undefined == foo || foo == null ? _value.foo : foo as Foo),
     );
   }
+
+  @override
+  $IFooCopy<$R> get foo =>
+      $FooCopy(_value.foo, (v) => _then(_value.copyWith(foo: v)));
 }

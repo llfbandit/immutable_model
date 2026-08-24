@@ -55,15 +55,20 @@ void main() {
     test('List.indexWhere', () {
       expect(CopyOnWriteList([1, 2, 3, 2], false).indexWhere((x) => x == 2), 1);
       expect(
-          CopyOnWriteList([1, 2, 3, 2], false).indexWhere((x) => x == 2, 2), 3);
+        CopyOnWriteList([1, 2, 3, 2], false).indexWhere((x) => x == 2, 2),
+        3,
+      );
     });
 
     test('List.lastIndexWhere', () {
-      expect(CopyOnWriteList([1, 2, 3, 2], false).lastIndexWhere((x) => x == 2),
-          3);
       expect(
-          CopyOnWriteList([1, 2, 3, 2], false).lastIndexWhere((x) => x == 2, 2),
-          1);
+        CopyOnWriteList([1, 2, 3, 2], false).lastIndexWhere((x) => x == 2),
+        3,
+      );
+      expect(
+        CopyOnWriteList([1, 2, 3, 2], false).lastIndexWhere((x) => x == 2, 2),
+        1,
+      );
     });
 
     test('List.add', () {
@@ -80,15 +85,17 @@ void main() {
 
     test('List.sort', () {
       expect(
-          (CopyOnWriteList<int>([1, 2], false)
-            ..sort((int x, int y) => x < y ? 1 : -1)),
-          [2, 1]);
+        (CopyOnWriteList<int>([1, 2], false)
+          ..sort((int x, int y) => x < y ? 1 : -1)),
+        [2, 1],
+      );
     });
 
     test('List.shuffle', () {
       expect(
-          (CopyOnWriteList<int>([1, 2], false)..shuffle(_AlwaysZeroRandom())),
-          [2, 1]);
+        (CopyOnWriteList<int>([1, 2], false)..shuffle(_AlwaysZeroRandom())),
+        [2, 1],
+      );
     });
 
     test('List.clear', () {
@@ -100,8 +107,12 @@ void main() {
     });
 
     test('List.insertAll', () {
-      expect((CopyOnWriteList<int>([1, 2], true)..insertAll(1, [3, 4])),
-          [1, 3, 4, 2]);
+      expect((CopyOnWriteList<int>([1, 2], true)..insertAll(1, [3, 4])), [
+        1,
+        3,
+        4,
+        2,
+      ]);
     });
 
     test('List.setAll', () {
@@ -125,13 +136,15 @@ void main() {
     });
 
     test('List.removeWhere', () {
-      expect((CopyOnWriteList<int>([1, 2], true)..removeWhere((x) => x == 1)),
-          [2]);
+      expect((CopyOnWriteList<int>([1, 2], true)..removeWhere((x) => x == 1)), [
+        2,
+      ]);
     });
 
     test('List.retainWhere', () {
-      expect((CopyOnWriteList<int>([1, 2], true)..retainWhere((x) => x == 1)),
-          [1]);
+      expect((CopyOnWriteList<int>([1, 2], true)..retainWhere((x) => x == 1)), [
+        1,
+      ]);
     });
 
     // Iterable.
@@ -146,9 +159,13 @@ void main() {
 
     test('Iterable<E>', () {
       expect(
-          CopyOnWriteList(<int>[], false), const TypeMatcher<Iterable<int>>());
-      expect(CopyOnWriteList(<int>[], false),
-          isNot(const TypeMatcher<Iterable<String>>()));
+        CopyOnWriteList(<int>[], false),
+        const TypeMatcher<Iterable<int>>(),
+      );
+      expect(
+        CopyOnWriteList(<int>[], false),
+        isNot(const TypeMatcher<Iterable<String>>()),
+      );
     });
 
     test('Iterable.map', () {
@@ -160,8 +177,12 @@ void main() {
     });
 
     test('Iterable.expand', () {
-      expect(CopyOnWriteList([1, 2], false).expand((x) => [x, x + 1]),
-          [1, 2, 2, 3]);
+      expect(CopyOnWriteList([1, 2], false).expand((x) => [x, x + 1]), [
+        1,
+        2,
+        2,
+        3,
+      ]);
     });
 
     test('Iterable.contains', () {
@@ -182,24 +203,30 @@ void main() {
 
     test('Iterable.fold', () {
       expect(
-          CopyOnWriteList([1, 2], false)
-              .fold('', (x, y) => x.toString() + y.toString()),
-          '12');
+        CopyOnWriteList([
+          1,
+          2,
+        ], false).fold('', (x, y) => x.toString() + y.toString()),
+        '12',
+      );
     });
 
     test('Iterable.followedBy', () {
       expect(
-        CopyOnWriteList([1, 2], false).followedBy(
-          CopyOnWriteList([3, 4], false),
-        ),
+        CopyOnWriteList([
+          1,
+          2,
+        ], false).followedBy(CopyOnWriteList([3, 4], false)),
         [1, 2, 3, 4],
       );
     });
 
     test('Iterable.every', () {
       expect(CopyOnWriteList([1, 2], false).every((x) => x == 1), isFalse);
-      expect(CopyOnWriteList([1, 2], false).every((x) => x == 1 || x == 2),
-          isTrue);
+      expect(
+        CopyOnWriteList([1, 2], false).every((x) => x == 1 || x == 2),
+        isTrue,
+      );
     });
 
     test('Iterable.join', () {
@@ -212,8 +239,10 @@ void main() {
     });
 
     test('Iterable.toSet', () {
-      expect(CopyOnWriteList([1, 2], false).toSet(),
-          const TypeMatcher<Set<int>>());
+      expect(
+        CopyOnWriteList([1, 2], false).toSet(),
+        const TypeMatcher<Set<int>>(),
+      );
       expect(CopyOnWriteList([1, 2], false).toSet(), [1, 2]);
     });
 
@@ -243,35 +272,52 @@ void main() {
 
     test('Iterable.firstWhere', () {
       expect(CopyOnWriteList([1, 2], false).firstWhere((x) => x == 2), 2);
-      expect(() => CopyOnWriteList([1, 2], false).firstWhere((x) => x == 3),
-          throwsA(anything));
       expect(
-          CopyOnWriteList([1, 2], false)
-              .firstWhere((x) => x == 3, orElse: () => 4),
-          4);
+        () => CopyOnWriteList([1, 2], false).firstWhere((x) => x == 3),
+        throwsA(anything),
+      );
+      expect(
+        CopyOnWriteList([
+          1,
+          2,
+        ], false).firstWhere((x) => x == 3, orElse: () => 4),
+        4,
+      );
     });
 
     test('Iterable.lastWhere', () {
       expect(CopyOnWriteList([1, 2], false).lastWhere((x) => x == 2), 2);
-      expect(() => CopyOnWriteList([1, 2], false).lastWhere((x) => x == 3),
-          throwsA(anything));
       expect(
-          CopyOnWriteList([1, 2], false)
-              .lastWhere((x) => x == 3, orElse: () => 4),
-          4);
+        () => CopyOnWriteList([1, 2], false).lastWhere((x) => x == 3),
+        throwsA(anything),
+      );
+      expect(
+        CopyOnWriteList([
+          1,
+          2,
+        ], false).lastWhere((x) => x == 3, orElse: () => 4),
+        4,
+      );
     });
 
     test('Iterable.singleWhere', () {
       expect(CopyOnWriteList([1, 2], false).singleWhere((x) => x == 2), 2);
-      expect(() => CopyOnWriteList([1, 2], false).singleWhere((x) => x == 3),
-          throwsA(anything));
-      expect(() => CopyOnWriteList([1, 2], false).singleWhere((x) => true),
-          throwsA(anything));
+      expect(
+        () => CopyOnWriteList([1, 2], false).singleWhere((x) => x == 3),
+        throwsA(anything),
+      );
+      expect(
+        () => CopyOnWriteList([1, 2], false).singleWhere((x) => true),
+        throwsA(anything),
+      );
       expect(CopyOnWriteList([1, 2], false).singleWhere((x) => x == 2), 2);
       expect(
-          CopyOnWriteList([1, 2], false)
-              .singleWhere((x) => false, orElse: () => 7),
-          7);
+        CopyOnWriteList([
+          1,
+          2,
+        ], false).singleWhere((x) => false, orElse: () => 7),
+        7,
+      );
     });
 
     test('Iterable.elementAt', () {
@@ -279,14 +325,17 @@ void main() {
     });
 
     test('Iterable.cast', () {
-      expect(CopyOnWriteList([1, 2], false).cast<Object>(),
-          const TypeMatcher<Iterable<Object>>());
+      expect(
+        CopyOnWriteList([1, 2], false).cast<Object>(),
+        const TypeMatcher<Iterable<Object>>(),
+      );
       expect(CopyOnWriteList([1, 2], false).cast<Object>(), [1, 2]);
     });
 
     test('Iterable.whereType', () {
-      expect(
-          CopyOnWriteList([1, 'two', 3], false).whereType<String>(), ['two']);
+      expect(CopyOnWriteList([1, 'two', 3], false).whereType<String>(), [
+        'two',
+      ]);
     });
 
     test('Iterable.single', () {

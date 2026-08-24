@@ -6,8 +6,8 @@ extension _$AbtractChildImExt<T> on AbtractChild<T> {
 }
 
 mixin _$AbtractChildMixin<T> {
-  _$IAbtractChildCopy<T> get copyWith =>
-      _$AbtractChildCopy<T>(this as AbtractChild<T>);
+  $IAbtractChildCopy<T, AbtractChild<T>> get copyWith =>
+      $AbtractChildCopy(this as AbtractChild<T>, (v) => v);
 
   @override
   int get hashCode => (this as AbtractChild)._eq().hashCode;
@@ -22,27 +22,30 @@ mixin _$AbtractChildMixin<T> {
   String toString() => (this as AbtractChild)._eq().toString();
 }
 
-abstract interface class _$IAbtractChildCopy<T> {
-  AbtractChild<T> call({String? id, T? aValue, int? integer});
+abstract interface class $IAbtractChildCopy<T, $R> {
+  $R call({String? id, T? aValue, int? integer});
 }
 
-class _$AbtractChildCopy<T> implements _$IAbtractChildCopy<T> {
-  const _$AbtractChildCopy(this._value);
+class $AbtractChildCopy<T, $R> implements $IAbtractChildCopy<T, $R> {
+  const $AbtractChildCopy(this._value, this._then);
 
   final AbtractChild<T> _value;
+  final $R Function(AbtractChild<T>) _then;
 
   @override
-  AbtractChild<T> call({
-    Object? id = const $ImCopy(),
-    Object? aValue = const $ImCopy(),
-    Object? integer = const $ImCopy(),
+  $R call({
+    Object? id = $undefined,
+    Object? aValue = $undefined,
+    Object? integer = $undefined,
   }) {
-    return AbtractChild<T>(
-      const $ImCopy() == id || id == null ? _value.id : id as String,
-      const $ImCopy() == aValue ? _value.aValue : aValue as T?,
-      const $ImCopy() == integer || integer == null
-          ? _value.integer
-          : integer as int,
+    return _then(
+      AbtractChild<T>(
+        $undefined == id || id == null ? _value.id : id as String,
+        $undefined == aValue ? _value.aValue : aValue as T?,
+        $undefined == integer || integer == null
+            ? _value.integer
+            : integer as int,
+      ),
     );
   }
 }

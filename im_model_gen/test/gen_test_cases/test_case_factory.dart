@@ -6,7 +6,8 @@ extension _$FactoryImExt on Factory {
 }
 
 mixin _$FactoryMixin {
-  _$IFactoryCopy get copyWith => _$FactoryCopy(this as Factory);
+  $IFactoryCopy<Factory> get copyWith =>
+      $FactoryCopy(this as Factory, (v) => v);
 
   @override
   int get hashCode => (this as Factory)._eq().hashCode;
@@ -21,21 +22,24 @@ mixin _$FactoryMixin {
   String toString() => (this as Factory)._eq().toString();
 }
 
-abstract interface class _$IFactoryCopy {
-  Factory call({List<String>? coll});
+abstract interface class $IFactoryCopy<$R> {
+  $R call({List<String>? coll});
 }
 
-class _$FactoryCopy implements _$IFactoryCopy {
-  const _$FactoryCopy(this._value);
+class $FactoryCopy<$R> implements $IFactoryCopy<$R> {
+  const $FactoryCopy(this._value, this._then);
 
   final Factory _value;
+  final $R Function(Factory) _then;
 
   @override
-  Factory call({Object? coll = const $ImCopy()}) {
-    return Factory(
-      coll: const $ImCopy() == coll || coll == null
-          ? _value.coll
-          : ImList(coll as List<String>),
+  $R call({Object? coll = $undefined}) {
+    return _then(
+      Factory(
+        coll: $undefined == coll || coll == null
+            ? _value.coll
+            : ImList(coll as List<String>),
+      ),
     );
   }
 }

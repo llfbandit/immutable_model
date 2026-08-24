@@ -1,3 +1,10 @@
+## 2.0.0
+- BREAKING feat: Chained/deep `copyWith`.
+  - You must regenerate all models to conform to new code generation.
+  - This feature is not opt-in. Code will be tree-shaken at compile time if unused.
+- chore: Requires `im_model` `^2.0.0`.
+- chore: Updated the SDK lower bound to 3.13.0.
+
 ## 1.9.1
 - fix: wrong superclass resolution under certain circumstances.
 - perf: Replace linear lookup.

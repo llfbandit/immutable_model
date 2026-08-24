@@ -6,14 +6,14 @@ part of 'basic_test.dart';
 // ImmutableModelGenerator
 // **************************************************************************
 
-extension $CopyNonOptionalImExt on CopyNonOptional {
+extension _$CopyNonOptionalImExt on CopyNonOptional {
   dynamic _eq() => (id);
-
-  // ignore: library_private_types_in_public_api
-  _$ICopyNonOptionalCopy get copyWith => _$CopyNonOptionalCopy(this);
 }
 
 mixin _$CopyNonOptionalMixin {
+  $ICopyNonOptionalCopy<CopyNonOptional> get copyWith =>
+      $CopyNonOptionalCopy(this as CopyNonOptional, (v) => v);
+
   @override
   int get hashCode => (this as CopyNonOptional)._eq().hashCode;
 
@@ -27,35 +27,34 @@ mixin _$CopyNonOptionalMixin {
   String toString() => (this as CopyNonOptional)._eq().toString();
 }
 
-abstract interface class _$ICopyNonOptionalCopy {
-  CopyNonOptional call({
-    String? id,
-  });
+abstract interface class $ICopyNonOptionalCopy<$R> {
+  $R call({String? id});
 }
 
-class _$CopyNonOptionalCopy implements _$ICopyNonOptionalCopy {
-  const _$CopyNonOptionalCopy(this._value);
+class $CopyNonOptionalCopy<$R> implements $ICopyNonOptionalCopy<$R> {
+  const $CopyNonOptionalCopy(this._value, this._then);
 
   final CopyNonOptional _value;
+  final $R Function(CopyNonOptional) _then;
 
   @override
-  CopyNonOptional call({
-    Object? id = const $ImCopy(),
-  }) {
-    return CopyNonOptional(
-      id: const $ImCopy() == id || id == null ? _value.id : id as String,
+  $R call({Object? id = $undefined}) {
+    return _then(
+      CopyNonOptional(
+        id: $undefined == id || id == null ? _value.id : id as String,
+      ),
     );
   }
 }
 
-extension $CopyOptionalImExt on CopyOptional {
+extension _$CopyOptionalImExt on CopyOptional {
   dynamic _eq() => (id);
-
-  // ignore: library_private_types_in_public_api
-  _$ICopyOptionalCopy get copyWith => _$CopyOptionalCopy(this);
 }
 
 mixin _$CopyOptionalMixin {
+  $ICopyOptionalCopy<CopyOptional> get copyWith =>
+      $CopyOptionalCopy(this as CopyOptional, (v) => v);
+
   @override
   int get hashCode => (this as CopyOptional)._eq().hashCode;
 
@@ -69,23 +68,20 @@ mixin _$CopyOptionalMixin {
   String toString() => (this as CopyOptional)._eq().toString();
 }
 
-abstract interface class _$ICopyOptionalCopy {
-  CopyOptional call({
-    String? id,
-  });
+abstract interface class $ICopyOptionalCopy<$R> {
+  $R call({String? id});
 }
 
-class _$CopyOptionalCopy implements _$ICopyOptionalCopy {
-  const _$CopyOptionalCopy(this._value);
+class $CopyOptionalCopy<$R> implements $ICopyOptionalCopy<$R> {
+  const $CopyOptionalCopy(this._value, this._then);
 
   final CopyOptional _value;
+  final $R Function(CopyOptional) _then;
 
   @override
-  CopyOptional call({
-    Object? id = const $ImCopy(),
-  }) {
-    return CopyOptional(
-      id: const $ImCopy() == id ? _value.id : id as String?,
+  $R call({Object? id = $undefined}) {
+    return _then(
+      CopyOptional(id: $undefined == id ? _value.id : id as String?),
     );
   }
 }

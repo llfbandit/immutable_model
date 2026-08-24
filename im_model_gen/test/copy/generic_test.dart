@@ -27,21 +27,15 @@ void main() {
       deepNestedGeneric: ImList.empty(),
     );
 
-    expect(
-      generic.basicGeneric.runtimeType,
-      ImList<int>,
-    );
+    expect(generic.basicGeneric.runtimeType, ImList<int>);
 
-    expect(
-      generic.genericTemplate.runtimeType,
-      ImList<ImList<bool>>,
-    );
+    expect(generic.genericTemplate.runtimeType, ImList<ImList<bool>>);
 
     expect(
       generic
           .copyWith(
             genericTemplate: [
-              [true].immut
+              [true].immut,
             ],
           )
           .genericTemplate
@@ -51,19 +45,18 @@ void main() {
 
     expect(
       generic
-          .copyWith(genericTemplate: [
-            [true].immut
-          ])
+          .copyWith(
+            genericTemplate: [
+              [true].immut,
+            ],
+          )
           .genericTemplate
           .first
           .first,
       true,
     );
 
-    expect(
-      generic.nullableGeneric.runtimeType,
-      ImList<String?>,
-    );
+    expect(generic.nullableGeneric.runtimeType, ImList<String?>);
 
     expect(
       generic.copyWith(nullableGeneric: []).nullableGeneric.runtimeType,
