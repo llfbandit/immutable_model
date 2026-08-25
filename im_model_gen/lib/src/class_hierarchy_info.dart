@@ -65,15 +65,23 @@ class ClassHierarchyInfo {
     // throws, so a failed class isn't left cached as if it had passed.
     _classes[element.id] = classInfo;
 
-    try {
-      CheckImmutability().check(
-        element,
-        (nestedElement, nestedAnnotation) =>
-            getClassInfo(nestedElement, ConstantReader(nestedAnnotation)),
-      );
-    } catch (_) {
-      _classes.remove(element.id);
-      rethrow;
+    if (!classInfo.annotation.ignoreMutable) {
+      final ignoreMutableFields = <String>{
+        for (final field in classInfo.fields)
+          if (field.annotation?.ignoreMutable == true) ?field.element.name,
+      };
+
+      try {
+        CheckImmutability().check(
+          element,
+          ignoreMutableFields,
+          (nestedElement, nestedAnnotation) =>
+              getClassInfo(nestedElement, ConstantReader(nestedAnnotation)),
+        );
+      } catch (_) {
+        _classes.remove(element.id);
+        rethrow;
+      }
     }
 
     _addSuperClasses(classInfo);
@@ -152,10 +160,12 @@ class ClassHierarchyInfo {
     final copyConstructor = reader.peek('copyConstructor')?.stringValue;
     final ignoreCopy = reader.peek('ignoreCopy')?.boolValue;
     final ignoreEqual = reader.peek('ignoreEqual')?.boolValue;
+    final ignoreMutable = reader.peek('ignoreMutable')?.boolValue;
 
     return ImModelAnnotation(
       ignoreCopy: ignoreCopy ?? false,
       ignoreEqual: ignoreEqual ?? false,
+      ignoreMutable: ignoreMutable ?? false,
       copyConstructor: copyConstructor,
     );
   }
@@ -179,6 +189,7 @@ class ClassHierarchyInfo {
     return ImFieldAnnotation(
       ignoreCopy: reader.peek('ignoreCopy')?.boolValue,
       ignoreEqual: reader.peek('ignoreEqual')?.boolValue,
+      ignoreMutable: reader.peek('ignoreMutable')?.boolValue,
     );
   }
 

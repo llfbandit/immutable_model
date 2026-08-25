@@ -6,6 +6,7 @@ class ImModelAnnotation implements ImModel {
     this.copyConstructor,
     this.ignoreCopy = false,
     this.ignoreEqual = false,
+    this.ignoreMutable = false,
   });
 
   @override
@@ -16,15 +17,25 @@ class ImModelAnnotation implements ImModel {
 
   @override
   final bool ignoreEqual;
+
+  @override
+  final bool ignoreMutable;
 }
 
 /// The internal representation of `ImField` annotation.
 class ImFieldAnnotation implements ImField {
-  const ImFieldAnnotation({this.ignoreCopy, this.ignoreEqual});
+  const ImFieldAnnotation({
+    this.ignoreCopy,
+    this.ignoreEqual,
+    this.ignoreMutable,
+  });
 
   @override
   final bool? ignoreCopy;
 
   @override
   final bool? ignoreEqual;
+
+  @override
+  final bool? ignoreMutable;
 }

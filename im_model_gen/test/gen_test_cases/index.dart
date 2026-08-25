@@ -5,6 +5,7 @@ part 'test_case_basic.dart';
 part 'test_case_collection.dart';
 part 'test_case_factory.dart';
 part 'test_case_getter.dart';
+part 'test_case_ignore_mutable.dart';
 part 'test_case_inheritance.dart';
 part 'test_case_inheritance_abstract.dart';
 part 'test_case_inverted_flags.dart';

@@ -16,15 +16,19 @@ class CheckImmutability {
   static const _immutableChecker = TypeChecker.typeNamed(Immutable);
 
   /// Validates [element]'s fields and constructors against the immutability
-  /// constraints. [onNestedImModel] is called for every `@ImModel`-typed
-  /// collection element, so it can be validated too even if only reached
-  /// this way.
+  /// constraints. [ignoreMutableFields] holds the names of fields annotated
+  /// with `ImField(ignoreMutable: true)`, which are skipped entirely.
+  /// [onNestedImModel] is called for every `@ImModel`-typed collection
+  /// element, so it can be validated too even if only reached this way.
   void check(
     ClassElement element,
+    Set<String> ignoreMutableFields,
     void Function(ClassElement element, DartObject annotation) onNestedImModel,
   ) {
     // Check class members
     for (var field in element.fields) {
+      if (ignoreMutableFields.contains(field.name)) continue;
+
       // isSynthetic is to detect getter
       if (!field.isOriginGetterSetter && !field.isFinal && !field.isConst) {
         throw InvalidGenerationSourceError(
@@ -60,6 +64,8 @@ class CheckImmutability {
       if (constructor.isFactory) continue;
 
       for (var parameter in constructor.formalParameters) {
+        if (ignoreMutableFields.contains(parameter.name)) continue;
+
         final type = parameter.type.toString();
 
         if (nestedCollRegex.hasMatch(type)) {
@@ -73,7 +79,10 @@ class CheckImmutability {
 
     // Runs last so the checks above throw first where they overlap.
     for (var field in element.fields) {
-      if (field.isStatic || field.isConst || field.isOriginGetterSetter) {
+      if (field.isStatic ||
+          field.isConst ||
+          field.isOriginGetterSetter ||
+          ignoreMutableFields.contains(field.name)) {
         continue;
       }
       _checkFieldTypeImmutability(field, onNestedImModel);

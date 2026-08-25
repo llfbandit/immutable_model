@@ -71,19 +71,21 @@ example == other.copyWith(values: [1]); // false
 Applied to a class.
 
 | Parameter         | Default | Description                         |
-|-------------------|---------|-------------------------------------|
-| `ignoreCopy`      | `false` | Skip `copyWith` generation          |
-| `ignoreEqual`     | `false` | Skip `==` / `hashCode` generation   |
-| `copyConstructor` | `null`  | Named constructor to use for copies |
+|-------------------|---------|--------------------------------------|
+| `ignoreCopy`      | `false` | Skip `copyWith` generation           |
+| `ignoreEqual`     | `false` | Skip `==` / `hashCode` generation    |
+| `ignoreMutable`   | `false` | Skip immutability validation         |
+| `copyConstructor` | `null`  | Named constructor to use for copies  |
 
 ### `@ImField`
 
 Applied to a field to override the class-level `@ImModel` settings.
 
-| Parameter     | Default | Description                        |
-|---------------|---------|------------------------------------|
-| `ignoreCopy`  | `false` | Exclude this field from `copyWith` |
-| `ignoreEqual` | `false` | Exclude this field from equality   |
+| Parameter       | Default | Description                                  |
+|-----------------|---------|-----------------------------------------------|
+| `ignoreCopy`    | `false` | Exclude this field from `copyWith`            |
+| `ignoreEqual`   | `false` | Exclude this field from equality              |
+| `ignoreMutable` | `false` | Skip immutability validation for this field   |
 
 ## Collections
 

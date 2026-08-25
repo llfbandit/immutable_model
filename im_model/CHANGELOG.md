@@ -1,3 +1,6 @@
+## 2.1.0
+- Add `ignoreMutable` annotation parameters to skip immutability check.
+
 ## 2.0.0
 - chore: Version bump to align with `im_model_gen` 2.0.0 (chained/deep `copyWith` support). No other breaking changes in this package itself.
 - chore: Updated the SDK lower bound to 3.13.0.

@@ -1,3 +1,6 @@
+## 2.1.0
+- Take into account `ignoreMutable` annotation parameters to skip immutability check.
+
 ## 2.0.0
 - BREAKING feat: Chained/deep `copyWith`.
   - You must regenerate all models to conform to new code generation.
