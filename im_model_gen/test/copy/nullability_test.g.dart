@@ -28,7 +28,7 @@ mixin _$TestNullabilityMixin {
 }
 
 abstract interface class $ITestNullabilityCopy<$R> {
-  $R call({dynamic dynField, List<int>? coll});
+  $R call({int? dynField, List<int>? coll});
 }
 
 class $TestNullabilityCopy<$R> implements $ITestNullabilityCopy<$R> {
@@ -41,9 +41,7 @@ class $TestNullabilityCopy<$R> implements $ITestNullabilityCopy<$R> {
   $R call({Object? dynField = $undefined, Object? coll = $undefined}) {
     return _then(
       TestNullability(
-        $undefined == dynField || dynField == null
-            ? _value.dynField
-            : dynField as dynamic,
+        $undefined == dynField ? _value.dynField : dynField as int?,
         $undefined == coll || coll == null
             ? _value.coll
             : ImList(coll as List<int>),

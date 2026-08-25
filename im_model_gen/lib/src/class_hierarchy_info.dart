@@ -50,9 +50,6 @@ class FieldInfo {
 
   /// The annotation attached to the field.
   final ImFieldAnnotation? annotation;
-
-  /// True if the type is `dynamic`.
-  bool get isDynamic => type == 'dynamic';
 }
 
 class ClassHierarchyInfo {
@@ -62,10 +59,23 @@ class ClassHierarchyInfo {
     final existingClassInfo = _lookup(element);
     if (existingClassInfo != null) return existingClassInfo;
 
-    CheckImmutability().check(element);
-
     final classInfo = _createClassInfo(element, reader, element.isAbstract);
+    // Cached before check() to avoid infinite recursion on self-referential
+    // collection fields (e.g. `ImList<Self>`); removed again below if check()
+    // throws, so a failed class isn't left cached as if it had passed.
     _classes[element.id] = classInfo;
+
+    try {
+      CheckImmutability().check(
+        element,
+        (nestedElement, nestedAnnotation) =>
+            getClassInfo(nestedElement, ConstantReader(nestedAnnotation)),
+      );
+    } catch (_) {
+      _classes.remove(element.id);
+      rethrow;
+    }
+
     _addSuperClasses(classInfo);
 
     return classInfo;

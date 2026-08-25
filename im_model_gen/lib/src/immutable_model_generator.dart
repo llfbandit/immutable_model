@@ -26,9 +26,7 @@ class ImmutableModelGenerator extends GeneratorForAnnotation<ImModel> {
     }
     final classElement = element;
 
-    // Immutability (final fields, ImList/ImMap/ImSet, ...) is validated once
-    // per class inside ClassHierarchyInfo.getClassInfo, whether the class is
-    // reached here or only discovered later as a nested copyWith field.
+    // Immutability is validated inside getClassInfo, once per class.
     final classInfo = classHierarchyInfo.getClassInfo(classElement, annotation);
 
     final extName = '_\$${classElement.name}ImExt';

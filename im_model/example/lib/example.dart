@@ -2,13 +2,21 @@ import 'package:im_model/im_model.dart';
 
 part 'example.g.dart';
 
+class PlainClass {
+  final Uri data;
+
+  PlainClass(this.data);
+}
+
 /// Standard usage.
 @ImModel(/*ignoreCopy: false, ignoreEqual: false*/)
 class Basic with _$BasicMixin {
   final String id;
   final bool aValue;
+  final DateTime date;
+  final PlainClass plainClass;
 
-  Basic(this.id, this.aValue);
+  Basic(this.id, this.aValue, this.date, this.plainClass);
 }
 
 /// Usage of primary constructor.

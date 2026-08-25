@@ -96,3 +96,119 @@ class NonMemberParam {
 
   final int field;
 }
+
+class PlainMutable {
+  int value = 0;
+}
+
+@ShouldThrow(
+  '"ImList<PlainMutable> coll" has element type "PlainMutable", which is not immutable. Elements of ImList/ImMap/ImSet must be a core primitive, an enum, a Record of immutable fields, a class whose fields are all final/const (recursively), an @ImModel or @immutable class, or another ImList/ImMap/ImSet.',
+)
+@ImModel()
+class TestUnprovenCollectionElement {
+  TestUnprovenCollectionElement(this.coll);
+
+  final ImList<PlainMutable> coll;
+}
+
+// Mutability hidden two structural levels deep — the outer class's own
+// fields are all final, but one nests a class that isn't.
+class PlainOuterWithMutableInner {
+  const PlainOuterWithMutableInner(this.inner);
+
+  final PlainMutable inner;
+}
+
+@ShouldThrow(
+  '"ImList<PlainOuterWithMutableInner> coll" has element type "PlainOuterWithMutableInner", which is not immutable. Elements of ImList/ImMap/ImSet must be a core primitive, an enum, a Record of immutable fields, a class whose fields are all final/const (recursively), an @ImModel or @immutable class, or another ImList/ImMap/ImSet.',
+)
+@ImModel()
+class TestUnprovenNestedCollectionElement {
+  TestUnprovenNestedCollectionElement(this.coll);
+
+  final ImList<PlainOuterWithMutableInner> coll;
+}
+
+// Mutability reached only via an inherited field, not one declared directly
+// on the class itself.
+class PlainMutableBase {
+  int id = 0;
+}
+
+class PlainDerivedFromMutableBase extends PlainMutableBase {
+  PlainDerivedFromMutableBase(this.extra);
+
+  final String extra;
+}
+
+@ShouldThrow(
+  '"ImList<PlainDerivedFromMutableBase> coll" has element type "PlainDerivedFromMutableBase", which is not immutable. Elements of ImList/ImMap/ImSet must be a core primitive, an enum, a Record of immutable fields, a class whose fields are all final/const (recursively), an @ImModel or @immutable class, or another ImList/ImMap/ImSet.',
+)
+@ImModel()
+class TestUnprovenInheritedCollectionElement {
+  TestUnprovenInheritedCollectionElement(this.coll);
+
+  final ImList<PlainDerivedFromMutableBase> coll;
+}
+
+@ShouldThrow(
+  '"dynamic dyn" has type "dynamic", which is not immutable. Fields '
+  'must be a core primitive, an enum, a Record of immutable fields, a class '
+  'whose fields are all final/const (recursively), an @ImModel or '
+  '@immutable class, or an ImList/ImMap/ImSet of such elements.',
+)
+@ImModel()
+class TestDynamicField {
+  TestDynamicField(this.dyn);
+
+  final dynamic dyn;
+}
+
+@ShouldThrow(
+  '"Object obj" has type "Object", which is not immutable. Fields '
+  'must be a core primitive, an enum, a Record of immutable fields, a class '
+  'whose fields are all final/const (recursively), an @ImModel or '
+  '@immutable class, or an ImList/ImMap/ImSet of such elements.',
+)
+@ImModel()
+class TestObjectField {
+  TestObjectField(this.obj);
+
+  final Object obj;
+}
+
+@ShouldThrow(
+  '"Object? objOptional" has type "Object?", which is not '
+  'immutable. Fields must be a core primitive, an enum, a Record of '
+  'immutable fields, a class whose fields are all final/const '
+  '(recursively), an @ImModel or @immutable class, or an ImList/ImMap/ImSet '
+  'of such elements.',
+)
+@ImModel()
+class TestObjectOptionalField {
+  TestObjectOptionalField(this.objOptional);
+
+  final Object? objOptional;
+}
+
+// A plain class (reached only via structural nesting, never CheckImmutability
+// .check()'s own regex-based "use ImList" rule) hiding a raw mutable List.
+class PlainWithRawList {
+  const PlainWithRawList(this.items);
+
+  final List<int> items;
+}
+
+@ShouldThrow(
+  '"ImList<PlainWithRawList> coll" has element type "PlainWithRawList", '
+  'which is not immutable. Elements of ImList/ImMap/ImSet must be a core '
+  'primitive, an enum, a Record of immutable fields, a class whose fields '
+  'are all final/const (recursively), an @ImModel or @immutable class, or '
+  'another ImList/ImMap/ImSet.',
+)
+@ImModel()
+class TestNestedRawCollectionField {
+  TestNestedRawCollectionField(this.coll);
+
+  final ImList<PlainWithRawList> coll;
+}

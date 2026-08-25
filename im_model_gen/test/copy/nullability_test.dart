@@ -7,8 +7,7 @@ part 'nullability_test.g.dart';
 class TestNullability with _$TestNullabilityMixin {
   TestNullability(this.dynField, this.coll);
 
-  /// Special case for dynamic types
-  final dynamic dynField;
+  final int? dynField;
 
   final ImList<int> coll;
 }

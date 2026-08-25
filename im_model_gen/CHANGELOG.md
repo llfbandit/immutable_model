@@ -2,6 +2,7 @@
 - BREAKING feat: Chained/deep `copyWith`.
   - You must regenerate all models to conform to new code generation.
   - This feature is not opt-in. Code will be tree-shaken at compile time if unused.
+- BREAKING feat: Immutability checks now recurse into collection element types and nested class fields, not just top-level fields.
 - chore: Requires `im_model` `^2.0.0`.
 - chore: Updated the SDK lower bound to 3.13.0.
 

@@ -5,18 +5,19 @@ Code generator for immutable Dart models — adds `==` equality and `copyWith` t
 - Standard Dart syntax — no custom factories or sealed classes required
 - Errors at generation time, not runtime
 - Small generated output — smaller binary, faster IDE
-- Enforces immutable collections
+- Enforces immutability
 - Supports inheritance
+- Supports copy chaining
 
 ## Setup
 
 ```yaml
 # pubspec.yaml
 dependencies:
-  im_model: ^1.4.0
+  im_model: ^2.0.0
 
 dev_dependencies:
-  im_model_gen: ^1.4.0
+  im_model_gen: ^2.0.0
   build_runner: ^2.0.0
 ```
 

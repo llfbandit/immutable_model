@@ -7,7 +7,7 @@ part of 'example.dart';
 // **************************************************************************
 
 extension _$BasicImExt on Basic {
-  dynamic _eq() => (id, aValue);
+  dynamic _eq() => (id, aValue, date, plainClass);
 }
 
 mixin _$BasicMixin {
@@ -27,7 +27,7 @@ mixin _$BasicMixin {
 }
 
 abstract interface class $IBasicCopy<$R> {
-  $R call({String? id, bool? aValue});
+  $R call({String? id, bool? aValue, DateTime? date, PlainClass? plainClass});
 }
 
 class $BasicCopy<$R> implements $IBasicCopy<$R> {
@@ -37,11 +37,20 @@ class $BasicCopy<$R> implements $IBasicCopy<$R> {
   final $R Function(Basic) _then;
 
   @override
-  $R call({Object? id = $undefined, Object? aValue = $undefined}) {
+  $R call({
+    Object? id = $undefined,
+    Object? aValue = $undefined,
+    Object? date = $undefined,
+    Object? plainClass = $undefined,
+  }) {
     return _then(
       Basic(
         $undefined == id || id == null ? _value.id : id as String,
         $undefined == aValue || aValue == null ? _value.aValue : aValue as bool,
+        $undefined == date || date == null ? _value.date : date as DateTime,
+        $undefined == plainClass || plainClass == null
+            ? _value.plainClass
+            : plainClass as PlainClass,
       ),
     );
   }

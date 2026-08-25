@@ -1,22 +1,23 @@
-Annotations and immutable collections for [im_model_gen](https://pub.dev/packages/im_model_gen) — a code generator that adds `==` equality and `copyWith` to your Dart classes.
+Annotations and immutable collections that power [im_model_gen](https://pub.dev/packages/im_model_gen), a code generator that adds `==` equality and `copyWith` to your Dart classes.
 
 ## Features
 
 - Standard Dart syntax — no custom factories or sealed classes required
 - Errors at generation time, not runtime
 - Small generated output — smaller binary, faster IDE
-- Enforces immutable collections
+- Enforces immutability
 - Supports inheritance
+- Supports copy chaining
 
 ## Setup
 
 ```yaml
 # pubspec.yaml
 dependencies:
-  im_model: ^1.4.0
+  im_model: ^2.0.0
 
 dev_dependencies:
-  im_model_gen: ^1.4.0
+  im_model_gen: ^2.0.0
   build_runner: ^2.0.0
 ```
 
@@ -94,8 +95,6 @@ Replace mutable collections with their immutable counterparts:
 | `Map<K, V>` | `ImMap<K, V>` |
 | `Set<T>`    | `ImSet<T>`    |
 
-The generator emits an error if it detects a mutable collection.
-
 Use `.mut` / `.immut` to switch between views — `.mut` is copy-on-write, so there's no allocation cost unless you actually modify it:
 
 ```dart
@@ -103,12 +102,10 @@ obj = obj.copyWith(values: obj.values.mut..add(42));
 // Generated code wraps the result back to ImList automatically.
 ```
 
-> Elements inside collections are not checked. `ImList<MyMutableClass>` is still mutable.
-
 ## vs Freezed
 
 - No special factory constructors or `@freezed` class shape
-- Mutable collections are caught at generation time
+- Mutable types are caught at generation time
 - Lean generated output
 - No lock-in syntax — easy to migrate away from
 - Generated code is intentionally minimal. A production Flutter web app (8.2 MB) saw a **650 KB reduction** (~8% of `main.dart.js`) after migrating from Freezed.
