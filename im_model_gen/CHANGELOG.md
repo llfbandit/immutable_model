@@ -1,5 +1,8 @@
+## 2.1.1
+- fix: Avoid unnecessary cast when field type is `Object`.
+
 ## 2.1.0
-- Take into account `ignoreMutable` annotation parameters to skip immutability check.
+- feat: Take into account `ignoreMutable` annotation parameters to skip immutability check.
 
 ## 2.0.0
 - BREAKING feat: Chained/deep `copyWith`.

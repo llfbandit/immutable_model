@@ -1,9 +1,6 @@
 part of 'index.dart';
 
-// Class-level bypass: both `mutableCounter` (non-final) and `rawList` (raw
-// mutable collection) would normally throw. Neither is part of the
-// constructor, mirroring Static's "extra field" pattern, so they're simply
-// excluded from copyWith/equality once validation no longer blocks them.
+// Class-level bypass: `mutableCounter` and `rawList` would normally throw.
 @ShouldGenerate(r'''
 extension _$IgnoreMutableClassImExt on IgnoreMutableClass {
   dynamic _eq() => (id, mutableCounter, rawList);
@@ -18,9 +15,7 @@ class IgnoreMutableClass {
   final List<int> rawList = const [];
 }
 
-// Field-level bypass: `tags` is a raw mutable list (normally an error) but
-// is still wired through the constructor, so it participates in copyWith
-// and equality just like a valid field would.
+// Field-level bypass: `tags` is a raw mutable list, normally an error.
 @ShouldGenerate(r'''
 extension _$IgnoreMutableFieldImExt on IgnoreMutableField {
   dynamic _eq() => (id, tags);
@@ -35,8 +30,7 @@ class IgnoreMutableField {
   final List<String> tags;
 }
 
-// The bypass on `tags` must not leak to sibling fields: `untouched` has the
-// same kind of violation but no override, so it must still throw.
+// The bypass must not leak to sibling fields: `untouched` still throws.
 @ShouldThrow(
   '"List<int> untouched" is a mutable list, you must use "ImList" instead to ensure immutability.',
 )
@@ -50,8 +44,7 @@ class IgnoreMutablePartial {
   final List<int> untouched;
 }
 
-// Field-level bypass also covers the constructor-parameter nested-mutable
-// -collection check (normally "ImSet<List<List<int>>>" would throw).
+// Also covers the constructor-parameter nested-collection check.
 @ShouldGenerate(r'''
 extension _$IgnoreMutableNestedImExt on IgnoreMutableNested {
   dynamic _eq() => (id, coll);
@@ -66,9 +59,8 @@ class IgnoreMutableNested {
   final ImSet<List<List<int>>> coll;
 }
 
-// Field-level bypass also covers the recursive element-type check
-// (`PlainMutable`, declared in test_cases_exceptions.dart, is not provably
-// immutable and would normally throw as an ImList element type).
+// Also covers the recursive element-type check (`PlainMutable` from
+// test_cases_exceptions.dart isn't provably immutable).
 @ShouldGenerate(r'''
 extension _$IgnoreMutableElementImExt on IgnoreMutableElement {
   dynamic _eq() => (id, coll);
@@ -83,8 +75,7 @@ class IgnoreMutableElement {
   final ImList<PlainMutable> coll;
 }
 
-// Field-level bypass also resolves through a primary constructor parameter
-// (the annotation lives on the parameter, not a class-body field).
+// Also resolves through a primary constructor parameter.
 @ShouldGenerate(r'''
 extension _$IgnoreMutablePrimaryImExt on IgnoreMutablePrimary {
   dynamic _eq() => (id, tags);
@@ -95,3 +86,63 @@ class IgnoreMutablePrimary(
   final String id,
   @ImField(ignoreMutable: true) final List<int> tags,
 ) {}
+
+// Object fields (only reachable via ignoreMutable) must not get an
+// `unnecessary_cast`-triggering `as Object`.
+@ShouldGenerate(r'''
+  $R call({Object? id = $undefined, Object? obj = $undefined}) {
+    return _then(
+      IgnoreMutableObjectField(
+        $undefined == id || id == null ? _value.id : id as String,
+        $undefined == obj || obj == null ? _value.obj : obj,
+      ),
+    );
+  }
+''', contains: true)
+@ImModel()
+class IgnoreMutableObjectField {
+  const IgnoreMutableObjectField(this.id, this.obj);
+
+  final String id;
+  @ImField(ignoreMutable: true)
+  final Object obj;
+}
+
+@ShouldGenerate(r'''
+  $R call({Object? id = $undefined, Object? obj = $undefined}) {
+    return _then(
+      IgnoreMutableObjectNullableField(
+        $undefined == id || id == null ? _value.id : id as String,
+        $undefined == obj ? _value.obj : obj,
+      ),
+    );
+  }
+''', contains: true)
+@ImModel()
+class IgnoreMutableObjectNullableField {
+  const IgnoreMutableObjectNullableField(this.id, this.obj);
+
+  final String id;
+  @ImField(ignoreMutable: true)
+  final Object? obj;
+}
+
+// `dynamic` doesn't have that problem, so the cast stays.
+@ShouldGenerate(r'''
+  $R call({Object? id = $undefined, Object? dyn = $undefined}) {
+    return _then(
+      IgnoreMutableDynamicField(
+        $undefined == id || id == null ? _value.id : id as String,
+        $undefined == dyn || dyn == null ? _value.dyn : dyn as dynamic,
+      ),
+    );
+  }
+''', contains: true)
+@ImModel()
+class IgnoreMutableDynamicField {
+  const IgnoreMutableDynamicField(this.id, this.dyn);
+
+  final String id;
+  @ImField(ignoreMutable: true)
+  final dynamic dyn;
+}

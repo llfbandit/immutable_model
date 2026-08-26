@@ -314,6 +314,9 @@ class _CopyImplTemplate {
       imWrapper = 'ImMap';
     } else if (imSetRegex.hasMatch(type)) {
       imWrapper = 'ImSet';
+    } else if (type == 'Object' || type == 'Object?') {
+      // Already Object/Object? here; casting to it is `unnecessary_cast`.
+      return name;
     } else {
       return '$name as $type';
     }
